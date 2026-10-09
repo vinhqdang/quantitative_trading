@@ -1,0 +1,15 @@
+[project]
+name = "marketsim"
+version = "0.1.0"
+description = "Agent-based limit order book simulator for testing market-manipulation detection"
+requires-python = ">=3.10"
+dependencies = ["numpy", "pandas", "scikit-learn", "tabulate"]
+
+[project.optional-dependencies]
+dev = ["pytest"]
+
+[tool.setuptools.packages.find]
+include = ["marketsim*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
