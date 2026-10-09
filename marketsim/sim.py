@@ -41,7 +41,8 @@ class SimConfig:
     n_ring: tuple[int, int] = (0, 0)
     ring_size: tuple[int, int] = (6, 20)
     ring_params: dict | None = None
-    ring_block: int = 200
+    ring_block: int = 3000  # shares (in lots) held before the campaign and sold off-book at the end of each push
+    block_vwap: int = 1     # reference price of off-book block trades: mean mid over this many trailing steps (1 = last price)
     policy: Policy = field(default_factory=Policy)
 
 
@@ -212,15 +213,18 @@ def manipulation_impact(ep: Episode, horizon: int = 8, gap: int = 20) -> dict[st
     return out
 
 
-def ring_utility(ep: Episode) -> dict:
+def ring_utility(ep: Episode, vwap: int | None = None) -> dict:
     """Benefit of ring manipulation: block * price displacement over each completed push, plus trading profit.
 
+    The block is sold off-book at a reference price: the mean mid over the trailing `vwap` steps at the end of the
+    push (1 = the last price). Displacement is measured against the mid at the start of the campaign.
     Returns per-episode totals: utility, displacement (mean ticks per cycle), trading profit, cycles.
     """
+    L = vwap or ep.config.block_vwap
     cycles = [c for c in ep.extras.get("ring_cycles", []) if "end_push" in c]
-    disp = [c["mid1"] - c["mid0"] for c in cycles]
+    disp = [float(np.mean(ep.mids[max(0, c["end_push"] - L + 1): c["end_push"] + 1]) - c["mid0"]) for c in cycles]
     per_share, shares = tagged_pnl_per_share(ep, "ring_")
     trading = 0.0 if shares == 0 else per_share * shares
     block = ep.config.ring_block
     return {"utility": float(block * np.sum(disp) + trading), "displacement": float(np.mean(disp)) if disp else 0.0,
-            "trading": float(trading), "cycles": len(cycles)}
+            "trading": float(trading), "cycles": len(cycles), "gain": float(block * np.sum(disp) + trading)}

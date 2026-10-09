@@ -71,25 +71,27 @@ def coincidence_scan(flow: np.ndarray, tols=(1, 5, 15)) -> tuple[np.ndarray, np.
     return obs, p
 
 
-def submission_flow(ep: Episode, window: int = 300) -> np.ndarray:
-    """Tensor [window, side(2), agent, step] of order submission counts (limit and market orders)."""
-    cfg = ep.config
-    ev = ep.events
-    ev = ev[(ev.t >= cfg.warmup) & ev.kind.isin([NEW, MKT])]
-    n_win = int((cfg.steps - cfg.warmup) // window)
-    rel = ev.t.to_numpy() - cfg.warmup
+def submission_flow_from_events(events: pd.DataFrame, n_agent: int, steps: int, warmup: int = 0,
+                                window: int = 300) -> np.ndarray:
+    """Tensor [window, side(2), agent, step] of order submission counts (limit and market orders).
+
+    `events` needs columns t, kind, agent, side (see exchange.EVENT_COLUMNS); agent ids are 0..n_agent-1.
+    """
+    ev = events[(events.t >= warmup) & events.kind.isin([NEW, MKT])]
+    n_win = int((steps - warmup) // window)
+    rel = ev.t.to_numpy() - warmup
     w, st = rel // window, rel % window
     keep = w < n_win
-    n_agent = int(ep.agents.aid.max()) + 1
     F = np.zeros((n_win, 2, n_agent, window))
     side = (ev.side.to_numpy() < 0).astype(int)
     np.add.at(F, (w[keep], side[keep], ev.agent.to_numpy()[keep], st[keep]), 1.0)
     return F
 
 
-def scan_episode(ep: Episode, window: int = 300, tols=(1, 5, 15), **_) -> pd.DataFrame:
-    """Per (agent, window) coincidence z-score and p-value for one episode (agents with no submissions get p=1)."""
-    F = submission_flow(ep, window)
+def scan_events(events: pd.DataFrame, n_agent: int, steps: int, warmup: int = 0, window: int = 300,
+                tols=(1, 5, 15)) -> pd.DataFrame:
+    """Per (agent, window) coincidence z-score and p-value from raw order events (agents without submissions get p=1)."""
+    F = submission_flow_from_events(events, n_agent, steps, warmup, window)
     rows = []
     for w in range(F.shape[0]):
         z, p = coincidence_scan(F[w], tols)
@@ -97,3 +99,9 @@ def scan_episode(ep: Episode, window: int = 300, tols=(1, 5, 15), **_) -> pd.Dat
         rows.append(pd.DataFrame({"agent": np.arange(F.shape[2]), "window": w,
                                   "z": np.where(active, z, 0.0), "p": np.where(active, p, 1.0), "active": active}))
     return pd.concat(rows, ignore_index=True)
+
+
+def scan_episode(ep: Episode, window: int = 300, tols=(1, 5, 15), **_) -> pd.DataFrame:
+    """Per (agent, window) coincidence z-score and p-value for a simulated episode."""
+    cfg = ep.config
+    return scan_events(ep.events, int(ep.agents.aid.max()) + 1, cfg.steps, cfg.warmup, window, tols)

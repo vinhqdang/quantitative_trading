@@ -5,8 +5,9 @@ Mapping, with sources and confidence in docs/vietnam_calibration.md:
   1 quantity unit = one round lot (100 shares)
   1 step         = about one trading minute; a trading day = 240 steps
   daily price band +/-7% of the previous close
-Participant mix, cancel share and relative tick are matched to published figures; spread and volatility are
-not (no published figures were found).
+Participant mix, cancel share and relative tick are matched to published figures (retail 0.795 vs 0.80, cancel
+share 0.323 vs 0.318, relative tick 20 bps). Spread and volatility are not matched: no published spread was found,
+and the simulated daily volatility (about 0.4%) is below the assumed 1.5% of a typical stock.
 """
 
 from __future__ import annotations
@@ -20,5 +21,5 @@ VN_POLICY = Policy("HOSE band 7%", band=0.07, day_len=240)
 
 
 def vn_config(**overrides) -> SimConfig:
-    base = SimConfig(start_price=500, policy=VN_POLICY)
+    base = SimConfig(start_price=500, policy=VN_POLICY, n_noise=400, mm_activity=0.05)
     return replace(base, **overrides)
