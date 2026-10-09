@@ -1,0 +1,9 @@
+scenario,detector,B,block rule (steps),gain,displacement,caught,net U (m=5),net U (m=10)
+no price band,none,0,1,226741.66666666666,4.733333333333333,,,
+band 7% (HOSE today),none,0,1,152400.0,3.602777777777778,,,
+band 10%,none,0,1,1264533.1666666667,8.848530982905983,,,
+band 15%,none,0,1,669515.9166666666,7.563438644688645,,,
+band 7% + block priced at 60-step mean,none,0,60,161944.87500000003,2.253861005892257,,,
+band 7% + block priced at 240-step mean,none,0,240,116246.00000000001,0.5598081316831325,,,
+band 7% + inspect 1 account per window,scan,1,1,11780.5,0.5357142857142857,1.0,-53086.166666666664,-117952.83333333333
+band 7% + inspect 3 accounts per window,scan,3,1,6610.0,0.17200369075369074,0.5833333333333334,-23673.75,-53957.5

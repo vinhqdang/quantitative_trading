@@ -13,7 +13,7 @@ UNVERIFIED (single weak source), NOT FOUND.
 | 1 price tick | 1 HOSE tick | tick table below |
 | reference price 500 ticks | a 25,000 VND stock: 50 VND tick, relative tick 0.2% (20 bps) | DERIVED from the tick table |
 | 1 quantity unit | one round lot, 100 shares | lot size below |
-| 1 step | about one trading minute | assumption |
+| 1 step | about one trading minute | assumption (VN30F1M has a median of 4,937 ticks per day) |
 | 240 steps per day | about 225 minutes of continuous matching plus auctions | assumption |
 | daily band 7% (`Policy.band`) | HOSE daily price limit | band table below |
 | block of 3000 lots | 300,000 shares held before a campaign and sold off-book | assumption; HOSE negotiated trades start at 20,000 shares |
@@ -49,7 +49,7 @@ mid-cap. `marketsim.vietnam.vn_config()` uses the 500-tick preset.
 | Amendments and cancellations as share of orders | 31.76% in Dec 2020 (4.4 million of 13.9 million); pre-KRX | SECONDARY | [VIR](https://vir.com.vn/hose-considers-suspending-amendment-and-cancellation-orders-while-trading-82982.html) |
 | Margin balance | about 446 trillion VND at end of June 2026; initial margin not below 50%, maintenance not below 30%, set by each broker | SECONDARY | [VnEconomy](https://vneconomy.vn/du-no-margin-ky-luc-hon-446-nghin-ty-dong-phan-lon-tap-trung-vao-hoat-dong-cho-vay-theo-deal-rieng.htm), [Decision 87/QD-UBCK](https://dulieuphapluat.vn/van-ban/chung-khoan-van-ban/decision-no-87qd-ubck-dated-january-25-2017-on-the-promulgation-of-the-regulation-guiding-the-margin-trading-1111650.html) |
 
-Moments matched by `marketsim.calibrate`: retail share 0.80, cancel share 0.3176, relative tick 20 bps.
+Moments matched by `marketsim.calibrate`: retail share 0.80, cancel share 0.3176, relative tick 20 bps, daily volatility 1.16% (measured, see below).
 
 ## Enforcement facts behind the policy experiments
 
@@ -61,12 +61,36 @@ Moments matched by `marketsim.calibrate`: retail share 0.80, cancel share 0.3176
 | Pattern across prosecuted cases | multi-account collusive trading dominates; no spoofing or layering prosecution found | SECONDARY | [VJOL](https://vjol.vista.gov.vn/HVNH-KHDAOTAONH/article/view/90100) |
 | 2025 statistics (to 30 Nov) | 488 administrative decisions; 3 manipulation penalty cases; 83 exchange alert reports reviewed; 17 investor-trading inspection teams | SECONDARY | [Doanh nghiep Hoi nhap](https://doanhnghiephoinhap.vn/11-thang-nam-2025-uy-ban-chung-khoan-nha-nuoc-xu-phat-gan-60-ty-dong-124379.html) |
 
+## Measured on real data
+
+Computed by `experiments/real_data_stats.py` (output in `results/real_data_stats.md`) from two public Kaggle datasets, downloaded
+without an account. Neither has account identifiers or order-level events; raw files are not stored here.
+
+| Item | Value | Source |
+|---|---|---|
+| VN30 daily return sd | 1.16% (2023 onward), 1.19% (2012-2025); excess kurtosis 4.7; autocorrelation of absolute returns 0.20 at lag 1 | [keithvo/vnstockdata](https://www.kaggle.com/datasets/keithvo/vnstockdata) (ODbL) |
+| VN-Index daily return sd | 1.09% (2023 onward), 1.44% (2000-2025); excess kurtosis 3.6; autocorrelation of absolute returns 0.46 | same |
+| VN30 30-minute bars | 10 per day; 30-minute return sd 0.30% | same |
+| VN30F1M spread | 1 tick in 73% of quote-bearing ticks, 2 ticks 16%, 3 ticks 6%; mean 1.1 bp | [khimduong/vn30-market-making](https://www.kaggle.com/datasets/khimduong/vn30-market-making) (licence not stated, provenance of ticks not documented) |
+| VN30F1M activity | median 4,937 ticks per day, median gap 2.1 s; one-minute return sd 0.054% with excess kurtosis 42; daily sd 1.16% | same |
+
+These are index and futures data, not single-stock order books. They fix the daily volatility target (1.16%) and show that the
+real minimum spread is reached most of the time, which the simulator does not reproduce.
+
+Other datasets found but not downloaded: an OHLC history of Vietnamese stocks to 2023
+([vuthinh](https://www.kaggle.com/datasets/vuthinh/vietnam-stock-market-ohlc-price-data), 171 MB),
+HOSE-HNX-UPCoM stock prices ([hoanganh4511](https://www.kaggle.com/datasets/hoanganh4511/stock-dataset-hose-hnx-upcom), 69 MB),
+VN30F1M 1-minute data on [HuggingFace](https://huggingface.co/datasets/smtrading/VN30F1M). One Kaggle upload
+(`graycie/stock-vn30-in-one-month`) is a Python pickle and was not opened, because loading a pickle can run arbitrary code.
+`vnstock` on PyPI is flagged as quarantined and was not installed. The Vietnamese broker price APIs (SSI, TCBS, VNDirect) were
+not reachable from this environment.
+
 ## Not found, so not calibrated
 
-Typical bid-ask spread in ticks; daily volatility of VN-Index or a typical stock; order-to-trade ratios after KRX;
-published counts of surveillance alerts per day; the share of manipulation cases that involve many accounts. The
-simulator's minimum spread is 2 ticks against a rule minimum of 1 tick. Volatility is set to about 1.5-2% per day as
-an assumption.
+Account-level order data (not public anywhere); order-to-trade ratios after KRX; published counts of surveillance alerts per day;
+the share of manipulation cases that involve many accounts; spreads and depth of single stocks. The simulator's minimum spread is
+2 ticks against 1 tick for VN30F1M, and it does not reproduce the measured tail heaviness (excess kurtosis 4-5 daily, 40 at one
+minute) or volatility clustering.
 
 ## Plugging in real data
 
