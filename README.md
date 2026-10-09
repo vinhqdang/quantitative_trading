@@ -81,6 +81,32 @@ and the table reports 20 separate episodes. `gain` is block value plus trading p
 - In the first, uncalibrated preset (daily volatility 0.4%) the ring's prize was ten times larger and the block rule looked weak;
   those results are kept in `results/notes/vn_preset_v1/`. The ranking of levers depends on the market's volatility.
 
+### 2b. Real data: documented cases on public daily prices (`results/case_validation.md`)
+
+No account data, so a market-level check: do public daily prices and volumes single out stocks in documented manipulation
+periods? Ten cases from enforcement decisions with exact dates (`data/cases.csv`: FIR, SJS, PDR, PSH, AGG, PPT, CRC, GKM, PAS, HCI)
+are scored against all 1,551 stocks of a public daily panel (about 1,360 scored on a typical recent date). Detectors use only data up
+to each date and rank stocks against each other on that date, with no labels. The protocol was fixed before the cases were scored.
+"On some date" means the stock reached the top-B list of its date at least once during the period; the chance column is the same
+statistic for 300 random stocks over the same dates.
+
+| detector | superiority over a random stock (0.5 = chance) | in top 10 | chance | in top 20 | chance | in top 50 | chance |
+|---|---|---|---|---|---|---|---|
+| market-adjusted abnormal return only | 0.89 | 8/10 | 15% | 10/10 | 27% | 10/10 | 53% |
+| combined six-feature score | 0.78 | 6/10 | 22% | 6/10 | 35% | 10/10 | 58% |
+| isolation forest on the same features | 0.78 | 7/10 | 21% | 8/10 | 34% | 9/10 | 54% |
+| round trip (run-up then retracement) only | 0.70 | 9/10 | 76% | 10/10 | 81% | 10/10 | 90% |
+| volume surge only | 0.33 | 0/10 | 3% | 0/10 | 5% | 0/10 | 13% |
+
+- Public prices carry signal: the simplest rank, market-adjusted abnormal return, puts 8 of 10 cases in the daily top 10 of about
+  1,360 stocks at some point of their period, against 15% for random stocks.
+- The multi-feature combination and the isolation forest are not better than that single feature, and volume surge is uninformative
+  (these stocks were pushed up with ordinary volume, for example GKM rose five-fold at 1.02 times its usual volume). Nothing new is
+  claimed for the market-level detector.
+- This says little about precision: periods are long (80-590 days), only ten documented cases exist among thousands of price run-ups, and an
+  unlabeled run-up is not an innocent one. Decisions arrive years after the conduct, and enforcement targets manipulations that moved
+  prices, which favours price-based detectors.
+
 ### 3. Order-level levers against a fixed spoofer (`results/policy.md`)
 
 Default spoofer and pump-and-dump agents that do not adapt; 16 episodes per policy, same seeds.
@@ -107,7 +133,7 @@ experiment; its manipulators are easy to separate by construction.
 
 ## Real data
 
-Account-level order data, the input the coincidence test needs, is not public: only the exchanges (HOSE, HNX), the depository (VSDC)
+Account-level order data, the input the coincidence test needs, is not public (section 2b is the market-level check on public data): only the exchanges (HOSE, HNX), the depository (VSDC)
 and the securities commission hold it, so no real ring has been tested. What was obtained from public sources
 (`results/real_data_stats.md`, `docs/vietnam_calibration.md`): VN30, VN-Index and VN100 bars from 2012 and 1.56 million
 VN30 futures ticks with best bid and ask from 2024-2025 (Kaggle `keithvo/vnstockdata`, `khimduong/vn30-market-making`). They
@@ -131,6 +157,9 @@ accounts, FIR with 76); or academic access to account-level data in another mark
   about 120 accounts (section 1) and about 580 accounts (section 2) per window, with different adversaries, so how it scales with the
   number of accounts is not established.
 - Section 1 was measured in the default simulator (about 120 accounts), not the Vietnam preset.
+- Section 2b: ten cases; periods are taken from press reports quoting decisions (the decision documents were not opened); the panel holds only
+  currently listed stocks, so delisted ones (for example parts of the FLC group) are missing and HNG falls before the first scored date;
+  one case (PSH) was traded on the negotiated system, which need not show in daily prices.
 - `retail trading cost` in section 3 falls under larger ticks because simulated noise traders mostly post passive orders and earn the
   wider spread, unlike retail investors in practice.
 - The spoofer-versus-retrained-detector loop was stopped after three rounds (`results/notes/`).
@@ -144,6 +173,7 @@ python experiments/run_ring_detection.py          # section 1, about 10 minutes
 python experiments/run_vn_policy.py               # strategy search per policy, about 15 minutes
 python experiments/run_vn_cross.py                # section 2, about 15 minutes (reads results/vn_policy.md)
 python experiments/run_policy.py                  # section 3
+python experiments/run_case_validation.py --folder DIR_OF_DAILY_PARQUET   # section 2b (Kaggle vuthinh/vietnam-stock-market-ohlc-price-data)
 python experiments/run_block_rule.py
 python experiments/real_data_stats.py --indices DIR --futures VN30F1M_data.csv   # needs the two Kaggle datasets
 python experiments/run_experiments.py             # section 4
@@ -162,6 +192,7 @@ marketsim/sim.py            episode runner, market-quality and manipulation diag
 marketsim/coordination.py   label-free coincidence test
 marketsim/baselines.py      pairwise correlation baseline
 marketsim/features.py       account-window features and labels
+marketsim/realdata.py       stock-level scores from public daily prices
 marketsim/detect.py         account-level detectors and evaluation
 marketsim/ring_adversary.py adaptive ring: search space, inspection, evolution strategy
 marketsim/adversary.py      adaptive spoofer

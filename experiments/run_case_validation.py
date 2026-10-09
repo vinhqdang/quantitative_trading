@@ -67,10 +67,12 @@ def evaluate(cases: pd.DataFrame, panel, det: dict[str, np.ndarray], n_null: int
                  "p vs random stocks": float((null >= peak).mean()),
                  "superiority": float((null < peak).mean() + 0.5 * (null == peak).mean())}
             raw = det[name][rows]
+            filled = np.nan_to_num(raw, nan=-1e9)
+            srt = np.sort(filled, axis=1)
             for b in B:
-                top = np.nanargmax(np.nan_to_num(raw, nan=-1e9), axis=1) if False else None
-                kth = np.sort(np.nan_to_num(raw, nan=-1e9), axis=1)[:, -b]
-                r[f"top{b}"] = bool((raw[:, j] >= kth).any())
+                kth = srt[:, -b]
+                r[f"top{b}"] = bool((filled[:, j] >= kth).any())
+                r[f"chance top{b}"] = float((filled[:, draw] >= kth[:, None]).any(axis=0).mean())
             res.append(r)
     return pd.DataFrame(res)
 
@@ -86,6 +88,7 @@ def summarise(df: pd.DataFrame, B: list[int]) -> pd.DataFrame:
     })
     for b in B:
         out[f"in top {b} on some date"] = g[f"top{b}"].mean()
+        out[f"chance (random stock) top {b}"] = g[f"chance top{b}"].mean()
     return out
 
 
@@ -107,9 +110,8 @@ def main(args):
             f"{len(cases)} cases with a documented period were considered, {covered} stocks are in the price panel "
             f"(1D data, {panel['close'].shape[1]} stocks, {panel['close'].index.min().date()} to {panel['close'].index.max().date()}; "
             f"about {n_active} stocks have scores on a typical recent date). Window {args.window} trading days. "
-            f"Random-stock null: {args.n_null} stocks per case. Chance level: median peak percentile of a random stock, 0.5 superiority, "
-            f"5% of cases with p < 0.05, and about {B[0] / n_active:.1%}-{B[-1] / n_active:.1%} of cases in the top-B lists on some date "
-            "(higher over a long period because of the many dates).\n", summ.round(3).to_markdown(), "\n",
+            f"Random-stock null: {args.n_null} stocks per case. Chance level: 0.5 superiority, 5% of cases with p < 0.05, and for "
+            "the top-B lists the share of random stocks that reach the list on some date of the same period (reported next to each detector).\n", summ.round(3).to_markdown(), "\n",
             "## By case (combined score)\n",
             res[res.detector == "combined (Fisher)"].drop(columns="detector").round(3).to_markdown(index=False), ""]
     Path(args.out).mkdir(exist_ok=True)
