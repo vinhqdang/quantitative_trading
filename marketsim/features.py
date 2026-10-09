@@ -120,9 +120,10 @@ def label_windows(ep: Episode, feats: pd.DataFrame, window: int = 300, min_tagge
     ev = ep.events
     sub = ev[(ev.t >= cfg.warmup) & (ev.kind.isin([NEW, MKT]))].merge(ep.gt_orders, on="oid")
     sub["window"] = (sub.t - cfg.warmup) // window
-    sub["type"] = sub.tag.str.split("_").str[0].map({"spoof": "spoof", "pd": "pump", "wash": "wash"})
+    sub["type"] = sub.tag.str.split("_").str[0].map({"spoof": "spoof", "pd": "pump", "wash": "wash", "ring": "ring"})
     cnt = sub.groupby(["agent", "window", "type"]).size().rename("n").reset_index()
-    cnt = cnt[cnt.n >= min_tagged].sort_values("n").drop_duplicates(["agent", "window"], keep="last")
+    need = cnt.type.map({"ring": 1}).fillna(min_tagged)  # ring members act rarely each: one tagged order counts
+    cnt = cnt[cnt.n >= need].sort_values("n").drop_duplicates(["agent", "window"], keep="last")
     df = feats.merge(cnt[["agent", "window", "type"]], on=["agent", "window"], how="left")
     df = df.merge(ep.agents.rename(columns={"aid": "agent"})[["agent", "kind"]], on="agent")
     df["type"] = df["type"].fillna("none")

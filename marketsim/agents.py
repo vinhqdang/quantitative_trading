@@ -75,10 +75,14 @@ class MarketMaker(Agent):
 
     def step(self, ex: Exchange) -> None:
         r = self.rng
-        if r.random() > self.activity:
+        # a fee per cancelled order makes frequent re-quoting less attractive (about 4 cancels per re-quote
+        # against a typical gain of 8 per re-quote)
+        if r.random() > self.activity / (1 + ex.policy.cancel_fee * 4 / 8):
             return
         for oid in list(ex.open[self.aid]):
             ex.cancel(oid)
+        if ex.open[self.aid]:
+            return  # some quotes are locked by a minimum resting time: stay with them rather than stack new ones
         inv = ex.inv[self.aid]
         # depth shown on one side is read as pressure: quotes shift towards the heavier side's opposite
         mid = ex.mid() + self.imb_sens * ex.imbalance(5)
@@ -192,12 +196,18 @@ class Manipulator(NoiseTrader):
 
     manipulator = True
 
-    def __init__(self, aid, rng, window: tuple[int, int], evasion: float = 0.0):
+    def __init__(self, aid, rng, window: tuple[int, int], evasion: float = 0.0, params: dict | None = None):
         super().__init__(aid, rng, activity=0.03)
         self.window = window
         self.evasion = evasion
+        self.params = params or {}
+        self.dilute = 0.0  # chance per step of also acting like a noise trader while manipulating
         self._cursor = 0
         self._net = 0
+
+    def apply_params(self) -> None:
+        for k, v in self.params.items():
+            setattr(self, k, v)
 
     def tagged_net(self, ex: Exchange, prefix: str) -> int:
         """Net position (buys minus sells) built through this agent's tagged orders."""
@@ -236,6 +246,10 @@ class Manipulator(NoiseTrader):
     def step(self, ex: Exchange) -> None:
         if self.active(ex):
             self.manipulate(ex)
+            if self.dilute > 0 and self.rng.random() < self.dilute:
+                saved, self.activity = self.activity, 1.0
+                NoiseTrader.step(self, ex)
+                self.activity = saved
         else:
             NoiseTrader.step(self, ex)
 
@@ -254,14 +268,16 @@ class Spoofer(Manipulator):
 
     kind = "spoofer"
 
-    def __init__(self, aid, rng, window, evasion: float = 0.0):
-        super().__init__(aid, rng, window, evasion)
+    def __init__(self, aid, rng, window, evasion: float = 0.0, params: dict | None = None):
+        super().__init__(aid, rng, window, evasion, params)
         e = evasion
+        self.cool_lo, self.cool_hi, self.timeout = 20, 60, 30
         self.layers = 3 if e < 0.5 else 1 if e > 0.8 else 2
         self.fake_qty = max(20, int(250 * (1 - 0.8 * e)))
         self.dist = 1 + int(4 * e)
         self.hold_extra = 2 + int(15 * e)
         self.real_qty = 10
+        self.apply_params()
         self.state = "idle"
         self.cool_until = window[0]
         self.fakes: list[int] = []
@@ -287,11 +303,13 @@ class Spoofer(Manipulator):
             self.t0, self.cancel_at, self.state = t, -1, "spoofing"
         elif self.state == "spoofing":
             filled = self.real_oid not in ex.open[self.aid]
-            if self.cancel_at < 0 and (filled or t - self.t0 > 30):
+            if self.cancel_at < 0 and (filled or t - self.t0 > self.timeout):
                 self.cancel_at = t + self.hold_extra
             if self.cancel_at >= 0 and t >= self.cancel_at:
                 for oid in self.fakes:
                     ex.cancel(oid)
+                if any(oid in ex.open[self.aid] for oid in self.fakes):
+                    return  # still locked: the fake orders stay exposed, retry next step
                 ex.cancel(self.real_oid)
                 self.state = "unwind"
                 self.t0 = t
@@ -299,7 +317,7 @@ class Spoofer(Manipulator):
             net = self.tagged_net(ex, "spoof_")
             if net == 0 or t - self.t0 > 40:
                 self.stop_exit(ex)
-                self.state, self.cool_until = "idle", t + int(r.integers(20, 60))
+                self.state, self.cool_until = "idle", t + int(r.integers(self.cool_lo, self.cool_hi))
                 return
             self.exit_step(ex, net, "spoof_unwind")
 
@@ -375,3 +393,119 @@ class WashAccount(Manipulator):
     def step(self, ex: Exchange) -> None:
         # the pair controller drives the collusive trades; otherwise act honestly
         NoiseTrader.step(self, ex)
+
+
+class RingAccount(Manipulator):
+    """One account of a colluding ring: trades like a noise trader unless the ring controller uses it."""
+
+    kind = "ring"
+
+    def step(self, ex: Exchange) -> None:
+        NoiseTrader.step(self, ex)
+
+
+RING_DEFAULT = {"acc_len": 60, "push_len": 25, "dist_len": 50, "p_acc": 0.4, "p_push": 0.8, "m_push": 2, "q": 3,
+                "cross_frac": 0.2, "jitter": 0, "cool": 60}
+
+
+class RingController:
+    """A ring of K accounts that fragments a price-pushing campaign across accounts.
+
+    Phases per cycle: accumulate (passive buys by random members), push (near-simultaneous aggressive buys by
+    several members plus cross trades between members), distribute (passive sells of inventory). Members only
+    sell what they hold (no short selling). `jitter` spreads the members' actions over time, which weakens the
+    synchrony between accounts at the cost of a weaker push.
+
+    The ring's benefit is a block it sells off-book at the end of each push, valued at the price displacement
+    achieved: utility = block * displacement + trading profit.
+    """
+
+    def __init__(self, members: list[RingAccount], rng: np.random.Generator, window: tuple[int, int],
+                 params: dict | None = None, block: int = 200):
+        self.members = members
+        self.rng = rng
+        self.window = window
+        self.block = block
+        self.p = {**RING_DEFAULT, **(params or {})}
+        self.state = "idle"
+        self.cool_until = window[0]
+        self.phase_end = 0
+        self.queue: list[tuple[int, int, str, int]] = []  # (due step, member index, action, qty)
+        self.cycles: list[dict] = []
+        self._cursor = 0
+        self._inv = {m.aid: 0 for m in members}
+
+    def _update_inventory(self, ex: Exchange) -> None:
+        ids = self._inv
+        for a, tag, side, _, qty, _t in ex.gt_trades[self._cursor:]:
+            if a in ids and tag.startswith("ring_"):
+                ids[a] += side * qty
+        self._cursor = len(ex.gt_trades)
+
+    def _schedule(self, ex: Exchange, member: int, action: str, qty: int) -> None:
+        j = self.p["jitter"]
+        due = ex.t + (int(self.rng.integers(0, j + 1)) if j else 0)
+        self.queue.append((due, member, action, qty))
+
+    def _run_due(self, ex: Exchange) -> None:
+        keep = []
+        for due, mi, action, qty in self.queue:
+            if due > ex.t:
+                keep.append((due, mi, action, qty))
+                continue
+            m = self.members[mi]
+            if action == "acc" and ex.best_bid() is not None:
+                ex.limit(m.aid, BUY, ex.best_bid(), qty, tag="ring_acc")
+            elif action == "push":
+                ex.market(m.aid, BUY, qty, tag="ring_push")
+            elif action == "dist" and self._inv[m.aid] > 0 and ex.best_ask() is not None:
+                ex.limit(m.aid, SELL, ex.best_ask(), min(qty, self._inv[m.aid]), tag="ring_dist")
+        self.queue = keep
+
+    def step(self, ex: Exchange) -> None:
+        r, p, t = self.rng, self.p, ex.t
+        self._update_inventory(ex)
+        self._run_due(ex)
+        if not (self.window[0] <= t < self.window[1]):
+            return
+        K = len(self.members)
+        if self.state == "idle":
+            if t >= self.cool_until:
+                self.state, self.phase_end = "acc", t + p["acc_len"]
+                self.cycles.append({"start": t, "mid0": ex.mid()})
+            return
+        if self.state == "acc":
+            if t >= self.phase_end:
+                self.state, self.phase_end = "push", t + p["push_len"]
+            elif r.random() < p["p_acc"]:
+                self._schedule(ex, int(r.integers(K)), "acc", p["q"])
+        elif self.state == "push":
+            if t >= self.phase_end:
+                self.cycles[-1].update(end_push=t, mid1=ex.mid())
+                self.state, self.phase_end = "dist", t + p["dist_len"]
+            elif r.random() < p["p_push"]:
+                for mi in r.choice(K, size=min(K, p["m_push"]), replace=False):
+                    self._schedule(ex, int(mi), "push", p["q"])
+                if r.random() < p["cross_frac"] and K >= 2:
+                    self._cross(ex)
+        elif self.state == "dist":
+            held = [i for i, m in enumerate(self.members) if self._inv[m.aid] > 0]
+            if t >= self.phase_end or not held:
+                self.state, self.cool_until = "idle", t + p["cool"]
+                return
+            if r.random() < 0.5:
+                self._schedule(ex, int(r.choice(held)), "dist", p["q"])
+
+    def _cross(self, ex: Exchange) -> None:
+        bid, ask = ex.best_bid(), ex.best_ask()
+        if bid is None or ask is None or ask - bid < 2:
+            return
+        holders = [i for i, m in enumerate(self.members) if self._inv[m.aid] > 0]
+        if not holders:
+            return  # no short selling: only a member holding stock can sell to another
+        a = int(self.rng.choice(holders))
+        b = int(self.rng.choice([i for i in range(len(self.members)) if i != a]))
+        price = int(self.rng.integers(bid + 1, ask))
+        qty = min(int(self.p["q"]), self._inv[self.members[a].aid])
+        ex.limit(self.members[a].aid, SELL, price, qty, tag="ring_cross")
+        ex.limit(self.members[b].aid, BUY, price, qty, tag="ring_cross")

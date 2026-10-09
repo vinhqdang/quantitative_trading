@@ -221,3 +221,4 @@ __marimo__/
 
 # experiment logs
 results/run.log
+results/*.log

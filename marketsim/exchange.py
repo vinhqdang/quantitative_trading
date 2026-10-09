@@ -7,9 +7,11 @@ exposed to the detection features.
 
 from __future__ import annotations
 
+import math
 from collections import defaultdict
 
 from .lob import BUY, SELL, OrderBook
+from .policy import Policy
 
 # event kinds
 NEW, MKT, CANCEL, TRADE = 0, 1, 2, 3
@@ -17,7 +19,15 @@ EVENT_COLUMNS = ["t", "kind", "agent", "oid", "side", "price", "qty", "mid", "cp
 
 
 class Exchange:
-    def __init__(self, start_price: int = 10_000):
+    def __init__(self, start_price: int = 10_000, policy: Policy | None = None):
+        self.policy = policy or Policy()
+        self.ref = float(start_price)
+        self.at_limit = 0
+        self.halt_until = -1
+        self.halts = 0
+        self.spreads: list[float] = []
+        self.depths: list[int] = []
+        self.funds: list[float] = []
         self.book = OrderBook()
         self.t = 0
         self.last_price = start_price
@@ -74,6 +84,15 @@ class Exchange:
         return self._submit(agent, side, None, int(qty), tag, MKT)
 
     def _submit(self, agent, side, price, qty, tag, kind) -> int:
+        if self.t < self.halt_until:
+            return -1  # trading halt: new orders are rejected
+        tick = self.policy.tick
+        if price is not None and tick > 1:
+            price = (price // tick) * tick if side == BUY else -(-price // tick) * tick
+        pol = self.policy
+        if pol.band > 0 and price is not None:
+            if price > math.floor(self.ref * (1 + pol.band)) or price < math.ceil(self.ref * (1 - pol.band)):
+                return -1  # outside the daily price band
         mid = self.mid()
         order, fills, stp = self.book.submit(agent, side, price, qty, self.t)
         if tag is not None:
@@ -104,13 +123,39 @@ class Exchange:
             self.open[f.maker.agent].discard(f.maker.oid)
 
     def cancel(self, oid: int) -> bool:
+        pol = self.policy
+        if pol.min_rest:
+            live = self.book.orders.get(oid)
+            if live is not None and self.t - live.ts < pol.min_rest:
+                return False
         order = self.book.cancel(oid)
         if order is None:
             return False
+        if pol.cancel_fee:
+            self.cash[order.agent] -= pol.cancel_fee
         self.open[order.agent].discard(oid)
         self.events.append((self.t, CANCEL, order.agent, oid, order.side, order.price, order.qty, self.mid(), -1, 0))
         return True
 
     def end_step(self) -> None:
         self.mids.append(self.mid())
+        self.funds.append(self.fund)
+        sp = self.spread()
+        self.spreads.append(float("nan") if sp is None else float(sp))
+        bb, ba = self.best_bid(), self.best_ask()
+        if bb is None or ba is None:
+            self.depths.append(0)
+        else:
+            self.depths.append(sum(q for p, q in self.book.qty_at[BUY].items() if p >= bb - 5)
+                               + sum(q for p, q in self.book.qty_at[SELL].items() if p <= ba + 5))
+        pol = self.policy
+        if pol.halt_move > 0 and self.t >= self.halt_until and len(self.mids) > pol.halt_window:
+            if abs(self.mids[-1] - self.mids[-1 - pol.halt_window]) > pol.halt_move:
+                self.halt_until = self.t + 1 + pol.halt_len
+                self.halts += 1
+        if pol.band > 0:
+            if abs(self.mids[-1] - self.ref) >= self.ref * pol.band - 1:
+                self.at_limit += 1
+            if (self.t + 1) % pol.day_len == 0:
+                self.ref = self.mids[-1]
         self.t += 1
