@@ -74,11 +74,14 @@ class MarketMaker(Agent):
         self.half = 1 + int(rng.integers(0, 2))
 
     def step(self, ex: Exchange) -> None:
-        r = self.rng
         # a fee per cancelled order makes frequent re-quoting less attractive (about 4 cancels per re-quote
         # against a typical gain of 8 per re-quote)
-        if r.random() > self.activity / (1 + ex.policy.cancel_fee * 4 / 8):
+        if self.rng.random() > self.activity / (1 + ex.policy.cancel_fee * 4 / 8):
             return
+        self.requote(ex)
+
+    def requote(self, ex: Exchange) -> None:
+        r = self.rng
         for oid in list(ex.open[self.aid]):
             ex.cancel(oid)
         if ex.open[self.aid]:
@@ -509,3 +512,84 @@ class RingController:
         qty = min(int(self.p["q"]), self._inv[self.members[a].aid])
         ex.limit(self.members[a].aid, SELL, price, qty, tag="ring_cross")
         ex.limit(self.members[b].aid, BUY, price, qty, tag="ring_cross")
+
+
+# --------------------------------------------------------------------------
+# honest groups that act in step with each other (confounders for coordination tests)
+# --------------------------------------------------------------------------
+class GroupMember(NoiseTrader):
+    """Sub-account of an honest group: trades like a noise trader unless its group acts."""
+
+    kind = "group_member"
+
+
+class SliceFund:
+    """One institution splitting parent orders across sub-accounts: one-way, same-step child orders, no round trip."""
+
+    kind = "fund_sub"
+
+    def __init__(self, members, rng, mean_gap: int = 450):
+        self.members, self.rng, self.mean_gap = members, rng, mean_gap
+        self.remaining, self.side, self.end = 0, BUY, -1
+        self.next_start = 300 + int(rng.exponential(mean_gap))
+
+    def step(self, ex: Exchange) -> None:
+        r = self.rng
+        if self.remaining <= 0:
+            if ex.t >= self.next_start:
+                self.remaining = int(r.integers(400, 1200))
+                self.side = BUY if r.random() < 0.5 else SELL
+                self.end = ex.t + int(r.integers(100, 250))
+                self.next_start = self.end + int(r.exponential(self.mean_gap))
+            return
+        if ex.t >= self.end:
+            self.remaining = 0
+            return
+        if r.random() < 0.5:
+            for mi in r.choice(len(self.members), size=min(len(self.members), int(r.integers(2, 4))), replace=False):
+                qty = min(self.remaining, 3 + int(r.integers(0, 4)))
+                if qty > 0:
+                    ex.market(self.members[mi].aid, self.side, qty)
+                    self.remaining -= qty
+
+
+class BotFleet:
+    """Bots that react to the same public price signal with small latency differences, in either direction."""
+
+    kind = "bot_fleet"
+
+    def __init__(self, members, rng, thr: float = 3.0, lookback: int = 10):
+        self.members, self.rng, self.thr, self.lookback = members, rng, thr, lookback
+        self.queue: list[tuple[int, int, int]] = []
+
+    def step(self, ex: Exchange) -> None:
+        r = self.rng
+        keep = []
+        for due, mi, side in self.queue:
+            if due <= ex.t:
+                ex.market(self.members[mi].aid, side, 1 + int(r.integers(0, 3)))
+            else:
+                keep.append((due, mi, side))
+        self.queue = keep
+        move = ex.mid() - ex.mid_at(self.lookback)
+        if abs(move) >= self.thr:
+            side = BUY if move > 0 else SELL
+            for mi in range(len(self.members)):
+                if r.random() < 0.5:
+                    self.queue.append((ex.t + int(r.integers(0, 3)), mi, side))
+
+
+class MMDesks:
+    """Several market-making desks of one firm that re-quote together (same steps, both sides)."""
+
+    kind = "mm_desk"
+
+    def __init__(self, desks, rng, period: tuple[int, int] = (8, 15)):
+        self.desks, self.rng, self.period = desks, rng, period
+        self.next = 0
+
+    def step(self, ex: Exchange) -> None:
+        if ex.t >= self.next:
+            for d in self.desks:
+                d.requote(ex)
+            self.next = ex.t + int(self.rng.integers(*self.period))

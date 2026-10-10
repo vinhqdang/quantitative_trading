@@ -47,17 +47,21 @@ def _circ_box(x: np.ndarray, tol: int) -> np.ndarray:
     return out
 
 
-def coincidence_scan(flow: np.ndarray, tols=(1, 5, 15)) -> tuple[np.ndarray, np.ndarray]:
-    """flow: [side(2), agent, step] submission counts of one window. Returns (z, p) per agent.
+def coincidence_scan(flow: np.ndarray, tols=(1, 5, 15), signed: bool = False) -> tuple[np.ndarray, np.ndarray]:
+    """flow: [side(2), agent, step] submission counts of one window (side 0 = buy, 1 = sell). Returns (z, p) per agent.
 
     z is the observed maximum standardised coincidence statistic; p is its exact circular-shift p-value.
+    With `signed=True` the buy and sell counts of each account and step are netted before testing, so accounts that
+    quote both sides at the same moment (market-making desks) contribute nothing while one-directional coordination does.
     """
+    if signed:
+        flow = (flow[0] - flow[1])[None, :, :]
     n, T = flow.shape[1], flow.shape[2]
     total = flow.sum(axis=1)                                   # [side, step]
     stats = []
     for tol in tols:
         corr = np.zeros((n, T))
-        for sd in range(2):
+        for sd in range(flow.shape[0]):
             others = _circ_box(total[sd][None, :] - flow[sd], tol)   # everyone else, widened
             Fo = np.fft.rfft(others, axis=1)
             Fa = np.fft.rfft(flow[sd], axis=1)
@@ -89,19 +93,19 @@ def submission_flow_from_events(events: pd.DataFrame, n_agent: int, steps: int, 
 
 
 def scan_events(events: pd.DataFrame, n_agent: int, steps: int, warmup: int = 0, window: int = 300,
-                tols=(1, 5, 15)) -> pd.DataFrame:
+                tols=(1, 5, 15), signed: bool = False) -> pd.DataFrame:
     """Per (agent, window) coincidence z-score and p-value from raw order events (agents without submissions get p=1)."""
     F = submission_flow_from_events(events, n_agent, steps, warmup, window)
     rows = []
     for w in range(F.shape[0]):
-        z, p = coincidence_scan(F[w], tols)
+        z, p = coincidence_scan(F[w], tols, signed)
         active = F[w].sum(axis=(0, 2)) > 0
         rows.append(pd.DataFrame({"agent": np.arange(F.shape[2]), "window": w,
                                   "z": np.where(active, z, 0.0), "p": np.where(active, p, 1.0), "active": active}))
     return pd.concat(rows, ignore_index=True)
 
 
-def scan_episode(ep: Episode, window: int = 300, tols=(1, 5, 15), **_) -> pd.DataFrame:
+def scan_episode(ep: Episode, window: int = 300, tols=(1, 5, 15), signed: bool = False, **_) -> pd.DataFrame:
     """Per (agent, window) coincidence z-score and p-value for a simulated episode."""
     cfg = ep.config
-    return scan_events(ep.events, int(ep.agents.aid.max()) + 1, cfg.steps, cfg.warmup, window, tols)
+    return scan_events(ep.events, int(ep.agents.aid.max()) + 1, cfg.steps, cfg.warmup, window, tols, signed)

@@ -8,7 +8,8 @@ import numpy as np
 import pandas as pd
 
 from .agents import (FundamentalTrader, ImbalanceTrader, Institution, MarketMaker, MomentumTrader, NoiseTrader,
-                     PumpAndDump, RingAccount, RingController, Spoofer, WashAccount, WashPair)
+                     PumpAndDump, RingAccount, RingController, Spoofer, WashAccount, WashPair, GroupMember,
+                     SliceFund, BotFleet, MMDesks)
 from .exchange import EVENT_COLUMNS, Exchange
 from .policy import Policy
 
@@ -41,6 +42,10 @@ class SimConfig:
     n_ring: tuple[int, int] = (0, 0)
     ring_size: tuple[int, int] = (6, 20)
     ring_params: dict | None = None
+    n_slice: tuple[int, int] = (0, 0)      # honest funds that split orders across sub-accounts
+    n_fleet: tuple[int, int] = (0, 0)      # honest bot fleets reacting to the same signal
+    n_desks: tuple[int, int] = (0, 0)      # honest market-making firms with several desks re-quoting together
+    group_size: tuple[int, int] = (6, 12)
     ring_block: int = 3000  # shares (in lots) held before the campaign and sold off-book at the end of each push
     block_vwap: int = 1     # reference price of off-book block trades: mean mid over this many trailing steps (1 = last price)
     policy: Policy = field(default_factory=Policy)
@@ -109,6 +114,30 @@ def run_episode(seed: int, cfg: SimConfig | None = None) -> Episode:
             agents.append(members[-1])
         rings.append(RingController(members, child(), w, cfg.ring_params, cfg.ring_block))
 
+    groups = []
+    def members(n, cls=GroupMember):
+        out = []
+        for _ in range(n):
+            out.append(cls(len(agents), child()))
+            agents.append(out[-1])
+        return out
+
+    for _ in range(0 if cfg.n_slice == (0, 0) else int(rng.integers(cfg.n_slice[0], cfg.n_slice[1] + 1))):
+        m = members(int(rng.integers(*cfg.group_size)))
+        for a in m:
+            a.kind = "fund_sub"
+        groups.append(SliceFund(m, child()))
+    for _ in range(0 if cfg.n_fleet == (0, 0) else int(rng.integers(cfg.n_fleet[0], cfg.n_fleet[1] + 1))):
+        m = members(int(rng.integers(*cfg.group_size)))
+        for a in m:
+            a.kind = "bot_fleet"
+        groups.append(BotFleet(m, child()))
+    for _ in range(0 if cfg.n_desks == (0, 0) else int(rng.integers(cfg.n_desks[0], cfg.n_desks[1] + 1))):
+        m = members(int(rng.integers(3, 6)), cls=lambda aid, r: MarketMaker(aid, r, activity=0.0))
+        for a in m:
+            a.kind = "mm_desk"
+        groups.append(MMDesks(m, child()))
+
     order = np.arange(len(agents))
     for t in range(cfg.steps):
         ex.fund += rng.normal(0, cfg.fund_sigma)
@@ -121,6 +150,8 @@ def run_episode(seed: int, cfg: SimConfig | None = None) -> Episode:
             p.cross(ex)
         for rc in rings:
             rc.step(ex)
+        for g in groups:
+            g.step(ex)
         ex.end_step()
 
     events = pd.DataFrame(ex.events, columns=EVENT_COLUMNS)
