@@ -222,3 +222,11 @@ __marimo__/
 # experiment logs
 results/run.log
 results/*.log
+
+# LaTeX build files
+paper/*.aux
+paper/*.log
+paper/*.bbl
+paper/*.blg
+paper/*.out
+paper/*.toc
