@@ -71,7 +71,7 @@ cancel share, volatility and retail share. Ring gain relative to the no-policy c
 | inspect 1 account per window | 0.17 | 17% | 2 of 6 markets |
 | inspect 3 accounts per window | 0.18 | 42% | 5 of 6 markets |
 
-The stock-level family is in `results/vn_ensemble_stock.md`. Policy matrix in the first market, effects on honest quality
+Stock-level family (`results/vn_ensemble_stock.md`, six markets, no-policy gain median 164k): band 0.99; block at 60 / 240 steps 0.45 / 0.20 (one market still gains 131k at 240 steps); inspection of 1 / 3 accounts per window: detection 8% / 25%, ring deterred at fine 5x gain in 3 / 5 of 6 markets (the ring shrinks its operation to about 3% of baseline gain). Policy matrix in the first market, effects on honest quality
 and on fixed manipulators: spoofing profit is not reduced by minimum resting time or cancel fees in the Vietnam preset
 (the strictest settings raise spread by 7-8% and volatility by 21-24%); doubling the tick raises spread by about 35% and cuts depth by 10%; wash-trade
 share is unaffected by all order-level levers; only the block reference price cuts the ring's gain.
