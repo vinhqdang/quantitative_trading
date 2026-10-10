@@ -1,0 +1,12 @@
+\begin{tabular}{lrrrrr}
+\toprule
+policy & median gain & range over markets & median ratio to no policy & median detection prob. & deterred at $m=5$ \\
+\midrule
+no price band & 110.0k & 86.7k to 162.1k & 1.00 & -- & -- \\
+band 7\% (HOSE today) & 105.0k & 89.2k to 164.6k & 0.97 & -- & -- \\
+band 7\% + block at 60-step mean & 38.4k & 11.7k to 90.8k & 0.35 & -- & -- \\
+band 7\% + block at 240-step mean & 15.3k & -0.9k to 23.5k & 0.11 & -- & -- \\
+band 7\% + inspect 1 per window & 16.8k & 4.5k to 51.6k & 0.17 & 17\% & 2/6 \\
+band 7\% + inspect 3 per window & 16.8k & 4.5k to 51.6k & 0.18 & 42\% & 5/6 \\
+\bottomrule
+\end{tabular}

@@ -115,6 +115,38 @@ def fig_policy():
     fig.savefig(OUT / "policy.pdf")
 
 
+def fig_ensemble():
+    """Ring gain relative to its gain with no policy, one dot per calibrated market."""
+    fams = [("", "index-level markets (daily volatility 0.9-1.4%)", BLUE), ("_stock", "stock-level markets (daily volatility 1.8-2.8%)", ORANGE)]
+    fams = [f for f in fams if (R / f"vn_ensemble{f[0]}.csv").exists()]
+    if not fams:
+        return
+    labels = ["no price band", "band 7% (HOSE today)", "band 7% + block at 60-step mean", "band 7% + block at 240-step mean",
+              "band 7% + inspect 1 per window", "band 7% + inspect 3 per window"]
+    short = ["no band", "band 7%\n(today)", "block price\n60-step mean", "block price\n240-step mean", "inspect 1\nper window", "inspect 3\nper window"]
+    fig, ax = plt.subplots(figsize=(6.2, 2.9))
+    rng = np.random.default_rng(0)
+    for k, (tag, lab, col) in enumerate(fams):
+        df = pd.read_csv(R / f"vn_ensemble{tag}.csv")
+        base = df[df.policy == "no price band"].set_index("market").gain
+        df["ratio"] = df.apply(lambda r: r.gain / base[r.market] if r.market in base and base[r.market] > 0 else np.nan, axis=1)
+        for i, pol in enumerate(labels):
+            v = df[df.policy == pol].ratio.dropna().to_numpy()
+            x = i + (k - (len(fams) - 1) / 2) * 0.3
+            ax.scatter(x + rng.uniform(-0.05, 0.05, len(v)), v, s=14, color=col, alpha=0.8, label=lab if i == 0 else None,
+                       marker="o" if k == 0 else "s", edgecolor="white", linewidth=0.4)
+            if len(v):
+                ax.hlines(np.median(v), x - 0.12, x + 0.12, color=INK, lw=1.2)
+    ax.axhline(1, color=MUTED, lw=0.6, ls=":")
+    ax.axhline(0, color=MUTED, lw=0.5)
+    ax.set_xticks(range(len(labels)))
+    ax.set_xticklabels(short, fontsize=7)
+    ax.set_ylabel("ring gain / gain with no policy")
+    ax.legend(frameon=False, fontsize=7, loc="lower center", bbox_to_anchor=(0.5, 1.0), ncol=2)
+    fig.tight_layout()
+    fig.savefig(OUT / "ensemble.pdf")
+
+
 if __name__ == "__main__":
-    fig_robust(); fig_sensitivity(); fig_pump(); fig_policy()
+    fig_robust(); fig_sensitivity(); fig_pump(); fig_policy(); fig_ensemble()
     print(sorted(p.name for p in OUT.glob("*.pdf")))

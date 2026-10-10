@@ -1,195 +1,146 @@
 # marketsim
 
-An agent-based limit order book simulator for designing and stress-testing market surveillance and exchange
-rules from the regulator's side, with a preset calibrated to the Ho Chi Minh Stock Exchange (HOSE).
+An agent-based limit order book simulator for designing and stress-testing market surveillance and exchange rules from
+the regulator's side, with presets calibrated to the Ho Chi Minh Stock Exchange (HOSE), and public-data checks on real
+Vietnamese markets. The paper draft is in `paper/` (`main.tex`, `main.pdf`); every table and figure in it is generated from
+the CSV files in `results/` by `experiments/make_tables.py` and `experiments/make_figures.py`.
 
 Questions it is built to answer:
 
 1. Can manipulation by many colluding accounts be found when there are no labelled cases?
-2. Against a manipulator that adapts, which regulatory lever actually removes the benefit: inspection capacity,
-   the daily price band, a reference-price rule for off-book block trades, order-level rules?
+2. Against a manipulator that adapts, which regulatory lever removes the benefit: inspection capacity, the daily price
+   band, a reference-price rule for off-book block trades, order-level rules, tick size?
 3. What does each lever cost honest participants?
+4. Do the answers survive a family of calibrated markets, and what can public data say about them?
 
 ## What is new and what is not
 
-Not new: adversarial detection-versus-evasion loops on agent-based markets
-([Wellman and Wang, IJCAI 2020](https://humancompatible.ai/?p=37)), graph-network detection of coordinated trading
-(for example [Losavio et al. 2026](https://arxiv.org/pdf/2604.24590)), and inspection or audit games with limited
-budgets. The searches behind this list were not exhaustive.
+Not new: adversarial detection-versus-evasion loops on agent-based markets (Wang and Wellman, 2020), graph-network
+detection of coordinated trading, audit games with limited budgets, time-shift and jitter tests for coincident events
+(for example Liang et al., 2025). The searches behind this list were not exhaustive.
 
-What this repository adds, as far as a literature search found:
+What this repository adds:
 
-- **A label-free coordination detector with exact false-alarm control** (`marketsim/coordination.py`). For each account
-  and window it counts submissions that coincide in time and side with *any other* account and tests the count against
-  the exact circular-shift distribution. The p-value is calibrated without labels and without knowing who the
-  manipulators are, so the false-alarm rate can be set from the inspection capacity. Pooling over accounts gives far
-  more power than pairwise tests, which fail when a ring fragments its trading over many accounts.
-- **Best-response evaluation of rules and inspection against an adaptive ring** in a simulator whose tick size, price
-  band, lot size, participant mix and cancel share follow HOSE (`docs/vietnam_calibration.md`), with penalties set by
-  the Vietnamese fine cap of 5 or 10 times the illegal gain.
+- **A label-free coincidence test with exact false-alarm control** (`marketsim/coordination.py`). For each account and
+  window, signed order flow is compared with the aggregate flow of all other accounts through a tolerance-box filter; the
+  statistic is compared with its exact circular-shift distribution, with the maximum taken over tolerances. The p-value is
+  super-uniform under cyclic exchangeability, without labels. A signed variant nets buys against sells and is robust to
+  honest groups that act in step (market-making desks, funds splitting parent orders, bot fleets).
+- **Best-response evaluation of rules** against an adaptive ring (evolution-strategy search, cross-evaluated over a fixed
+  strategy set) in a family of calibrated markets rather than one, with penalties tied to the Vietnamese fine cap of 5 or
+  10 times the illegal gain (Becker deterrence condition: detection probability above 1/m).
+- **Public-data checks**: documented enforcement cases against a 1,551-stock daily panel (with random-stock and same-stock
+  time placebos), Telegram pump events in tick data, and a difference-in-differences on the HOSE tick reform of
+  September 2016 compared with simulated tick changes.
 
-Not claimed: that any number here describes the real market. See the limits section.
+Not claimed: that any number from the simulator describes the real market, or that the detector works on real accounts.
 
-## Results
+## Main results
 
-All tables are in `results/`. Rings: 6-30 accounts, fragmented orders, phases of accumulation, coordinated push,
-distribution; outside the campaign each account trades like a noise trader.
+All figures below are from `results/`; intervals are bootstrap intervals over episodes where stated.
 
-### 1. Finding rings without labels (`results/ring_detection.md`)
+### Detection (`results/ring_robust.md`, `ring_ablation.md`, `ring_detection.md`)
 
-16 test episodes per ring type; `catch@5` is the share of ring-active windows in which one of the 5 top-ranked accounts
-(out of about 120 active) is a ring member.
+Catch@5 = share of ring-active windows in which a ring member is among the 5 top-ranked accounts of about 120-170.
 
-| detector | default ring | many small accounts | jittered timing | stealth |
-|---|---|---|---|---|
-| order-to-trade ratio (exchange practice) | 0.00 | 0.00 | 0.00 | 0.00 |
-| isolation forest, no labels | 0.02 | 0.07 | 0.02 | 0.16 |
-| pairwise flow correlation, no labels | 0.00 | 0.00 | 0.00 | 0.00 |
-| **coincidence test, no labels** | **0.90** | **0.88** | **0.88** | **0.73** |
-| coincidence test, 4 windows pooled, no labels | 0.92 | 0.86 | 0.92 | 0.77 |
-| gradient boosting trained on labelled default rings | 0.99 | 0.90 | 0.99 | 0.91 |
-
-Calibration on markets without rings: 1.1% of honest accounts have p <= 0.01 (market makers 0.7%, momentum traders
-2.7%). Where labels exist, supervised boosting is as good or better; the coincidence test is the only detector here
-that works without them.
-
-### 2. Which lever removes a ring's benefit (`results/vn_cross.md`)
-
-Vietnam preset recalibrated on real data (about 580 active accounts per window, simulated daily volatility 1.14% against 1.16% measured
-for VN30, 240 steps per day, 3000-step episodes of about 12 trading days). Every policy faces the same set of 7 ring strategies,
-including the strongest ones found by evolution-strategy search under each policy; the ring picks the best on 20 selection episodes
-and the table reports 20 separate episodes. `gain` is block value plus trading profit in tick-lots (mean, standard error in brackets).
-
-| policy | ring gain | caught | net benefit after fine (5x) |
+| scenario | coincidence, unsigned | coincidence, signed | gradient boosting trained with labels |
 |---|---|---|---|
-| no price band | 82k (28k) | - | - |
-| band 7% (HOSE today) | 79k (29k) | - | - |
-| band 10% or 15% | 81k (28k) and 82k (28k) | - | - |
-| band 7% + block priced at 60-step mean | 22k (28k) | - | - |
-| band 7% + block priced at 240-step mean (1 day) | 6k (21k) | - | - |
-| band 7% + inspect 1 account per window | 14k (11k) | 20% | -36k |
-| band 7% + inspect 3 accounts per window | 14k (11k) | 45% | -49k |
+| clean market | 0.85 | 0.87 | 1.00 |
+| + market-making desks | 0.32 | 0.88 | 1.00 |
+| + fund splitting orders | 0.71 | 0.74 | 0.99 |
+| + bot fleet | 0.86 | 0.85 | - |
+| all three honest groups | 0.23 | 0.52 | 0.98 |
 
-- The daily price band does not bind: the ring's price displacement is about 2.5 ticks (0.5% of price), far inside 7%. Widening it to
-  10-15%, which the securities commission is studying, changes nothing for this manipulation.
-- Inspection cuts the best ring's gain by about 83% and makes the expected net benefit negative at fines of 5 and 10 times the gain
-  (-36k and -85k at B = 1), with 0.17-0.5% of accounts inspected per window. The deterrence condition is a detection probability
-  above 1/m (20% at m = 5, 10% at m = 10).
-- Pricing off-book block trades at a trailing mean cuts the best ring's gain by 73% (60 steps) to 93% (240 steps) at the point
-  estimate; the 60-step reduction is 1.4 standard errors and the 240-step one 2. The honest cost is the gap between the last price
-  and the trailing mean: 0.17% of price for 60 steps and 0.50% for 240 steps (`results/block_rule.md`).
-- In the first, uncalibrated preset (daily volatility 0.4%) the ring's prize was ten times larger and the block rule looked weak;
-  those results are kept in `results/notes/vn_preset_v1/`. The ranking of levers depends on the market's volatility.
+- Without labels, the coincidence test finds rings where the order-to-trade ratio, isolation forest and pairwise correlation
+  find none; false alarms are 1.1% of honest accounts at p <= 0.01.
+- Honest synchronised groups crowd out the unsigned test (market-making desks flagged in 71% of windows); the signed
+  variant removes that (0% for desks alone, 18% with all three groups).
+- Where labels exist, supervised boosting is better everywhere. The test is useful only when labelled cases do not exist.
+- Power falls with the number of accounts: catch@5 is 0.91, 0.84, 0.64, 0.28 at 100, 206, 373, 708 accounts.
 
-### 2b. Real data: documented cases on public daily prices (`results/case_validation.md`)
+### Policy levers (`results/vn_ensemble.md`, `vn_ensemble_stock.md`, `policy_matrix.md`)
 
-No account data, so a market-level check: do public daily prices and volumes single out stocks in documented manipulation
-periods? Ten cases from enforcement decisions with exact dates (`data/cases.csv`: FIR, SJS, PDR, PSH, AGG, PPT, CRC, GKM, PAS, HCI)
-are scored against all 1,551 stocks of a public daily panel (about 1,360 scored on a typical recent date). Detectors use only data up
-to each date and rank stocks against each other on that date, with no labels. The protocol was fixed before the cases were scored.
-"On some date" means the stock reached the top-B list of its date at least once during the period; the chance column is the same
-statistic for 300 random stocks over the same dates.
+Six index-level markets (daily volatility 0.9-1.4%) and a stock-level family (1.8-2.8%), each accepted by rejection against
+cancel share, volatility and retail share. Ring gain relative to the no-policy case, median over markets (index level):
 
-| detector | superiority over a random stock (0.5 = chance) | in top 10 | chance | in top 20 | chance | in top 50 | chance |
-|---|---|---|---|---|---|---|---|
-| market-adjusted abnormal return only | 0.89 | 8/10 | 15% | 10/10 | 27% | 10/10 | 53% |
-| combined six-feature score | 0.78 | 6/10 | 22% | 6/10 | 35% | 10/10 | 58% |
-| isolation forest on the same features | 0.78 | 7/10 | 21% | 8/10 | 34% | 9/10 | 54% |
-| round trip (run-up then retracement) only | 0.70 | 9/10 | 76% | 10/10 | 81% | 10/10 | 90% |
-| volume surge only | 0.33 | 0/10 | 3% | 0/10 | 5% | 0/10 | 13% |
+| policy | ratio to no policy | detection probability | deterred at fine 5x gain |
+|---|---|---|---|
+| daily price band 7% (HOSE today) | 0.97 | - | - |
+| block trades priced at 60-step mean | 0.35 | - | - |
+| block trades priced at 1-day mean | 0.11 | - | - |
+| inspect 1 account per window | 0.17 | 17% | 2 of 6 markets |
+| inspect 3 accounts per window | 0.18 | 42% | 5 of 6 markets |
 
-- Public prices carry signal: the simplest rank, market-adjusted abnormal return, puts 8 of 10 cases in the daily top 10 of about
-  1,360 stocks at some point of their period, against 15% for random stocks.
-- The multi-feature combination and the isolation forest are not better than that single feature, and volume surge is uninformative
-  (these stocks were pushed up with ordinary volume, for example GKM rose five-fold at 1.02 times its usual volume). Nothing new is
-  claimed for the market-level detector.
-- This says little about precision: periods are long (80-590 days), only ten documented cases exist among thousands of price run-ups, and an
-  unlabeled run-up is not an innocent one. Decisions arrive years after the conduct, and enforcement targets manipulations that moved
-  prices, which favours price-based detectors.
+The stock-level family is in `results/vn_ensemble_stock.md`. Policy matrix in the first market, effects on honest quality
+and on fixed manipulators: spoofing profit is not reduced by minimum resting time or cancel fees in the Vietnam preset
+(the strictest settings raise spread by 7-8% and volatility by 21-24%); doubling the tick raises spread by about 35% and cuts depth by 10%; wash-trade
+share is unaffected by all order-level levers; only the block reference price cuts the ring's gain.
 
-### 3. Order-level levers against a fixed spoofer (`results/policy.md`)
+### Real data (public, no accounts)
 
-Default spoofer and pump-and-dump agents that do not adapt; 16 episodes per policy, same seeds.
-
-| policy | spread | volatility | retail trading cost | spoofing price impact | spoofing profit per episode |
-|---|---|---|---|---|---|
-| baseline | 2.6 ticks | 0.21 | 2.2 | 1.07 | 56 |
-| tick size x4 | +124% | +50% | -54% (see limits) | -25% | 687 |
-| minimum resting time 5 steps | 0% | -4% | +11% | +1% | 13 |
-| minimum resting time 15 steps | +3% | +4% | +16% | -17% | -346 |
-| cancel fee 2 | +1% | -1% | +36% | -5% | 128 |
-| circuit breaker (6 ticks) | +1% | +2% | -6% | +3% | 43 |
-
-A short minimum resting time removes the fixed spoofer's profit at small cost; larger ticks hurt quality without
-stopping it; cancel fees are costly and ineffective. Spoofing is not what Vietnamese enforcement has prosecuted
-(multi-account collusion dominates), and these manipulators do not adapt.
-
-### 4. Single-account manipulation (`results/summary.md`)
-
-Spoofing, pump-and-dump and wash trading with account-level features. Gradient boosting reaches recall 0.93-0.99 at
-1% false positives even against less extreme (evasive) manipulators; isolation forest 0.02-0.18; the order-to-trade
-rule 0. Evasive spoofing loses its price effect (1.08 ticks at evasion 0, 0.02 at evasion 1.0). This was the first
-experiment; its manipulators are easy to separate by construction.
-
-## Real data
-
-Account-level order data, the input the coincidence test needs, is not public (section 2b is the market-level check on public data): only the exchanges (HOSE, HNX), the depository (VSDC)
-and the securities commission hold it, so no real ring has been tested. What was obtained from public sources
-(`results/real_data_stats.md`, `docs/vietnam_calibration.md`): VN30, VN-Index and VN100 bars from 2012 and 1.56 million
-VN30 futures ticks with best bid and ask from 2024-2025 (Kaggle `keithvo/vnstockdata`, `khimduong/vn30-market-making`). They
-fixed the volatility target (daily sd 1.16%) and showed that the real spread is one tick in 73% of quotes. Ways to get account-level
-data: a data-sharing agreement with HOSE, HNX or the commission; the per-account trade tables in published case files (SJS with 26
-accounts, FIR with 76); or academic access to account-level data in another market, to test the method there.
+- **Cases** (`results/case_validation*.md`): ten enforcement cases with documented periods. Market-adjusted abnormal return
+  beats random stocks with probability 0.89 and the same stock on other dates with 0.87; 8 of 10 cases enter the daily
+  top 10 of about 1,360 stocks (chance 15%). Volume surge looks uninformative against random stocks (0.33) but not against
+  the same stock's other dates (0.90): the case stocks are ordinary HOSE stocks. 10, 20 and 60-day windows agree.
+- **Telegram pumps** (`results/pump_events.md`, 701 events): standardised volume rises from 0.19 to 0.71 and buy imbalance
+  from 0.03 to 0.23 in the last hours before the announcement; a detector with 0.05 false alarms per coin-hour fires in the
+  last hour for 6% of events (16% at 0.25).
+- **HOSE tick reform, 12 September 2016** (`results/tick_reform.md`, `tick_sim.md`): 282 HOSE stocks against 489 control
+  stocks. Share of zero-return days falls by 0.071 [0.050, 0.092]; the Corwin-Schultz spread falls by 0.061 points
+  [-0.133, 0.008] (about 8%), concentrated in low-priced stocks. The simulator predicts larger effects than observed for
+  cuts of the tick by 5 to 10 times and similar ones for a halving. The reform's old tick could not be established.
 
 ## Limits
 
-- The manipulators and the detector features were written by the same author. Separable footprints in the simulator say nothing
-  about real manipulation, and the detectors have not seen real order-level data.
-- The Vietnam preset matches cancel share, relative tick and daily volatility but not the spread (3 ticks against a measured 1 tick),
-  tail heaviness (excess kurtosis 4-5 daily, 40 at one minute) or volatility clustering; retail share is 0.72 against 0.75-0.82
-  published. Every rule fact is from secondary sources (the exchange rulebooks could not be fetched).
-- Ring search is an evolution strategy with a small budget. Single search runs were non-monotone across policies, so section 2
-  cross-evaluates a shared strategy set; it is a lower bound on a fully adaptive ring's benefit. With 20 episodes per cell the standard
-  errors are 20-100% of the means, so only the large differences (inspection, the 240-step block rule) are distinguishable from noise.
-- In the default simulator (no price band) a ring can exploit unbounded price run-ups, so best-response runs there are not
-  reported (`results/notes/`). The block value of 3000 lots is an assumption (stock held beforehand and sold off-book).
-- A ring counts as caught if any member is inspected in any window, and finding one member exposes the ring. Detection was only tested at
-  about 120 accounts (section 1) and about 580 accounts (section 2) per window, with different adversaries, so how it scales with the
-  number of accounts is not established.
-- Section 1 was measured in the default simulator (about 120 accounts), not the Vietnam preset.
-- Section 2b: ten cases; periods are taken from press reports quoting decisions (the decision documents were not opened); the panel holds only
-  currently listed stocks, so delisted ones (for example parts of the FLC group) are missing and HNG falls before the first scored date;
-  one case (PSH) was traded on the negotiated system, which need not show in daily prices.
-- `retail trading cost` in section 3 falls under larger ticks because simulated noise traders mostly post passive orders and earn the
-  wider spread, unlike retail investors in practice.
-- The spoofer-versus-retrained-detector loop was stopped after three rounds (`results/notes/`).
+- No account-level data. The manipulators and detector features were written by the same author; separable footprints in
+  the simulator say nothing about real manipulation, and the coincidence test has not seen real order data.
+- The calibrated markets match cancel share, relative tick, volatility and retail share but not the spread (3 ticks against
+  1 tick measured), tail heaviness or volatility clustering. Rule facts come from secondary sources (broker summaries,
+  press); the exchange rulebooks were not fetched. The block size of 3000 lots is an assumption.
+- The ring strategy set was found in the first market and is not re-optimised in each market of the families, so effects of
+  rules are lower bounds on an adaptive ring's gain. A ring is counted as caught if any member is inspected.
+- Case periods come from press reports quoting decisions (decision documents not opened); the price panel holds only
+  currently listed stocks. Case stocks hit the daily band in their manipulation periods, which simulated rings (displacement
+  about 0.5%) never do, so the band's null effect is a statement about rings of the simulated size.
+- Superseded or default-simulator-only runs (including order-level lever results from the uncalibrated simulator and the
+  first preset) are kept in `results/notes/` and do not carry over to the Vietnam preset.
+
+Data sources used (public; not committed): Kaggle `keithvo/vnstockdata`, `khimduong/vn30-market-making`,
+`vuthinh/vietnam-stock-market-ohlc-price-data`; Hugging Face `kjhq/Vietnam-Stock-Symbols-and-Metadata`,
+`Go3x3/pump_and_dump_dataset`. See `data/README.md` and `docs/vietnam_calibration.md`.
 
 ## Run
 
 ```
 pip install -e ".[dev]"
-pytest                                            # 21 tests
-python experiments/run_ring_detection.py          # section 1, about 10 minutes
-python experiments/run_vn_policy.py               # strategy search per policy, about 15 minutes
-python experiments/run_vn_cross.py                # section 2, about 15 minutes (reads results/vn_policy.md)
-python experiments/run_policy.py                  # section 3
-python experiments/run_case_validation.py --folder DIR_OF_DAILY_PARQUET   # section 2b (Kaggle vuthinh/vietnam-stock-market-ohlc-price-data)
-python experiments/run_block_rule.py
-python experiments/real_data_stats.py --indices DIR --futures VN30F1M_data.csv   # needs the two Kaggle datasets
-python experiments/run_experiments.py             # section 4
+pytest
+python experiments/run_ring_detection.py                 # base detection
+python experiments/run_ring_robust.py                    # honest groups, signed test
+python experiments/run_ring_ablation.py                  # accounts, ring size, push probability
+python experiments/run_vn_policy.py && python experiments/run_vn_cross.py   # single-market best response
+python experiments/run_vn_ensemble.py                    # index-level family
+python experiments/run_vn_ensemble.py --vol-lo 1.8 --vol-hi 2.8 --sigma-lo 1.0 --sigma-hi 2.0 --tag _stock --n-draw 80
+python experiments/run_policy_matrix.py                  # all levers, quality and manipulators
+python experiments/run_tick_sim.py                       # simulated tick cuts
+python experiments/run_tick_reform.py --folder DIR       # real tick-reform DiD (daily panel)
+python experiments/run_case_validation.py --folder DIR   # real enforcement cases (add --window 10/60 --tag _w10/_w60)
+python experiments/case_stats.py --folder DIR            # case stocks against the market
+python experiments/run_pump_events.py                    # needs the Telegram pump archives
+python experiments/make_tables.py && python experiments/make_figures.py
+cd paper && pdflatex main && bibtex main && pdflatex main && pdflatex main
 ```
 
 On real order-level data: convert to the event schema in `marketsim/exchange.py` and call
-`marketsim.coordination.scan_events`; `marketsim.calibrate.moments_from_events` computes the calibration moments.
+`marketsim.coordination.scan_events`; `marketsim.calibrate.moments_from_events` computes calibration moments.
 
 ## Layout
 
 ```
 marketsim/lob.py            matching engine (price-time priority, self-trade prevention)
-marketsim/exchange.py       event log, positions, policy levers (tick, minimum rest, cancel fee, halt, band)
-marketsim/agents.py         honest agents, spoofer, pump-and-dump, wash pair, collusion ring
-marketsim/sim.py            episode runner, market-quality and manipulation diagnostics
-marketsim/coordination.py   label-free coincidence test
+marketsim/exchange.py       event log, positions, policy levers (tick, minimum rest, cancel fee, halt, band, block reference)
+marketsim/agents.py         honest agents and groups, spoofer, pump-and-dump, wash pair, collusion ring
+marketsim/sim.py            episode runner, market quality and manipulation diagnostics
+marketsim/coordination.py   label-free coincidence test (unsigned and signed)
 marketsim/baselines.py      pairwise correlation baseline
 marketsim/features.py       account-window features and labels
 marketsim/realdata.py       stock-level scores from public daily prices
@@ -197,7 +148,7 @@ marketsim/detect.py         account-level detectors and evaluation
 marketsim/ring_adversary.py adaptive ring: search space, inspection, evolution strategy
 marketsim/adversary.py      adaptive spoofer
 marketsim/calibrate.py      calibration moments
-marketsim/vietnam.py        HOSE mid-cap preset
+marketsim/vietnam.py        HOSE preset
 docs/vietnam_calibration.md rules, statistics, sources and confidence
-experiments/  results/  tests/
+paper/  experiments/  results/  tests/  data/
 ```

@@ -63,9 +63,18 @@ def evaluate(cases: pd.DataFrame, panel, det: dict[str, np.ndarray], n_null: int
             draw = rng.choice(pool, size=min(n_null, len(pool)), replace=False)
             null = np.array([peak_percentile(P, rows, k) for k in draw])
             null = null[np.isfinite(null)]
+            # time placebo: the same stock over periods of the same length that do not overlap the case period
+            L = len(rows)
+            valid_start = [s0 for s0 in range(0, P.shape[0] - L)
+                           if (s0 + L < rows.min() - L or s0 > rows.max() + L) and np.isfinite(P[s0:s0 + L, j]).mean() > 0.5]
+            tnull = np.array([peak_percentile(P, np.arange(s0, s0 + L), j) for s0 in
+                              rng.choice(valid_start, size=min(n_null, len(valid_start)), replace=False)]) if len(valid_start) > 20 else np.array([])
+            tnull = tnull[np.isfinite(tnull)]
             r = {"ticker": c.ticker, "detector": name, "days": len(rows), "peak percentile": peak,
                  "p vs random stocks": float((null >= peak).mean()),
-                 "superiority": float((null < peak).mean() + 0.5 * (null == peak).mean())}
+                 "superiority": float((null < peak).mean() + 0.5 * (null == peak).mean()),
+                 "p vs same stock, other dates": float((tnull >= peak).mean()) if len(tnull) else np.nan,
+                 "superiority vs same stock": float((tnull < peak).mean() + 0.5 * (tnull == peak).mean()) if len(tnull) else np.nan}
             raw = det[name][rows]
             filled = np.nan_to_num(raw, nan=-1e9)
             srt = np.sort(filled, axis=1)
@@ -85,6 +94,8 @@ def summarise(df: pd.DataFrame, B: list[int]) -> pd.DataFrame:
         "share of cases >= 0.99": g["peak percentile"].apply(lambda s: (s >= 0.99).mean()),
         "mean superiority vs random stock": g.superiority.mean(),
         "share with p < 0.05": g["p vs random stocks"].apply(lambda s: (s < 0.05).mean()),
+        "superiority vs same stock, other dates": g["superiority vs same stock"].mean(),
+        "share with p < 0.05 vs same stock": g["p vs same stock, other dates"].apply(lambda s: (s < 0.05).mean()),
     })
     for b in B:
         out[f"in top {b} on some date"] = g[f"top{b}"].mean()
@@ -115,8 +126,8 @@ def main(args):
             "## By case (combined score)\n",
             res[res.detector == "combined (Fisher)"].drop(columns="detector").round(3).to_markdown(index=False), ""]
     Path(args.out).mkdir(exist_ok=True)
-    res.to_csv(Path(args.out) / "case_validation_cases.csv", index=False)
-    (Path(args.out) / "case_validation.md").write_text("\n".join(text))
+    res.to_csv(Path(args.out) / f"case_validation{args.tag}_cases.csv", index=False)
+    (Path(args.out) / f"case_validation{args.tag}.md").write_text("\n".join(text))
     print("\n".join(text))
 
 
@@ -127,4 +138,5 @@ if __name__ == "__main__":
     ap.add_argument("--window", type=int, default=20)
     ap.add_argument("--n-null", type=int, default=300)
     ap.add_argument("--out", default="results")
+    ap.add_argument("--tag", default="")
     main(ap.parse_args())

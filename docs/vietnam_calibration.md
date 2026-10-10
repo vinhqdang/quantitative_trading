@@ -85,6 +85,25 @@ VN30F1M 1-minute data on [HuggingFace](https://huggingface.co/datasets/smtrading
 `vnstock` on PyPI is flagged as quarantined and was not installed. The Vietnamese broker price APIs (SSI, TCBS, VNDirect) were
 not reachable from this environment.
 
+## Families of calibrated markets (ensemble)
+
+A single calibrated market is one draw from many that fit the same moments, so policy conclusions are reported over a family
+(`experiments/run_vn_ensemble.py`): market parameters (noise and fundamental traders, market-maker activity and depth
+sensitivity, latent-value volatility, momentum activity) are drawn at random and kept when cancel share is 0.27-0.37, retail
+share 0.66-0.85 and daily volatility lies in the target band. Two bands are used: index level (0.9-1.4%, the VN30 index at 1.16%)
+and stock level (1.8-2.8%; the median HOSE stock has 2.46% since 2022 and the stocks in the enforcement cases had a median of
+1.75% in the year before the manipulation; `results/case_stats.md`). The spread is not matched in either family.
+
+## Public-data checks that are not calibration targets
+
+* HOSE tick reform of 12 September 2016, difference-in-differences against HNX and UPCoM stocks (`results/tick_reform.md`). The
+  old tick could not be established, so the simulator is compared through simulated tick cuts of 2, 5 and 10 times
+  (`results/tick_sim.md`); the real zero-return and spread effects are of the order of a halving. Tick bands per
+  Vo and Doan (2023), via the paper's reference list.
+* Case stocks (`data/cases.csv`, `results/case_stats.md`): ordinary HOSE stocks that reached the daily ceiling on a median of five
+  days in the manipulation period, one stock for 12 days in a row. The simulated ring's displacement (about 0.5%) never reaches the band.
+* Telegram pump events (701 events, `results/pump_events.md`): volume and buy imbalance profile before and after the announcement.
+
 ## Not found, so not calibrated
 
 Account-level order data (not public anywhere); order-to-trade ratios after KRX; published counts of surveillance alerts per day;

@@ -90,6 +90,84 @@ def case_list():
     return df
 
 
+def window_sensitivity():
+    rows = [r"window (days) & detector & superiority vs random stocks & superiority vs same stock & cases in top 10 / 10 \\", r"\midrule"]
+    for tag, w in (("_w10", 10), ("", 20), ("_w60", 60)):
+        f = R / f"case_validation{tag}_cases.csv"
+        if not f.exists():
+            continue
+        df = pd.read_csv(f)
+        for d, lab in (("abnormal return only", "abnormal return"), ("combined (Fisher)", "combined score"), ("volume surge only", "volume surge")):
+            g = df[df.detector == d]
+            rows.append(" & ".join([str(w), lab, f"{g.superiority.mean():.2f}", f"{g['superiority vs same stock'].mean():.2f}", f"{int(g.top10.sum())}"]) + r" \\")
+    (OUT / "window_sensitivity.tex").write_text("\\begin{tabular}{llrrr}\n\\toprule\n" + "\n".join(rows) + "\n\\bottomrule\n\\end{tabular}\n")
+
+
+def tick_compare():
+    did, sim = R / "tick_reform_did.csv", R / "tick_sim.csv"
+    if not (did.exists() and sim.exists()):
+        return
+    d = pd.read_csv(did).set_index("outcome")
+    s = pd.read_csv(sim)
+    rows = [r"outcome & real DiD (95\% interval) & real, relative to HOSE pre-period level & sim: tick $2\to1$ & $5\to1$ & $10\to1$ \\", r"\midrule"]
+    for out in ["CS spread (%)", "daily range (%)", "|return| (%)", "zero-return share", "log volume"]:
+        r = d.loc[out]
+        rel = r["DiD"] / r["pre-period HOSE mean"] * 100 if "log" not in out else float("nan")
+        cells = [tex_escape(out), f"{r['DiD']:.3f} [{r.ci_lo:.3f}, {r.ci_hi:.3f}]", "--" if np.isnan(rel) else f"{rel:.0f}\\%"]
+        for old in ("2 -> 1", "5 -> 1", "10 -> 1"):
+            x = s[(s["tick reduction"] == old) & (s.outcome == out)].iloc[0]
+            cells.append("--" if "log" in out else f"{x.change / x['level before'] * 100:.0f}\\%")
+        rows.append(" & ".join(cells) + r" \\")
+    (OUT / "tick_compare.tex").write_text("\\begin{tabular}{lccccc}\n\\toprule\n" + "\n".join(rows) + "\n\\bottomrule\n\\end{tabular}\n")
+
+
+def ensemble(tag, name):
+    f = R / f"vn_ensemble{tag}.csv"
+    if not f.exists():
+        return
+    df = pd.read_csv(f)
+    if "gain_vs_no_band" not in df:
+        base = df[df.policy == "no price band"].set_index("market").gain
+        df["gain_vs_no_band"] = df.apply(lambda r: r.gain / base[r.market] if r.market in base and base[r.market] > 0 else np.nan, axis=1)
+    n = df.market.nunique()
+    rows = [r"policy & median gain & range over markets & median ratio to no policy & median detection prob. & deterred at $m=5$ \\", r"\midrule"]
+    for pol, g in df.groupby("policy", sort=False):
+        ratio = g.gain_vs_no_band.median()
+        caught = g.caught.median() if "caught" in g and g.caught.notna().any() else float("nan")
+        det = f"{int((g.net_U5 <= 0).sum())}/{len(g)}" if "net_U5" in g and g.net_U5.notna().any() else "--"
+        rows.append(" & ".join([tex_escape(pol), f"{g.gain.median() / 1e3:.1f}k", f"{g.gain.min() / 1e3:.1f}k to {g.gain.max() / 1e3:.1f}k",
+                                "--" if np.isnan(ratio) else f"{ratio:.2f}", "--" if np.isnan(caught) else f"{caught:.0%}".replace("%", r"\%"), det]) + r" \\")
+    (OUT / f"ensemble{name}.tex").write_text("\\begin{tabular}{lrrrrr}\n\\toprule\n" + "\n".join(rows) + "\n\\bottomrule\n\\end{tabular}\n")
+    return n
+
+
+def matrix():
+    f = R / "policy_matrix.csv"
+    if not f.exists():
+        return
+    df = pd.read_csv(f)
+    base = df.iloc[0]
+    rows = [r"policy & spread & depth & volatility & retail cost & volume & spoof impact & pump impact & wash share & ring gain \\", r"\midrule"]
+    for _, r in df.iterrows():
+        rel = lambda k: f"{(r[k] / base[k] - 1) * 100:+.0f}\\%"
+        rows.append(" & ".join([tex_escape(r.policy), rel("spread"), rel("depth"), rel("vol"), rel("noise_cost"), rel("volume"),
+                                f"{r['spoof impact']:.2f}", f"{r['pump impact']:.2f}", f"{r['wash volume share']:.3f}", f"{r['ring gain'] / 1e3:.0f}k"]) + r" \\")
+    (OUT / "matrix.tex").write_text("\\begin{tabular}{lrrrrrrrrr}\n\\toprule\n" + "\n".join(rows) + "\n\\bottomrule\n\\end{tabular}\n")
+
+
+def case_stats():
+    f = R / "case_stats.csv"
+    if not f.exists():
+        return
+    df = pd.read_csv(f)
+    rows = [r"stock & exchange & days & pre-period vol. (\%) & vol. in period (\%) & zero-return share & log price change ($\times100$) & ceiling days & longest run \\", r"\midrule"]
+    for _, r in df.iterrows():
+        rows.append(" & ".join([tex_escape(r.ticker), tex_escape(r.exchange), str(int(r.days)), f"{r['pre vol %']:.2f}", f"{r['case vol %']:.2f}",
+                                f"{r['pre zero-return share']:.2f}", f"{r['price change %']:+.0f}", str(int(r['ceiling days'])),
+                                str(int(r['longest ceiling run']))]) + r" \\")
+    (OUT / "casestats.tex").write_text("\\begin{tabular}{llrrrrrrr}\n\\toprule\n" + "\n".join(rows) + "\n\\bottomrule\n\\end{tabular}\n")
+
+
 if __name__ == "__main__":
-    robust(); policy(); cases(); ablation(); case_list()
+    robust(); policy(); cases(); ablation(); case_list(); window_sensitivity(); tick_compare(); ensemble("", ""); ensemble("_stock", "_stock"); matrix(); case_stats()
     print(sorted(p.name for p in OUT.glob("*.tex")))
