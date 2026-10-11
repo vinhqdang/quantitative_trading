@@ -151,6 +151,7 @@ python experiments/run_ring_ablation.py                  # accounts, ring size, 
 python experiments/run_vn_policy.py && python experiments/run_vn_cross.py   # single-market best response
 python experiments/run_vn_ensemble.py                    # index-level family
 python experiments/run_vn_ensemble.py --vol-lo 1.8 --vol-hi 2.8 --sigma-lo 1.0 --sigma-hi 2.0 --tag _stock --n-draw 80
+python experiments/run_vn_ensemble.py --vol-lo 0.9 --vol-hi 1.5 --retail-lo 0.55 --sigma-lo 0.2 --sigma-hi 0.9 --nfund-lo 80 --nfund-hi 220 --nnoise-lo 450 --nnoise-hi 900 --mm-lo 0.10 --mm-hi 0.28 --acf-max 0.2 --draw-episodes 4 --draw-steps 6000 --n-markets 4 --tag _acf --n-draw 100
 python experiments/run_policy_matrix.py                  # all levers, quality and manipulators
 python experiments/run_block_static.py                   # block reference price: exact ex-post evaluation
 python experiments/theory_checks.py && python experiments/fit_power_law.py   # propositions by Monte Carlo, power law fit

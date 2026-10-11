@@ -34,7 +34,16 @@ Figure~\ref{fig:ensemble} and Table~\ref{tab:ensemble} give the ring's gain in t
 
 \subsection{Markets without trending}\label{sec:acf}
 
-\textit{(pending)}
+The simulated daily returns of the families above trend (lag-1 autocorrelation 0.4 to 0.6, Figure~\ref{fig:calibration}c), whereas the daily returns of VN30 and of HOSE stocks have no serial correlation. The trending comes from the slow adjustment of the price to the latent value, and a ring may profit from it. To check whether the conclusions depend on it, we drew a third family with many more fundamental traders (80 to 220 against 25 to 60, so that the price follows the latent value within a day), more noise traders and market makers, and accepted a draw only if, besides the volatility (0.9--1.5\%) and the cancel share, the lag-1 autocorrelation of daily returns of four honest episodes of 6000 steps was at most 0.2 in absolute value; the retail-share tolerance was widened to 0.55--0.85 because more fundamental traders lower it. Four of 29 draws were accepted (autocorrelation 0.03 to 0.20, volatility 1.05--1.37\%, retail share 0.62--0.65), so this family has four markets, and its moments were not re-measured.
+
+Table~\ref{tab:ensembleacf} gives the results. The band again has no effect (median ratio 1.06). In three of the four markets the ring is profitable without a rule (35k to 64k); in the fourth it loses money (\textminus40k) whatever the rule. Pricing blocks at the trailing mean removes the gain in two of the three profitable markets (to \textminus0.5k and \textminus1.1k at 240 steps) and in the third leaves 55\% of it (28k against 52k), where the ring's gain comes mostly from trading. Inspection is less effective than in the other families: the median probability of being caught is 4\% with one and with three inspected accounts, and the ring's expected net benefit at $m=5$ is non-positive in two of four markets, one of which is the market where the ring loses money anyway; in the market where it is not caught at all it nets 65k. Markets with more accounts per window (about 630 to 1070 noise and fundamental traders against 400 to 670 before) are the markets where the power law predicts weaker detection (Section~\ref{sec:powercheck}). The conclusion on the band and on the block price therefore survives the removal of the trending; the conclusion on inspection depends on the number of accounts, and the capacity needed grows with it.
+
+\begin{table}[t]
+\centering\footnotesize
+\adjustbox{max width=\linewidth}{\input{tables/ensemble_acf.tex}}
+\caption{Family of four markets without trending daily returns (lag-1 autocorrelation of at most 0.2): the ring's gain against each policy, as in Table~\ref{tab:ensemble}.}\label{tab:ensembleacf}
+\end{table}
+
 
 \subsection{The block reference price: law, ex-post evaluation and best response}\label{sec:blockcheck}
 
@@ -118,7 +127,7 @@ Table~\ref{tab:summary} lists, for each lever, what the simulated markets and th
 \toprule
 lever & against rings & against spoofing, pumps, wash & cost to honest investors\\
 \midrule
-inspection with a fine proportional to the gain & deters with enough capacity (three accounts per window: 5 of 6 markets in each family); capacity falls by a factor of 2.4 when the fine multiple doubles & not tested & fine paid by manipulators only; inspection effort\\
+inspection with a fine proportional to the gain & deters with enough capacity (three accounts per window: 5 of 6 markets in each of the two families, 2 of 4 without trending); capacity falls by a factor of 2.4 when the fine multiple doubles & not tested & fine paid by manipulators only; inspection effort\\
 off-book block priced at a trailing mean & removes 58--61\% of the block value at 60 steps and 87--98\% at one day; total gain falls to 28--44\% of its value at one day (block of 3000 lots; Appendix~\ref{app:extra}) & not applicable & 0.17\%--0.50\% of price on block trades\\
 daily price band 7\% or 10\% & no effect in the markets tested & not tested & none observed in honest markets\\
 minimum resting time, cancel fee & no effect & no reduction; spoofing profit and impact not lower & volatility +6\% to +24\%, spread up to +8\%\\

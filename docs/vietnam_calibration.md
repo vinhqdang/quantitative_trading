@@ -92,7 +92,7 @@ A single calibrated market is one draw from many that fit the same moments, so p
 sensitivity, latent-value volatility, momentum activity) are drawn at random and kept when cancel share is 0.27-0.37, retail
 share 0.66-0.85 and daily volatility lies in the target band. Two bands are used: index level (0.9-1.4%, the VN30 index at 1.16%)
 and stock level (1.8-2.8%; the median HOSE stock has 2.46% since 2022 and the stocks in the enforcement cases had a median of
-1.75% in the year before the manipulation; `results/case_stats.md`). The spread is not matched in either family.
+1.75% in the year before the manipulation; `results/case_stats.md`). The spread is not matched in either family. A third family (`--tag _acf`) adds the lag-1 autocorrelation of daily returns (at most 0.2 in absolute value, measured on four honest episodes) and a wider prior on the number of fundamental traders (80-220), with the retail-share tolerance widened to 0.55-0.85; it has four markets. Re-measured over 16 episodes (`results/calib_markets.csv`), some accepted markets of the first two families lie outside the tolerance box, because acceptance used two episodes.
 
 ## Public-data checks that are not calibration targets
 

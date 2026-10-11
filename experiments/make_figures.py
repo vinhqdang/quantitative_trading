@@ -118,7 +118,7 @@ def fig_policy():
 def fig_ensemble():
     """Ring gain relative to its gain with no policy, one dot per calibrated market."""
     fams = [("", "index level (daily volatility 0.9-1.4%)", BLUE), ("_stock", "stock level (1.8-2.8%)", ORANGE),
-            ("_acf", "index level, no trending (return autocorrelation \u2264 0.15)", AQUA)]
+            ("_acf", "index level, no trending (return autocorrelation \u2264 0.2)", AQUA)]
     fams = [f for f in fams if (R / f"vn_ensemble{f[0]}.csv").exists()]
     if not fams:
         return
