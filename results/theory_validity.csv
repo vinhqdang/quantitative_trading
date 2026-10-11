@@ -1,0 +1,21 @@
+flows,alpha,rejection rate,n tests
+iid Gaussian,0.001,0.0,18000
+iid Gaussian,0.005,0.0031666666666666666,18000
+iid Gaussian,0.01,0.01,18000
+iid Gaussian,0.05,0.051111111111111114,18000
+iid Gaussian,0.1,0.10116666666666667,18000
+iid Poisson counts,0.001,0.0,18000
+iid Poisson counts,0.005,0.0034444444444444444,18000
+iid Poisson counts,0.01,0.010222222222222223,18000
+iid Poisson counts,0.05,0.052333333333333336,18000
+iid Poisson counts,0.1,0.10377777777777777,18000
+"bursty (shared regime), unsigned",0.001,0.0,18000
+"bursty (shared regime), unsigned",0.005,0.2185,18000
+"bursty (shared regime), unsigned",0.01,0.6518888888888889,18000
+"bursty (shared regime), unsigned",0.05,0.8813333333333333,18000
+"bursty (shared regime), unsigned",0.1,0.9378888888888889,18000
+"bursty (shared regime), signed",0.001,0.0,18000
+"bursty (shared regime), signed",0.005,0.005722222222222222,18000
+"bursty (shared regime), signed",0.01,0.015055555555555556,18000
+"bursty (shared regime), signed",0.05,0.063,18000
+"bursty (shared regime), signed",0.1,0.11661111111111111,18000

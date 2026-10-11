@@ -1,0 +1,129 @@
+\section{A label-free screening statistic and its theory}\label{sec:method}
+
+This section states the test, proves when it controls false alarms, gives a law for how its power depends on the number of accounts and on the size of a ring, shows why netting buys against sells protects against honest groups, and turns the power law into a deterrence condition for a regulator with a fixed inspection capacity. Section~\ref{sec:detect} checks every statement by simulation with the real implementation, and compares the power law with the agent-based market.
+
+\subsection{The coincidence statistic}\label{sec:stat}
+
+Take a window of $T$ steps and $N$ accounts. Let $x_i\in\mathbb R^T$ be account $i$'s signed submissions, $x_i[t]=$ buy orders minus sell orders submitted at step $t$, and let $y_{-i}=\sum_{j\ne i}x_j$ be the flow of all other accounts. For a tolerance $\tau\in\mathcal T$ let $\tilde y^{\tau}_{-i}[t]=\sum_{|d|\le\tau}y_{-i}[(t+d)\bmod T]$ (a circular box filter). For a shift $k\in\{0,\dots,T-1\}$ define the circular cross-correlation and the standardised statistic
+\begin{equation}
+C^{\tau}_i(k)=\sum_{t=0}^{T-1}x_i[(t-k)\bmod T]\;\tilde y^{\tau}_{-i}[t],\qquad
+Z_i(k)=\max_{\tau\in\mathcal T}\frac{C^{\tau}_i(k)-\bar C^{\tau}_i}{s^{\tau}_i},
+\label{eq:Z}
+\end{equation}
+where $\bar C^{\tau}_i$ and $s^{\tau}_i$ are the mean and standard deviation of $k\mapsto C^{\tau}_i(k)$ over the $T$ shifts. The statistic is large when account $i$ submits on the same side as the others at the same moments. The observed value is $Z_i(0)$; the circular-shift $p$-value is
+\begin{equation}
+p_i=\frac1T\,\#\{k\in\{0,\dots,T-1\}:\,Z_i(k)\ge Z_i(0)\}\in[1/T,1].
+\label{eq:p}
+\end{equation}
+All $T$ shifts are computed by the fast Fourier transform, so one window costs $O(NT\log T)$ per tolerance; we use $T=300$ and $\mathcal T=\{1,5,15\}$. The \emph{unsigned} variant keeps buys and sells as two channels $x^{\mathrm b}_i,x^{\mathrm s}_i\ge0$ and adds their correlations before standardising. In use, the $B$ accounts with the largest $Z_i(0)$ in a window are inspected (``top-$B$''), or accounts with $p_i\le\alpha$ are flagged.
+
+\subsection{Exact false-alarm control and its limits}\label{sec:valid}
+
+\begin{proposition}[validity]\label{prop:exact}
+Suppose that under the null hypothesis for account $i$ the pair $(x_i,y_{-i})$ is invariant in law to a cyclic shift of $x_i$ alone: $(g\,x_i,\,y_{-i})\overset{d}{=}(x_i,\,y_{-i})$ for every cyclic shift $g$. Then $\Pr(p_i\le\alpha)\le\alpha$ for every $\alpha\in[0,1]$.
+\end{proposition}
+\begin{proof}
+Write $Z_k=Z_i(k)$ and $R_m=\#\{k:Z_k\ge Z_m\}$. Shifting $x_i$ by $g^j$ shifts the sequence $k\mapsto C^\tau_i(k)$ cyclically, so its mean and standard deviation over $k$ do not change, and $Z_k(x,y)=Z_0(g^kx,y)$. Hence $R_m(x,y)=R_0(g^mx,y)$ and by invariance $R_0\overset{d}{=}R_m$ for every $m$. For any real vector $(Z_k)$ and any $r>0$, at most $r$ indices $m$ satisfy $R_m\le r$: if $S$ is the set of such indices and $m^\ast\in S$ has the smallest $Z_{m^\ast}$, then every $m\in S$ has $Z_m\ge Z_{m^\ast}$, so $|S|\le R_{m^\ast}\le r$. Therefore $\Pr(R_0\le\alpha T)=\frac1T\sum_m\Pr(R_m\le\alpha T)=\frac1T\mathbb E\,\#\{m:R_m\le\alpha T\}\le\alpha$. \qedhere
+\end{proof}
+
+The maximum over tolerances is taken inside $Z_i(k)$ for the same $k$, so it does not break the argument. This is the standard randomisation-test argument \citep[see][for time-shift tests on dependent series]{liang2025}, and its condition is strong: it fails when account $i$ and the others share a trend or a burst inside the window, and when honest accounts react to the same event. Honest groups that act in step violate it; Section~\ref{sec:groups} shows how much and how netting removes most of it. Two consequences of the discreteness of $p_i$ matter for a regulator.
+
+\begin{proposition}[inspection budget and resolution]\label{prop:budget}
+Let $H$ be a set of accounts for which the condition of Proposition~\ref{prop:exact} holds, with arbitrary dependence between them. (a) For any $\alpha$, $\mathbb E\,\#\{i\in H:p_i\le\alpha\}\le |H|\alpha$; flagging at the threshold $\alpha=\lambda/N$ gives at most $\lambda$ expected false flags per window, and at most $\lambda W$ over $W$ windows. (b) Always $p_i\ge1/T$. Hence flagging with a family-wise error rate $\alpha_0$ by Bonferroni ($p_i\le\alpha_0/N$) is possible only if $T\ge N/\alpha_0$, that is for at most $N_{\max}=\alpha_0T$ accounts.
+\end{proposition}
+\begin{proof}
+(a) is linearity of expectation applied to Proposition~\ref{prop:exact}; no independence is needed. (b) $p_i$ counts the shift $k=0$ itself. \qedhere
+\end{proof}
+
+With $T=300$ shifts and $\alpha_0=0.05$ the Bonferroni rule can handle only $15$ accounts, while a Vietnamese stock has hundreds of active accounts in a window of 300 minutes. Control with exact guarantees therefore needs either a finer resampling (more shifts than steps, as jitter surrogates provide) or ranking without a formal error bound. We use ranking (top-$B$), report the observed false-alarm rate, and treat the formal guarantee as per-account rather than per-family.
+
+\subsection{Power: a law in the number of accounts and the size of the ring}\label{sec:power}
+
+To see how detection depends on the market and on the ring, consider a Gaussian-flow model. Honest accounts have $x_i=e_i$ with $e_i[t]$ independent $\mathcal N(0,\sigma^2)$. A set of $k$ \emph{co-active} accounts (a ring, or the members that push together) each add the same signal, $x_i=e_i+b\,s$ for $i\le k$, with $s[t]\in\{0,1\}$ a campaign indicator and $\eta=b^2\mathrm{Var}(s)/\sigma^2$ the signal-to-noise ratio of one member.
+
+\begin{proposition}[signal index]\label{prop:power}
+In this model the population correlation between a co-active member's flow and the flow of all other accounts is
+\begin{equation}
+\rho_{N,k}(\eta)=\frac{(k-1)\,\eta}{\sqrt{(1+\eta)\,\bigl[(N-1)+(k-1)^2\eta\bigr]}},
+\label{eq:rho}
+\end{equation}
+and an honest account has correlation $0$. For a single tolerance $\tau$ and a window of $T$ steps the statistic satisfies $Z_i(0)\approx\sqrt{T_{\mathrm{eff}}}\,\rho+\xi$ with $\xi$ standard normal, where $T_{\mathrm{eff}}\approx T/(2\tau+1)$ for white flows. Consequently: (i) $\rho$ increases in $k$ and in $\eta$ and saturates at $\sqrt{\eta/(1+\eta)}$ as $k\to\infty$; (ii) for $N\gg(k-1)^2\eta$, $\rho\approx(k-1)\eta/\sqrt{(1+\eta)N}$, so the shift of the statistic falls like $N^{-1/2}$; (iii) to keep a given power as $N$ grows the number of co-active accounts must grow like $\sqrt N$: the detectable size is $k-1\gtrsim(t+z_\beta)\sqrt{(1+\eta)N}/(\eta\sqrt{T_{\mathrm{eff}}})$, where $t$ is the critical value and $z_\beta$ the normal quantile of the target power.
+\end{proposition}
+\begin{proof}
+Let $v_s=\mathrm{Var}(s)$. For a member $i$ and $y=y_{-i}$: $\mathrm{Cov}(x_i,y)=(k-1)b^2v_s=(k-1)\eta\sigma^2$, $\mathrm{Var}(x_i)=\sigma^2(1+\eta)$, and $\mathrm{Var}(y)=(N-1)\sigma^2+(k-1)^2b^2v_s=\sigma^2[(N-1)+(k-1)^2\eta]$, because the $N-1$ other noise terms are independent and the $k-1$ other members share the signal. Dividing gives~\eqref{eq:rho}. For honest $i$, $e_i$ is independent of $y$. Standardising $C(k)$ across shifts converts $T\,\widehat{\mathrm{cov}}(x_i,\tilde y)$ into $\sqrt T$ times the sample correlation when $x$ and $\tilde y$ are white, and a box filter of width $2\tau+1$ divides the effective number of independent samples by $2\tau+1$; the sample correlation is asymptotically $\mathcal N(\rho,1/T_{\mathrm{eff}})$ for small $\rho$. (i)--(iii) follow from~\eqref{eq:rho} by differentiation and by solving $\rho\sqrt{T_{\mathrm{eff}}}=t+z_\beta$. \qedhere
+\end{proof}
+
+Proposition~\ref{prop:power} is an approximation, not an exact result (the sample-correlation law is asymptotic and the maximum over tolerances adds a positive bias to $Z_i(0)$ in both hypotheses); Section~\ref{sec:powercheck} checks the linear dependence on $\rho$ and the $N^{-1/2}$ law in simulation. The predicted probability that a member is among the $B$ top-ranked accounts of $N$ follows from the null distribution $F_0$ of $Z_i(0)$: with $t_B=F_0^{-1}(1-B/N)$ and a mean shift $S=c\rho$,
+\begin{equation}
+q_B=1-F_0(t_B-S)\;\approx\;\Phi\!\bigl(S-\Phi^{-1}(1-B/N)\bigr),
+\label{eq:qB}
+\end{equation}
+and a ring of $K$ accounts has a member among the top $B$ with probability about $1-(1-q_B)^K$ if members are treated as independent (they are positively dependent, so the approximation overstates detection at small $K$; Section~\ref{sec:powercheck} quantifies this).
+
+\paragraph{Heterogeneous accounts.} If honest accounts have different noise variances $\sigma_j^2$ and member $i$ has $\sigma_i^2$, the same calculation gives $\rho$ as in~\eqref{eq:rho} with $\eta$ replaced by $\eta_i=b^2\mathrm{Var}(s)/\sigma_i^2$ and with $N-1$ replaced by the \emph{effective number of accounts} $N_{\mathrm{eff},i}=\sum_{j\ne i}\sigma_j^2/\sigma_i^2$, because $\mathrm{Var}(y_{-i})=\sum_{j\ne i}\sigma_j^2+(k-1)^2b^2\mathrm{Var}(s)$ and $\mathrm{Var}(x_i)=\sigma_i^2(1+\eta_i)$. A quiet account in a market whose aggregate flow is dominated by a few loud accounts therefore sees an $N_{\mathrm{eff}}$ far above the number of accounts, and its ring is correspondingly hard to see; Section~\ref{sec:real-accounts} measures $N_{\mathrm{eff}}\approx10^6$ against about 470 accounts on a real order flow.
+
+\subsection{Honest groups and the netting of buys against sells}\label{sec:netting}
+
+Market-making desks re-quote on both sides at the same moments. Suppose desk $i$ submits $b_i[t]=u[t]+\beta_i[t]$ buy and $s_i[t]=u[t]+\sigma_i[t]$ sell orders, where $u$ is the common re-quote activity and $\beta_i,\sigma_i$ are independent across accounts and sides.
+
+\begin{proposition}[netting]\label{prop:netting}
+For two desks $i\ne j$, the signed flows $x_i=b_i-s_i=\beta_i-\sigma_i$ and $x_j$ are uncorrelated at every lag, so their contribution to $\rho$ in~\eqref{eq:rho} is zero; the unsigned channels satisfy $\mathrm{Cov}(b_i+s_i,\;b_j+s_j)=4\,\mathrm{Var}(u)>0$. For a one-directional ring, $b_i=u+\beta_i$ and $s_i=\sigma_i$, the signed flows satisfy $\mathrm{Cov}(x_i,x_j)=\mathrm{Var}(u)$ and keep their signal, at the price of the extra variance $\mathrm{Var}(\sigma_i)$ in $x_i$.
+\end{proposition}
+\begin{proof}
+$\mathrm{Cov}(\beta_i-\sigma_i,\beta_j-\sigma_j)=0$ by independence; $\mathrm{Cov}(u+\beta_i+u+\sigma_i,u+\beta_j+u+\sigma_j)=\mathrm{Var}(2u)=4\mathrm{Var}(u)$; and $\mathrm{Cov}(u+\beta_i-\sigma_i,u+\beta_j-\sigma_j)=\mathrm{Var}(u)$. \qedhere
+\end{proof}
+
+Netting therefore removes symmetric two-sided coordination at no cost to the test's validity, and costs power for a ring whose members also submit unrelated orders on the opposite side: the signal-to-noise ratio of the signed flow is lower than that of the buy channel alone by the factor $\mathrm{Var}(\beta_i+u)/\mathrm{Var}(\beta_i+u-\sigma_i)$. Section~\ref{sec:groups} measures both effects. Coordination that is two-sided in a way that does not cancel (for example a fund that buys at one moment in some accounts and sells in others) is not protected by netting.
+
+\subsection{Deterrence with a fixed inspection capacity}\label{sec:deter}
+
+Let a ring pick a strategy $\theta$ from a set $\Theta$, earn a random gross gain $g(\theta)$, and be \emph{caught} (event $D$) with probability $Q(\theta)$ if the regulator inspects the $B$ top-ranked accounts in each of $W$ windows; a caught ring pays $m\,g^+$ where $g^+=\max(g,0)$ and $m$ is the fine multiple (5 for individuals and 10 for organisations in Vietnam, Appendix~\ref{app:calib}). Its expected net benefit is
+\begin{equation}
+U(\theta)=\mathbb E[g]-m\,\mathbb E[g^+\mathbf 1_D].
+\label{eq:U}
+\end{equation}
+
+\begin{proposition}[deterrence]\label{prop:deter}
+If $D$ is independent of $g$ given $\theta$, then $U(\theta)=\mathbb E[g]-mQ\,\mathbb E[g^+]$, and $mQ\ge1$ implies $U(\theta)\le0$. If in addition $g\ge0$, then $U(\theta)\le0$ if and only if $Q\ge1/m$. In the screening model, with~\eqref{eq:qB} and members and windows treated as independent, $Q=1-\bigl(1-[1-(1-q_B)^K]\bigr)^W$ and the smallest capacity that deters a ring of $K$ accounts over $W$ windows at fine multiple $m$ is
+\begin{equation}
+B^\ast=N\,\Phi\!\bigl(\Phi^{-1}(q^\ast)-S\bigr),\qquad q^\ast=1-\bigl(1-r^\ast\bigr)^{1/K},\quad r^\ast=1-\bigl(1-1/m\bigr)^{1/W},
+\label{eq:Bstar}
+\end{equation}
+whereas random inspection needs $B_{\mathrm{rand}}=Nq^\ast$. The saving $B_{\mathrm{rand}}/B^\ast=q^\ast/\Phi(\Phi^{-1}(q^\ast)-S)$ is at least $1$, increases in $S$, and tends to $1$ as $N\to\infty$ because $S\propto N^{-1/2}$.
+\end{proposition}
+\begin{proof}
+$U=\mathbb E[g]-mQ\,\mathbb E[g^+]\le\mathbb E[g^+](1-mQ)\le0$ when $mQ\ge1$, since $\mathbb E[g]\le\mathbb E[g^+]$. If $g\ge0$ then $U=\mathbb E[g](1-mQ)$. The expression for $Q$ is the union over members and windows. Solving $Q=1/m$ for $q_B$ and inverting~\eqref{eq:qB} gives~\eqref{eq:Bstar}; the saving is the ratio of the two capacities, and $\Phi(z-S)\le\Phi(z)$ for $S\ge0$. \qedhere
+\end{proof}
+
+Two consequences are used in Section~\ref{sec:frontier}. First, a ring that is exposed in many windows by many accounts needs little capacity to be deterred, which is why adaptive rings shrink: they reduce $K$ and the number of active windows. Second, the advantage of screening over random inspection disappears in large markets unless the signal $S$ is boosted, for example by longer windows or better statistics; with $N=2000$ accounts and a ring of three the saving is less than a factor of two.
+
+\subsection{A rule that changes the payoff: the block reference price}\label{sec:blocklaw}
+
+In the simulator a ring holds a block before the campaign and sells it off-book at the end of each push at a \emph{reference price}, and the exchange can set the reference to the mean mid-price over the last $L$ steps ($L=1$ is the last price). The reference enters only the payoff, not the dynamics. Write $P_t$ for the mid-price and $\Delta P_t=P_t-P_{t-1}$.
+
+\begin{proposition}[block reference price]\label{prop:block}
+With $m_L(t)=\frac1L\sum_{s=0}^{L-1}P_{t-s}$, the price displacement credited to a block sold at the end $t$ of a push that began at mid-price $P_0$ is $D_L=D_1-\sum_{u=0}^{L-2}\bigl(1-\tfrac{u+1}{L}\bigr)\Delta P_{t-u}$, where $D_1=P_t-P_0$: only recent price increments count, discounted linearly with age. If the price rises linearly by $D_1$ over the last $a$ steps before the sale and is flat before, then
+\begin{equation}
+\frac{D_L}{D_1}=\begin{cases}\dfrac{a}{2L}, & L\ge a,\\[1ex] 1-\dfrac{L}{2a}, & L\le a.\end{cases}
+\label{eq:blocklaw}
+\end{equation}
+If the ring instead holds the price at the top for $h$ further steps, $D_L/D_1=(a/2+h)/L$ for $L\ge a+h$, so keeping the full gain requires holding the price for about $L-a/2$ steps.
+\end{proposition}
+\begin{proof}
+$P_t-m_L(t)=\frac1L\sum_{s=0}^{L-1}(P_t-P_{t-s})=\frac1L\sum_{s}\sum_{u<s}\Delta P_{t-u}=\sum_{u=0}^{L-2}\frac{L-1-u}{L}\Delta P_{t-u}$ and $D_L=(m_L(t)-P_0)=D_1-(P_t-m_L(t))$. For the ramp, the average of the last $L$ prices above $P_0$ is $D_1a/(2L)$ when $L\ge a$ (the ramp has mean $D_1/2$ over $a$ of the $L$ steps) and $D_1(1-L/(2a))$ when $L\le a$; holding adds $h$ steps at $D_1$. \qedhere
+\end{proof}
+
+The rule therefore replaces the price level by an exponentially-flat memory of the path: a one-day reference ($L=240$) pays a ring that pushes for $a\approx60$ steps a quarter of what the last price pays, and the ring can recover the gain only by holding the price, which is the manipulation the rule penalises. Because the rule changes the payoff only, its effect on a ring that does not adapt can be computed exactly from the same simulated episodes for every $L$, and compared with the best response; this is done in Section~\ref{sec:blockcheck}.
+
+\subsection{Evaluating a rule by the ring's best response}\label{sec:br}
+
+Let $\pi\in\Pi$ be a policy (band, block reference $L$, inspection capacity $B$, order-level rules), $\varphi$ a market in a family $\mathcal M$, and $U(\theta;\pi,\varphi)$ the ring's net benefit~\eqref{eq:U}. The ring's value is $V(\pi;\varphi)=\sup_{\theta\in\Theta}U(\theta;\pi,\varphi)$. The regulator compares policies by the distribution of $V(\pi;\varphi)$ over $\varphi\in\mathcal M$ together with the cost to honest participants $C(\pi;\varphi)$ (spread, depth, volatility); it deems $\pi$ \emph{deterring} in $\varphi$ if $V(\pi;\varphi)\le0$.
+
+\begin{proposition}[best response on a finite strategy set]\label{prop:lower}
+Let $\hat\Theta\subset\Theta$ be finite, let $\hat\theta$ maximise the mean over $n$ selection episodes, and let $\hat U$ be the mean over $n$ further, independent episodes. Then $\mathbb E[\hat U\mid\hat\theta]=U(\hat\theta;\pi,\varphi)\le V(\pi;\varphi)$. Hence the reported ring benefit is unbiased for the benefit of the chosen strategy and a lower bound in expectation of the true best response, and a policy that appears deterring on $\hat\Theta$ may not be deterring against a larger set.
+\end{proposition}
+\begin{proof}
+$\hat U$ is independent of $\hat\theta$ given the market, so conditioning removes the selection bias; and $U(\hat\theta)\le\sup_\Theta U$. \qedhere
+\end{proof}
+
+The proposition is the reason for the statements throughout that the effects of rules on rings are conservative for the ring: with a better search, rings would do at least as well, and deterrence results are upper bounds on what a regulator can claim. The family $\mathcal M$ is drawn by approximate Bayesian rejection: parameters of the honest market are sampled, honest-only episodes are simulated, and a draw is kept if its cancel share, retail share and daily volatility are within tolerance of the real values (Section~\ref{sec:calib}). A conclusion that holds for every accepted market is more credible than one tuned to a single calibration, but the tolerance box is wide, and markets that match the moments need not match anything else.

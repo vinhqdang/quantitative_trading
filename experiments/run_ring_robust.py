@@ -83,6 +83,8 @@ def main(args):
         df["gbm"] = gbm.score(df)
         df["iforest"] = iso.score(df)
         df["otr_s"] = df.otr
+        keep = [c for c in ("episode", "window", "agent", "kind", "y", "z_unsigned", "z_signed", "p_unsigned", "p_signed", "gbm", "iforest", "otr_s") if c in df]
+        df[keep].to_csv(Path(args.out) / f"ring_robust_scores_{name.replace(' ', '_').replace('+', 'plus')}.csv.gz", index=False)
         for label, col in (("order-to-trade ratio", "otr_s"), ("isolation forest (no labels)", "iforest"),
                            ("coincidence, unsigned (no labels)", "z_unsigned"),
                            ("coincidence, signed (no labels)", "z_signed"),

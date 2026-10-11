@@ -7,7 +7,7 @@ Mapping, with sources and confidence in docs/vietnam_calibration.md:
   daily price band +/-7% of the previous close
 Matched: cancel share (0.321 vs published 0.318), relative tick (21 vs 20 bp), daily volatility (1.14% vs 1.16% measured
 for VN30 since 2023; see results/real_data_stats.md). Retail share is 0.72 against a published 0.75-0.82. Not matched:
-the spread (3 ticks against a measured 1 tick in 73% of VN30 futures quotes), tail heaviness and volatility clustering.
+the spread (3 ticks against a measured 1 tick in 73% of VN30 futures quotes), tail heaviness and the near-zero serial correlation of daily returns (the simulated daily returns are trending, lag-1 autocorrelation 0.4-0.6 against about 0 in the data).
 """
 
 from __future__ import annotations

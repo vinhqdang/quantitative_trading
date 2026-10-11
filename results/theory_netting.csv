@@ -1,0 +1,3 @@
+scenario,"share flagged (p<=0.01), unsigned","share flagged (p<=0.01), signed"
+"market-making desks (both sides, same moments)",0.7975,0.010833333333333332
+one-directional ring,0.3708333333333333,0.1725

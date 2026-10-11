@@ -38,6 +38,10 @@ def moments_from_events(events: pd.DataFrame, mids: np.ndarray, kind_of: dict[in
     if len(m) > day_len:
         r = (m[day_len:] - m[:-day_len]) / m[:-day_len]
         out["daily_vol_pct"] = float(np.std(r) * 100)
+        rd = m[day_len::day_len] / m[:-day_len:day_len] - 1        # non-overlapping daily returns
+        if len(rd) > 3:
+            a = rd - rd.mean()
+            out["acf_num"], out["acf_den"] = float((a[:-1] * a[1:]).sum()), float((a * a).sum())
     if kind_of is not None:
         tr = ev[ev.kind == TRADE]
         kinds = tr.agent.map(kind_of)

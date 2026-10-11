@@ -1,0 +1,33 @@
+\section{Experiments III: real data}\label{sec:real}
+
+\subsection{Real account-level order flow}\label{sec:real-accounts}
+
+Every result above is for simulated accounts. To see what the statistic does on real accounts we use two public data sets from a venue with an account identifier on every record, the Hyperliquid derivatives exchange. They are far from the Vietnamese market (a crypto perpetual-futures venue, dominated by automated accounts, with pseudonymous addresses that one operator may use in several copies), so the results are a stress test of the statistic, not an estimate for Vietnam. There are no manipulation labels.
+
+\paragraph{Data.} \emph{Order submissions}: the Level-4 order data of \citet{albers2026} (Zenodo record 18184441, CC BY 4.0), first member of the December 2025 file for the SOL perpetual, 577,918 orders submitted by 1,909 accounts in 23.6 minutes of 1 December 2025; we use one record per order identifier and the side of the order, windows of 300 bins of 0.5 seconds (150 seconds; nine windows with 351 to 715 active accounts and 61,000 orders on average). \emph{Fills}: a public table of fills (account address, side, millisecond time) of a 91-minute slice of 5 June 2026 for the perpetual contracts HYPE, BTC and ETH, windows of 300 bins of one second (18 windows). Accounts with fewer than three records in a window are not tested.
+
+\paragraph{Calibration on real flow.} Table~\ref{tab:realcal} gives the share of accounts with small $p$-values. On submissions, 28.5\% of accounts with at least three orders in a window have $p\le0.01$ for the signed statistic (33.4\% unsigned), against a nominal 1\%, and the share rises with activity: 6.6\% for accounts with 3 to 9 orders, 32.6\% for 10 to 99, 51.8\% for 100 or more; for accounts that trade on both sides it is 43.6\%. Netting buys against sells barely lowers the rate, unlike in the simulator: real market makers do not re-quote symmetrically but shift both quotes in the direction of the last price move, so their net flows are positively correlated (Proposition~\ref{prop:netting} covers the symmetric case only). The exchangeability condition of Proposition~\ref{prop:exact} is violated for a large share of the active accounts of this venue: they react to the same signals. The aggregate flow of the other accounts is also dominated by a few loud accounts: its variance per bin, divided by the median variance of a quiet account (3 to 15 orders in the window), gives an effective number of accounts $N_{\mathrm{eff}}\approx10^6$ (Section~\ref{sec:power}) against about 470 accounts, so that a ring of quiet accounts is nearly invisible unless it is loud. On fills the pattern is mechanical and different: the signed statistic flags almost nothing (0.0--0.03\%) and the unsigned one 15--17\%, because each trade appears twice, as the buy of one account and the sell of its counterparty in the same millisecond, so that the aggregate of the others contains the mirror image of every account's own flow. The test must be applied to submissions, not to executed trades.
+
+\begin{table}[t]
+\centering\footnotesize
+\adjustbox{max width=\linewidth}{\input{tables/real_calibration.tex}}
+\caption{Share of accounts flagged on real account-level flow (accounts with at least three records in the window). Under the null of Proposition~\ref{prop:exact} the share would be at most the level}\label{tab:realcal}
+\end{table}
+
+\paragraph{A ring planted in real flow.} To measure power against the real background, we choose $K=12$ quiet real accounts (3 to 15 orders in the window) and add to each, at ten common bins of the window (each member jittered by at most one bin), $q$ buy orders; the other accounts' flow is unchanged. Table~\ref{tab:realplant} and Figure~\ref{fig:realacc} give catch@$B$ over 180 trials (nine windows, 20 draws each). With no planting ($q=0$) none of the chosen accounts reaches the top five. A ring of three orders per push is undetectable; at 30 orders per member and push (5.9\% of the orders of the window in total) it is still not in the top ten in 99.4\% of the trials although 41\% of its members have $p\le0.01$, because a quarter of all accounts have $p\le0.01$ for natural reasons and the ranking is filled by loud accounts; at 100 orders (19.5\% of the flow of the window) it is in the top five in 80\% of the trials (signed statistic), and at 300 in all. The dependence on the design is steep and in the direction of Proposition~\ref{prop:power}: catch@5 falls from 1.00 to 0.79 as the number of accounts rises from 100 to 468 (by dropping real accounts at random), it is 0 for a ring of four, 0.26 for eight and 1.00 for 16 accounts, and 0.22, 0.79 and 1.00 for three, ten and thirty pushes per window. A ring of 12 retail accounts that submits a few orders at each of ten moments would not be found in this venue by this statistic; a ring that makes up a fifth of the flow of a stock-window would be. Whether a Vietnamese stock has a background as loud as this one is the empirical question account-level data would settle, and the planted-ring audit is the way to measure it (Section~\ref{sec:discussion}).
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{figures/real_accounts.pdf}
+\caption{The coincidence test on real order submissions (SOL perpetual, 23.6 minutes). (a) Share of accounts with $p\le0.01$ by number of submissions in the window; dotted: nominal 1\%. (b) Histogram of signed-test $p$-values of accounts with at least three submissions; dotted: uniform. (c)--(f) catch@5 of a ring of 12 quiet real accounts planted at ten common moments per window, signed (solid) and unsigned (dashed), against the number of orders per member and push (c), the number of accounts (d), the ring size (e) and the number of pushes per window (f); unless varied, $q=100$ orders per push and the full set of accounts}\label{fig:realacc}
+\end{figure}
+
+\begin{table}[t]
+\centering\scriptsize
+\setlength{\tabcolsep}{3pt}
+\adjustbox{max width=\linewidth}{\input{tables/real_planted.tex}}
+\caption{Planted ring among 12 quiet real accounts: catch@$B$ over 180 trials (nine windows, 20 draws), ranking by the signed statistic (unsigned at 5 for comparison), and share of members with $p\le0.01$. The sweep column names the factor that varies; the others are at $N=468$, $K=12$, 100 orders per push and 10 pushes}\label{tab:realplant}
+\end{table}
+
+
+\input{sections/real_cases}

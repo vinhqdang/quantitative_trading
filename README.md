@@ -2,7 +2,7 @@
 
 An agent-based limit order book simulator for designing and stress-testing market surveillance and exchange rules from
 the regulator's side, with presets calibrated to the Ho Chi Minh Stock Exchange (HOSE), and public-data checks on real
-Vietnamese markets. The paper draft is in `paper/` (`main.tex`, `main.pdf`); every table and figure in it is generated from
+Vietnamese markets. The paper draft is in `paper/` (`main_sn.tex` with `sections/`, `main_sn.pdf`; Springer Nature class `sn-jnl`); every table and figure in it is generated from
 the CSV files in `results/` by `experiments/make_tables.py` and `experiments/make_figures.py`.
 
 Questions it is built to answer:
@@ -95,7 +95,7 @@ share is unaffected by all order-level levers; only the block reference price cu
 - No account-level data. The manipulators and detector features were written by the same author; separable footprints in
   the simulator say nothing about real manipulation, and the coincidence test has not seen real order data.
 - The calibrated markets match cancel share, relative tick, volatility and retail share but not the spread (3 ticks against
-  1 tick measured), tail heaviness or volatility clustering. Rule facts come from secondary sources (broker summaries,
+  1 tick measured), tail heaviness or the near-zero serial correlation of daily returns (simulated lag-1 autocorrelation 0.49 at index level and 0.60 at stock level against -0.03 for VN30). Rule facts come from secondary sources (broker summaries,
   press); the exchange rulebooks were not fetched. The block size of 3000 lots is an assumption.
 - The ring strategy set was found in the first market and is not re-optimised in each market of the families, so effects of
   rules are lower bounds on an adaptive ring's gain. A ring is counted as caught if any member is inspected.
@@ -127,7 +127,6 @@ python experiments/run_case_validation.py --folder DIR   # real enforcement case
 python experiments/case_stats.py --folder DIR            # case stocks against the market
 python experiments/run_pump_events.py                    # needs the Telegram pump archives
 python experiments/make_tables.py && python experiments/make_figures.py
-cd paper && pdflatex main && bibtex main && pdflatex main && pdflatex main          # generic version
 cd paper && pdflatex main_sn && bibtex main_sn && pdflatex main_sn && pdflatex main_sn   # Springer Nature template (sn-jnl, sn-basic)
 ```
 

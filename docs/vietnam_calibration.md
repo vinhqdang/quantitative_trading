@@ -109,7 +109,7 @@ and stock level (1.8-2.8%; the median HOSE stock has 2.46% since 2022 and the st
 Account-level order data (not public anywhere); order-to-trade ratios after KRX; published counts of surveillance alerts per day;
 the share of manipulation cases that involve many accounts; spreads and depth of single stocks. The simulator's minimum spread is
 2 ticks against 1 tick for VN30F1M, and it does not reproduce the measured tail heaviness (excess kurtosis 4-5 daily, 40 at one
-minute) or volatility clustering.
+minute) or the near-zero serial correlation of daily returns: simulated daily returns of the first accepted markets have lag-1 autocorrelation 0.49 (index level) and 0.60 (stock level) against -0.03 for VN30 and 0.03 on average for HOSE stocks.
 
 ## Plugging in real data
 

@@ -34,31 +34,45 @@ POLICIES = [("no price band", dict(band=0.0), 1, "none", 0), ("band 7% (HOSE tod
             ("band 7% + inspect 3 per window", dict(band=0.07), 1, "scan", 3)]
 
 
-def draw(rng, sigma=(0.4, 1.2)):
-    return {"n_noise": int(rng.integers(350, 651)), "n_fund": int(rng.integers(25, 61)), "mm_activity": float(rng.uniform(0.06, 0.14)),
+def _mom(args):
+    seed, cfg = args
+    return episode_moments(seed, cfg)
+
+
+def draw(rng, sigma=(0.4, 1.2), nfund=(25, 60)):
+    return {"n_noise": int(rng.integers(350, 651)), "n_fund": int(rng.integers(nfund[0], nfund[1] + 1)), "mm_activity": float(rng.uniform(0.06, 0.14)),
             "fund_sigma": float(rng.uniform(*sigma)), "mm_imb_sens": float(rng.uniform(1.5, 4.0)),
             "mom_activity": float(rng.uniform(0.05, 0.12))}
 
 
-def sample_markets(n_draw: int, n_keep: int, seed: int, sigma=(0.4, 1.2)) -> pd.DataFrame:
+def sample_markets(n_draw: int, n_keep: int, seed: int, sigma=(0.4, 1.2), nfund=(25, 60), acf_max: float | None = None,
+                   n_ep: int = 2, steps: int | None = None) -> pd.DataFrame:
     rng = np.random.default_rng(seed)
     rows = []
+    pool = make_pool(4)
     for i in range(n_draw):
-        p = draw(rng, sigma)
+        p = draw(rng, sigma, nfund)
         cfg = replace(vn_config(**p), **HONEST)
-        m = pd.DataFrame([episode_moments(15_000_000 + 10 * i + j, cfg) for j in range(2)]).mean().to_dict()
+        if steps:
+            cfg = replace(cfg, steps=steps)
+        ms = pd.DataFrame(list(pool.map(_mom, [(15_000_000 + 10 * i + j, cfg) for j in range(n_ep)])))
+        m = ms.mean(numeric_only=True).to_dict()
+        m["ret_acf1"] = float(ms.acf_num.sum() / ms.acf_den.sum()) if "acf_num" in ms and ms.acf_den.sum() > 0 else float("nan")
         ok = all(TOL[k][0] <= m[k] <= TOL[k][1] for k in TOL)
-        rows.append({"draw": i, **p, **{k: m[k] for k in ("cancel_share", "daily_vol_pct", "retail_share", "spread_ticks")}, "accepted": ok})
-        print(f"draw {i}: accepted={ok} vol={m['daily_vol_pct']:.2f} cancel={m['cancel_share']:.2f} retail={m['retail_share']:.2f}", flush=True)
+        if acf_max is not None:
+            ok = ok and abs(m["ret_acf1"]) <= acf_max
+        rows.append({"draw": i, **p, **{k: m[k] for k in ("cancel_share", "daily_vol_pct", "retail_share", "spread_ticks", "ret_acf1")}, "accepted": ok})
+        print(f"draw {i}: accepted={ok} vol={m['daily_vol_pct']:.2f} cancel={m['cancel_share']:.2f} retail={m['retail_share']:.2f} acf1={m['ret_acf1']:.2f}", flush=True)
         if sum(r["accepted"] for r in rows) >= n_keep:
             break
+    pool.shutdown()
     return pd.DataFrame(rows)
 
 
 def main(args):
     TOL["daily_vol_pct"] = (args.vol_lo, args.vol_hi)
     tag = args.tag
-    draws = sample_markets(args.n_draw, args.n_markets, args.seed, (args.sigma_lo, args.sigma_hi))
+    draws = sample_markets(args.n_draw, args.n_markets, args.seed, (args.sigma_lo, args.sigma_hi), (args.nfund_lo, args.nfund_hi), args.acf_max, args.draw_episodes, args.draw_steps)
     draws.to_csv(Path(args.out) / f"vn_ensemble{tag}_draws.csv", index=False)
     markets = draws[draws.accepted].head(args.n_markets)
     strats_all = rvc.strategies(Path(args.out) / "vn_policy.md")
@@ -108,6 +122,11 @@ if __name__ == "__main__":
     ap.add_argument("--vol-hi", type=float, default=1.4)
     ap.add_argument("--sigma-lo", type=float, default=0.4)
     ap.add_argument("--sigma-hi", type=float, default=1.2)
+    ap.add_argument("--nfund-lo", type=int, default=25)
+    ap.add_argument("--nfund-hi", type=int, default=60)
+    ap.add_argument("--acf-max", type=float, default=None)
+    ap.add_argument("--draw-episodes", type=int, default=2)
+    ap.add_argument("--draw-steps", type=int, default=None)
     ap.add_argument("--tag", default="")
     ap.add_argument("--workers", type=int, default=4)
     ap.add_argument("--out", default="results")

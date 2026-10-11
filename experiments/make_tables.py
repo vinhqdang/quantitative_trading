@@ -168,6 +168,43 @@ def case_stats():
     (OUT / "casestats.tex").write_text("\\begin{tabular}{llrrrrrrr}\n\\toprule\n" + "\n".join(rows) + "\n\\bottomrule\n\\end{tabular}\n")
 
 
+def block():
+    f = R / "block_static.csv"
+    if not f.exists():
+        return
+    d = pd.read_csv(f)
+    Ls = [15, 30, 60, 120, 240, 480]
+    rows = [r"& \multicolumn{4}{c}{index level} & \multicolumn{4}{c}{stock level} \\", r"\cmidrule(lr){2-5}\cmidrule(lr){6-9}",
+            r"$L$ & block term & law & total, static & total, adaptive & block term & law & total, static & total, adaptive \\", r"\midrule"]
+    for L in Ls:
+        cells = [str(L)]
+        for fam in ("index level", "stock level"):
+            g = d[(d.family == fam) & (d.L == L)]
+            cells += [f"{g['block term ratio (static)'].median():.2f}", f"{g['linear-ramp law'].median():.2f}", f"{g['static ratio'].median():.2f}", f"{g['adaptive ratio'].median():.2f}"]
+        rows.append(" & ".join(cells) + r" \\")
+    (OUT / "block.tex").write_text("\\begin{tabular}{lrrrrrrrr}\n\\toprule\n" + "\n".join(rows) + "\n\\bottomrule\n\\end{tabular}\n")
+
+
+def capacity():
+    import sys
+    sys.path.insert(0, str(Path(__file__).parent))
+    from make_figures2 import required_inspection
+    par = pd.read_csv(R / "power_law_params.csv").iloc[0]
+    s0 = float(par.s0)
+    rows = [r"& \multicolumn{3}{c}{fine $5\times$ gain} & \multicolumn{3}{c}{fine $10\times$ gain} \\", r"\cmidrule(lr){2-4}\cmidrule(lr){5-7}",
+            r"$N$ & screening & random & saving & screening & random & saving \\", r"\midrule"]
+    for N in (100, 300, 600, 1000, 2000):
+        cells = [str(N)]
+        for m in (5, 10):
+            b = float(required_inspection(N, 3, 4, m, s0)); r = float(required_inspection(N, 3, 4, m, 0.0))
+            cells += [f"{b:.2f}", f"{r:.1f}", f"{r / b:.1f}"]
+        rows.append(" & ".join(cells) + r" \\")
+    (OUT / "capacity.tex").write_text("\\begin{tabular}{lrrrrrr}\n\\toprule\n" + "\n".join(rows) + "\n\\bottomrule\n\\end{tabular}\n")
+
+
+from table_extras import real_calibration, real_planted  # noqa: E402
+
+
 if __name__ == "__main__":
-    robust(); policy(); cases(); ablation(); case_list(); window_sensitivity(); tick_compare(); ensemble("", ""); ensemble("_stock", "_stock"); matrix(); case_stats()
+    robust(); policy(); cases(); ablation(); case_list(); window_sensitivity(); tick_compare(); ensemble("", ""); ensemble("_stock", "_stock"); matrix(); case_stats(); block(); capacity(); real_calibration(); real_planted()
     print(sorted(p.name for p in OUT.glob("*.tex")))
