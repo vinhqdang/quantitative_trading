@@ -27,7 +27,13 @@ def main(a):
                 out.append(((r - r.mean()) / r.std()).rename("ret").to_frame().assign(ticker=t))
     d = pd.concat(out)
     acf = {l: np.nanmean([x.ret.autocorr(l) for x in out]) for l in range(1, 6)}
-    pd.DataFrame({"lag": list(acf), "mean autocorrelation of daily returns, HOSE stocks": list(acf.values())}).to_csv(Path(a.out) / "calib_real_acf.csv", index=False)
+    tab = pd.DataFrame({"lag": list(acf), "mean autocorrelation of daily returns, HOSE stocks": list(acf.values())})
+    if a.index:
+        idx = pd.read_csv(a.index, usecols=["time", "close"])
+        idx["t"] = pd.to_datetime(idx.time, unit="s")
+        r = np.log(idx.set_index("t").sort_index().close["2023-01-01":]).diff().dropna()
+        tab["autocorrelation of daily returns, VN30 index"] = [r.autocorr(l) for l in range(1, 6)]
+    tab.to_csv(Path(a.out) / "calib_real_acf.csv", index=False)
     print(acf)
     d.sample(n=min(len(d), 40000), random_state=0).to_csv(Path(a.out) / "calib_real_stock_returns.csv", index=False)
     print(len(out), "stocks;", len(d), "returns")
@@ -37,5 +43,6 @@ if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--folder", required=True)
     ap.add_argument("--meta", required=True)
+    ap.add_argument("--index", default=None, help="VN30 daily CSV (time, close)")
     ap.add_argument("--out", default="results")
     main(ap.parse_args())

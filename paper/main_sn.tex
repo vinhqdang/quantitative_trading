@@ -27,7 +27,7 @@
 
 \affil*[1]{\orgname{British University Vietnam}, \orgaddress{\city{Hung Yen}, \country{Vietnam}}}
 
-\abstract{Prosecuted manipulation on Vietnamese stock exchanges is mostly carried out by groups of accounts trading in step, yet regulators have no labelled cases to train a detector and the order-level data to test one are not public. We study which rules and how much inspection capacity make such a ring give up. We state a label-free coincidence test with an exact circular-shift null per account, derive a power law in which the shift of the statistic falls like the inverse square root of the number of accounts; the law fits an agent-based market and yields a deterrence condition linking inspection capacity to the fine. A ring that re-optimises against each rule across simulated markets matching moments of the Ho Chi Minh Stock Exchange is unaffected by the daily price band, loses most of the block value when off-book blocks are priced at a trailing mean, and is deterred by inspection only with enough capacity; minimum resting times and cancel fees do not deter and raise volatility. On real order flow from a public derivatives venue the exchangeability condition fails for a quarter of the active accounts, and a planted ring of 12 quiet accounts is found only when it makes up about a fifth of the flow. On Vietnamese public data, the 2016 tick reform lowered the share of zero-return days by seven points, and a price-based rank places 8 of 10 documented cases in the daily top ten of 1,360 stocks.}
+\abstract{Prosecuted manipulation on Vietnamese stock exchanges is mostly carried out by groups of accounts trading in step, yet regulators have no labelled cases to train a detector and the order-level data to test one are not public. We study which rules and how much inspection capacity make such a ring give up. We state a label-free coincidence test with an exact circular-shift null per account, derive a power law in which the shift of the statistic falls like the inverse square root of the number of accounts; the law fits an agent-based market and yields a deterrence condition linking inspection capacity to the fine. A ring that picks its best strategy against each rule, in simulated markets matching moments of the Ho Chi Minh Stock Exchange, is unaffected by the daily price band, loses most of the block value when off-book blocks are priced at a trailing mean, and is deterred by inspection only with enough capacity; in one market, minimum resting times and cancel fees leave fixed manipulators' gains unchanged and raise volatility. On real order flow from a public derivatives venue the exchangeability condition fails for more than a quarter of the active accounts, and a planted ring of 12 quiet accounts is found only when it makes up about a fifth of the flow. On Vietnamese public data, the 2016 tick reform lowered the share of zero-return days by seven points, and a price-based rank puts 8 of 10 documented cases in the daily top ten.}
 
 \keywords{market manipulation, market surveillance, agent-based model, limit order book, exchange rules, Vietnam}
 
@@ -56,7 +56,7 @@
 \begin{appendices}
 \makeatletter\@removefromreset{table}{section}\@removefromreset{figure}{section}\makeatother
 \renewcommand{\thetable}{\arabic{table}}\renewcommand{\thefigure}{\arabic{figure}}
-\section{Documented cases used in Section~\ref{sec:real}}\label{app:cases}
+\section{Documented cases considered in Section~\ref{sec:cases} (HNG is listed but not scored)}\label{app:cases}
 \begin{table}[h]
 \centering\footnotesize
 \adjustbox{max width=\linewidth}{\input{tables/caselist.tex}}
@@ -71,7 +71,7 @@
 \item VN30, VN-Index and VN100 bars and the VN30F1M ticks: public Kaggle datasets (keithvo/vnstockdata, khimduong/vn30-market-making).
 \item Daily prices of 1,551 stocks: public Kaggle dataset (vuthinh/vietnam-stock-market-ohlc-price-data).
 \item Pump events: public Hugging Face dataset (Go3x3/pump\_and\_dump\_dataset, MIT licence).
-\item Order submissions with account identifiers: \citet{albers2026} (Zenodo record 18184441, CC BY 4.0), first member of the December 2025 SOL file of 877 million records per day over BTC, ETH and SOL; fills with account addresses: a public Hugging Face table of Hyperliquid fills (craftify2221/hyperliquid-fills-raw; the dataset card declares no licence), one row group of 5 June 2026. Both are mirrors or derivatives of the venue's public node data; we use samples of the files, not the full archives.
+\item Order submissions with account identifiers: \citet{albers2026} (Zenodo record 18184441, CC BY 4.0), first member of the December 2025 SOL file of about 880 million records per day over BTC, ETH and SOL; fills with account addresses: a public Hugging Face table of Hyperliquid fills (craftify2221/hyperliquid-fills-raw; the dataset card declares no licence), one row group of 5 June 2026. Both are mirrors or derivatives of the venue's public node data; we use samples of the files, not the full archives.
 \item Exchange metadata (HOSE, HNX or UPCoM for each ticker): public Hugging Face table of Vietnamese stock symbols (kjhq/Vietnam-Stock-Symbols-and-Metadata).
 \end{itemize}
 
@@ -151,7 +151,7 @@ Quang-Vinh Dang is the sole author of this work and is responsible for the study
 The study uses simulated data and public market data; no human participants or animals were involved. Enforcement cases are identified by stock ticker only, and persons named in the decisions are not named here.
 
 \bmhead{Data availability}
-All simulated data can be regenerated with the code and fixed random seeds provided with the paper, and the result tables behind every table and figure are in the repository. The real data are public: daily prices of Vietnamese stocks, VN30 index and VN30 futures data, exchange metadata and Telegram pump-and-dump events, from the sources listed in Table~\ref{tab:data} and Appendix~\ref{app:calib}. Raw files are not redistributed because of their licences; the case list used in Section~\ref{sec:real} is included in the repository. No account-level or other non-public data were used.
+All simulated data can be regenerated with the code and fixed random seeds provided with the paper, and the result tables behind every table and figure are in the repository. The real data are public: daily prices of Vietnamese stocks, VN30 index and VN30 futures data, exchange metadata and Telegram pump-and-dump events, from the sources listed in Table~\ref{tab:data} and Appendix~\ref{app:calib}. Raw files are not redistributed because of their licences; the case list used in Section~\ref{sec:real} is included in the repository. No Vietnamese account-level or other non-public data were used; the account-level order data used for the stress test of Section~\ref{sec:real-accounts} are public (Zenodo record 18184441 and the table of fills cited in Appendix~\ref{app:calib}).
 
 \bmhead{Code availability}
 The simulator, detectors, experiment scripts, result tables and the case list are in the repository \url{https://github.com/vinhqdang/quantitative_trading}.

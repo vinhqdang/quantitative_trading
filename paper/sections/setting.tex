@@ -39,7 +39,7 @@ cool-down & 30--120 steps & pause between cycles\\
 
 \paragraph{Moments.} Prices are in ticks of the Ho Chi Minh Stock Exchange (HOSE): a stock at 25,000 Vietnamese dong (VND) with a 50 VND tick has a relative tick of 20\,bp, and the daily band is $\pm 7\%$ of the previous close. Rules and statistics come from broker summaries and press (Appendix~\ref{app:calib}); the exchange rulebooks could not be fetched. We add measurements from public datasets (Table~\ref{tab:data}). Table~\ref{tab:calib} compares the first preset with the real moments. Cancel share, relative tick and daily volatility are matched; the spread (3 ticks against one tick in 73\% of futures quotes), the tails (excess kurtosis 4--5 daily and 40 at one minute) and the serial correlation of daily returns are not: simulated daily returns trend, with a lag-1 autocorrelation of 0.49 at index level and 0.60 at stock level against $-0.03$ for VN30 and 0.03 on average for HOSE stocks (Figure~\ref{fig:calibration}c). The trending comes from a slow adjustment of the price to the latent value; a family of markets in which it is calibrated away is analysed in Section~\ref{sec:acf}.
 
-\paragraph{Index level and stock level.} The 1.16\% target is the volatility of the VN30 \emph{index} (the 30 largest HOSE stocks). A single stock is more volatile: the median HOSE stock has a daily volatility of 2.46\% since 2022, and the stocks in the enforcement cases had a median of 1.75\% in the year before the manipulation, with a share of zero-return days of 0.13 against 0.12 for HOSE stocks (Section~\ref{sec:cases}). The case stocks are therefore ordinary HOSE stocks, not unusually illiquid ones, and the daily band was reached in their manipulation periods (median five days within 0.5 points of the ceiling; one stock for 12 days in a row). We therefore build two families of calibrated markets: index level (daily volatility 0.9--1.4\%) and stock level (1.8--2.8\%).
+\paragraph{Index level and stock level.} The 1.16\% target is the volatility of the VN30 \emph{index} (the 30 largest HOSE stocks). A single stock is more volatile: the median HOSE stock has a daily volatility of 2.46\% since 2022, and the stocks in the enforcement cases had a median of 1.75\% in the year before the manipulation (nine of the ten, those with earlier price history), with a share of zero-return days of 0.13 against 0.12 for HOSE stocks (Section~\ref{sec:cases}). The case stocks are therefore ordinary HOSE stocks, not unusually illiquid ones, and the daily band was reached in their manipulation periods (median five days within 0.5 points of the ceiling; one stock, with an assumed 7\% band, for 12 days in a row). We therefore build two families of calibrated markets: index level (daily volatility 0.9--1.4\%) and stock level (1.8--2.8\%).
 
 \begin{table}[t]
 \centering\footnotesize
@@ -50,7 +50,7 @@ data & content & used for\\
 \midrule
 Daily prices of 1,551 Vietnamese stocks, 2015--2025 & open, high, low, close, volume & stock-level detection checks (Section~\ref{sec:real}), tick-reform experiment (Section~\ref{sec:tick}), case statistics\\
 Exchange metadata & HOSE, Hanoi Stock Exchange (HNX) or Unlisted Public Company Market (UPCoM) for each ticker & control group for the tick reform; band of each case stock\\
-VN30, VN-Index, VN100 bars from 2012 & daily and 30-minute bars & index-level volatility target\\
+VN-Index (from 2000), VN30 (2012) and VN100 (2014) bars & daily and 30-minute bars & index-level volatility target\\
 1.56 million VN30 futures ticks, 2024--25 & price, best bid and ask & spread, tick activity (not matched)\\
 10 documented enforcement cases & stock, exact period, accounts, decision & weak labels for detection checks\\
 701 Telegram-organised pumps & tick trades around the pump, no accounts & accumulation before pumps, early-warning limits\\
@@ -66,21 +66,21 @@ Fills of three Hyperliquid perpetuals, 91 minutes & account address, side, milli
 \begin{table}[t]
 \centering\footnotesize
 \begin{adjustbox}{max width=\linewidth}
-\begin{tabular}{lrrl}
+\begin{tabular}{lrrrl}
 \toprule
-moment & simulator & real & source\\
+moment & default preset & first accepted index-level market & real & source\\
 \midrule
-cancel share of orders & 0.321 & 0.318 & HOSE, December 2020 (press)\\
-relative tick (bp) & 21 & 20 & derived from the tick table\\
-daily volatility, index level (\%) & 1.14 & 1.16 & VN30, 2023 onward\\
-daily volatility, typical stock (\%) & -- & 2.46 & HOSE median stock, 2022 onward\\
-retail share of value & 0.72 & 0.75--0.82 & press estimates, 2024--25\\
-spread: share of quotes at one tick & 0 & 0.73 & VN30F1M, 2024--25\\
-lag-1 autocorrelation of daily returns & 0.49 / 0.60 & $-0.03$ / 0.03 & VN30 / mean of HOSE stocks, 2022--25\\
+cancel share of orders & 0.321 & 0.318 & 0.318 & HOSE, December 2020 (press)\\
+relative tick (bp) & 21 & 19.8 & 20 & derived from the tick table\\
+daily volatility, index level (\%) & 1.14 & 1.05 & 1.16 & VN30, 2023 onward\\
+daily volatility, typical stock (\%) & -- & -- & 2.46 & HOSE median stock, 2022 onward\\
+retail share of value & 0.72 & 0.717 & 0.75--0.82 & press estimates, 2024--25\\
+spread: share of quotes at one tick & 0 & 0 & 0.73 & VN30F1M, 2024--25\\
+lag-1 autocorrelation of daily returns & -- & 0.49 (stock level: 0.60) & $-0.03$ (VN30), 0.03 (HOSE stocks) & 2022--25\\
 \bottomrule
 \end{tabular}
 \end{adjustbox}
-\caption{Calibration of the first Vietnam preset. The last two rows are not matched; the stock-level family targets the volatility of a typical stock.}\label{tab:calib}
+\caption{Calibration of the simulator. The default preset is the single market used first (values from its calibration); the second column is re-measured over 16 honest episodes of the first accepted market of the index-level family. The last two rows are not matched; the stock-level family targets the volatility of a typical stock}\label{tab:calib}
 \end{table}
 
 \begin{figure}[t]

@@ -165,7 +165,27 @@ def planted2(a):
     pd.DataFrame(rows).to_csv(Path(a.out) / "real_accounts_planted2.csv", index=False)
 
 
+def neff(a):
+    """Orders per window, active accounts and the effective number of accounts (aggregate variance over the variance of a quiet account)."""
+    d = load_orders(Path(a.orders))
+    rows = []
+    for i, F in enumerate(windows(d, 0.5, a.T)):
+        x = F[0] - F[1]
+        tot = F.sum(axis=(0, 2))
+        low = (tot >= 3) & (tot < 16)
+        vy = float(np.var(x.sum(axis=0)))
+        vx = float(np.median(np.var(x[low], axis=1)))
+        rows.append({"window": i, "orders": int(F.sum()), "active accounts": F.shape[1], "accounts with >=3 orders": int((tot >= 3).sum()),
+                     "quiet accounts": int(low.sum()), "variance of aggregate flow per bin": vy, "median variance of a quiet account": vx, "effective number of accounts": vy / vx})
+    df = pd.DataFrame(rows)
+    df.to_csv(Path(a.out) / "real_accounts_neff.csv", index=False)
+    print(df.round(2).to_string())
+    print("median active", df["active accounts"].median(), "mean", df["active accounts"].mean(), "mean orders", df.orders.mean(), "median Neff", df["effective number of accounts"].median())
+
+
 def main(a):
+    if a.stage == "neff":
+        return neff(a)
     if a.stage == "planted2":
         return planted2(a)
     rng = np.random.default_rng(a.seed)
