@@ -3,7 +3,7 @@
 An agent-based limit order book simulator for designing and stress-testing market surveillance and exchange rules from
 the regulator's side, with presets calibrated to the Ho Chi Minh Stock Exchange (HOSE), and public-data checks on real
 Vietnamese markets. The paper draft is in `paper/` (`main_sn.tex` with `sections/`, `main_sn.pdf`; Springer Nature class `sn-jnl`); every table and figure in it is generated from
-the CSV files in `results/` by `experiments/make_tables.py` and `experiments/make_figures.py`.
+the CSV files in `results/` by `experiments/make_tables.py`, `make_figures.py` and `make_figures2.py`.
 
 Questions it is built to answer:
 
@@ -29,11 +29,20 @@ What this repository adds:
 - **Best-response evaluation of rules** against an adaptive ring (evolution-strategy search, cross-evaluated over a fixed
   strategy set) in a family of calibrated markets rather than one, with penalties tied to the Vietnamese fine cap of 5 or
   10 times the illegal gain (Becker deterrence condition: detection probability above 1/m).
+- **Theory, verified by simulation** (`experiments/theory_checks.py`, `fit_power_law.py`): exactness of the shift test and its
+  resolution limit when many accounts are ranked (Propositions 1-2), a power law in the number of accounts and the number of
+  co-active members (Proposition 3, checked by Monte Carlo and fitted to the agent-based sensitivity results), the cancellation of
+  symmetric market-making flow by netting (Proposition 4), a deterrence-capacity formula (Proposition 5) and a law for the
+  block reference price (Proposition 6, checked by exact ex-post evaluation in `run_block_static.py`).
+- **A stress test on real account-level order flow** (`experiments/run_real_accounts.py`): Hyperliquid order submissions
+  (Zenodo 18184441) and fills; the exchangeability condition fails for a large share of accounts there, and a ring planted in
+  the real flow is found only when it makes up about a fifth of the flow.
 - **Public-data checks**: documented enforcement cases against a 1,551-stock daily panel (with random-stock and same-stock
   time placebos), Telegram pump events in tick data, and a difference-in-differences on the HOSE tick reform of
   September 2016 compared with simulated tick changes.
 
-Not claimed: that any number from the simulator describes the real market, or that the detector works on real accounts.
+Not claimed: that any number from the simulator describes the real market, or that the detector works on real Vietnamese
+accounts.
 
 ## Main results
 
@@ -75,6 +84,28 @@ Stock-level family (`results/vn_ensemble_stock.md`, six markets, no-policy gain 
 and on fixed manipulators: spoofing profit is not reduced by minimum resting time or cancel fees in the Vietnam preset
 (the strictest settings raise spread by 7-8% and volatility by 21-24%); doubling the tick raises spread by about 35% and cuts depth by 10%; wash-trade
 share is unaffected by all order-level levers; only the block reference price cuts the ring's gain.
+
+### Theory checks and the power law (`results/theory_checks.md`, `power_law_fit.md`)
+
+- Exact false-alarm control per account holds for the implemented test (rejection 0.0100 at the 1% level for Gaussian and 0.0102 for
+  Poisson flows); with a shared bursty regime the unsigned test rejects 65% and the signed test 1.5%. A Bonferroni rule needs T >= N/alpha
+  shifts, so with T = 300 it flags nothing for any N tested (50 to 1200).
+- In a Gaussian-flow model the shift of the statistic is linear in the model correlation (R^2 = 0.993); the same law with two fitted
+  constants explains the dependence of the agent-based catch@5 on the number of accounts, ring size and push probability (mean absolute
+  error 0.043; held-out sweeps 0.045 to 0.088).
+- Doubling the fine multiple from 5 to 10 cuts the capacity needed to deter a small ring by a factor of about 2.4 (3.0 to 1.2 accounts per
+  window at 600 active accounts); the saving from screening over random inspection falls from 3.7 at 600 accounts to 2.0 at 2000.
+- A trailing-mean reference price removes 58-61% of the block value at 60 steps and 87-98% at one day (the total gain falls to 28-44% at
+  one day); the linear-ramp law has the right shape and overstates the retained value by 0.04 to 0.2.
+
+### Real account-level order flow (`results/real_accounts.md`)
+
+On Hyperliquid order submissions (SOL perpetual, 577,918 orders, 1,909 accounts), 28.5% of accounts with at least 3 orders in a window have
+p <= 0.01 (signed; 33.4% unsigned) against a nominal 1%; the effective number of accounts, aggregate variance over the variance of a quiet
+account, is about 10^6 against 470 accounts. A ring of 12 quiet accounts planted in the real flow is found in the top five in 80% of trials at
+100 orders per member and push (20% of the flow of the window) and in none at 30 orders (6%). On fills the statistic is mechanically
+contaminated by counterparty mirroring and must be applied to submissions. These data are from a crypto derivatives venue dominated by
+automated accounts, not a Vietnamese market.
 
 ### Real data (public, no accounts)
 
@@ -121,12 +152,17 @@ python experiments/run_vn_policy.py && python experiments/run_vn_cross.py   # si
 python experiments/run_vn_ensemble.py                    # index-level family
 python experiments/run_vn_ensemble.py --vol-lo 1.8 --vol-hi 2.8 --sigma-lo 1.0 --sigma-hi 2.0 --tag _stock --n-draw 80
 python experiments/run_policy_matrix.py                  # all levers, quality and manipulators
+python experiments/run_block_static.py                   # block reference price: exact ex-post evaluation
+python experiments/theory_checks.py && python experiments/fit_power_law.py   # propositions by Monte Carlo, power law fit
+MARKETSIM_DATA=DIR python experiments/run_real_accounts.py          # real order flow (DIR/acct_data/...); --stage planted2 for the planted ring
+python experiments/run_calib_sim.py [--check-all]        # simulated returns and re-measured moments of the accepted markets
+python experiments/run_case_eventstudy.py --folder DIR   # cases in event time
 python experiments/run_tick_sim.py                       # simulated tick cuts
 python experiments/run_tick_reform.py --folder DIR       # real tick-reform DiD (daily panel)
 python experiments/run_case_validation.py --folder DIR   # real enforcement cases (add --window 10/60 --tag _w10/_w60)
 python experiments/case_stats.py --folder DIR            # case stocks against the market
 python experiments/run_pump_events.py                    # needs the Telegram pump archives
-python experiments/make_tables.py && python experiments/make_figures.py
+python experiments/make_tables.py && python experiments/make_figures.py && python experiments/make_figures2.py
 cd paper && pdflatex main_sn && bibtex main_sn && pdflatex main_sn && pdflatex main_sn   # Springer Nature template (sn-jnl, sn-basic)
 ```
 

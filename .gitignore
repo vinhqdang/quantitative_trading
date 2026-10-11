@@ -230,3 +230,4 @@ paper/*.bbl
 paper/*.blg
 paper/*.out
 paper/*.toc
+paper/submission_package.zip

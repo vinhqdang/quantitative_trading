@@ -92,7 +92,19 @@ The first version of the policy comparison used one calibrated market (index lev
 
 \section{Additional tables}\label{app:extra}
 
-Table~\ref{tab:ablation} gives the ablations of the signed test behind Figure~\ref{fig:sens}, and Table~\ref{tab:order} the effect of order-level rules on the default, non-adaptive spoofer in the uncalibrated simulator, which the main text does not use.
+Table~\ref{tab:calibmarkets} gives the moments of each accepted market re-measured over 16 honest episodes, and Table~\ref{tab:blocksize} the block-price rule against the assumed block size. Table~\ref{tab:ablation} gives the ablations of the signed test behind Figure~\ref{fig:sens}, and Table~\ref{tab:order} the effect of order-level rules on the default, non-adaptive spoofer in the uncalibrated simulator, which the main text does not use.
+
+\begin{table}[h]
+\centering\footnotesize
+\adjustbox{max width=\linewidth}{\input{tables/calib_markets.tex}}
+\caption{Moments of the accepted markets re-measured over 16 honest episodes of 6000 steps (standard error of the volatility in brackets), against the volatility measured at acceptance on two episodes. Tolerances: volatility 0.9--1.4\% (index level) and 1.8--2.8\% (stock level), cancel share 0.27--0.37, retail share 0.66--0.85}\label{tab:calibmarkets}
+\end{table}
+
+\begin{table}[h]
+\centering\footnotesize
+\adjustbox{max width=\linewidth}{\input{tables/block_size.tex}}
+\caption{Block-price rule against the assumed block size (median over six markets per family): gain with the last price as reference, and the share of it kept when the block is priced at the mean of the last 60 or 240 steps, for a ring that keeps its strategy. Assumed size: 3000 lots}\label{tab:blocksize}
+\end{table}
 
 \begin{table}[h]
 \centering\footnotesize

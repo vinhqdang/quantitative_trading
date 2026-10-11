@@ -202,9 +202,9 @@ def capacity():
     (OUT / "capacity.tex").write_text("\\begin{tabular}{lrrrrrr}\n\\toprule\n" + "\n".join(rows) + "\n\\bottomrule\n\\end{tabular}\n")
 
 
-from table_extras import real_calibration, real_planted  # noqa: E402
+from table_extras import block_size, calib_markets, real_calibration, real_planted  # noqa: E402
 
 
 if __name__ == "__main__":
-    robust(); policy(); cases(); ablation(); case_list(); window_sensitivity(); tick_compare(); ensemble("", ""); ensemble("_stock", "_stock"); matrix(); case_stats(); block(); capacity(); real_calibration(); real_planted()
+    robust(); policy(); cases(); ablation(); case_list(); window_sensitivity(); tick_compare(); ensemble("", ""); ensemble("_stock", "_stock"); ensemble("_acf", "_acf"); matrix(); case_stats(); block(); capacity(); real_calibration(); real_planted(); calib_markets(); block_size()
     print(sorted(p.name for p in OUT.glob("*.tex")))

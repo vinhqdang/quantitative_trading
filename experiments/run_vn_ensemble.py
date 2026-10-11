@@ -39,19 +39,19 @@ def _mom(args):
     return episode_moments(seed, cfg)
 
 
-def draw(rng, sigma=(0.4, 1.2), nfund=(25, 60)):
-    return {"n_noise": int(rng.integers(350, 651)), "n_fund": int(rng.integers(nfund[0], nfund[1] + 1)), "mm_activity": float(rng.uniform(0.06, 0.14)),
+def draw(rng, sigma=(0.4, 1.2), nfund=(25, 60), nnoise=(350, 650), mm=(0.06, 0.14)):
+    return {"n_noise": int(rng.integers(nnoise[0], nnoise[1] + 1)), "n_fund": int(rng.integers(nfund[0], nfund[1] + 1)), "mm_activity": float(rng.uniform(*mm)),
             "fund_sigma": float(rng.uniform(*sigma)), "mm_imb_sens": float(rng.uniform(1.5, 4.0)),
             "mom_activity": float(rng.uniform(0.05, 0.12))}
 
 
 def sample_markets(n_draw: int, n_keep: int, seed: int, sigma=(0.4, 1.2), nfund=(25, 60), acf_max: float | None = None,
-                   n_ep: int = 2, steps: int | None = None) -> pd.DataFrame:
+                   n_ep: int = 2, steps: int | None = None, nnoise=(350, 650), mm=(0.06, 0.14)) -> pd.DataFrame:
     rng = np.random.default_rng(seed)
     rows = []
     pool = make_pool(4)
     for i in range(n_draw):
-        p = draw(rng, sigma, nfund)
+        p = draw(rng, sigma, nfund, nnoise, mm)
         cfg = replace(vn_config(**p), **HONEST)
         if steps:
             cfg = replace(cfg, steps=steps)
@@ -71,8 +71,9 @@ def sample_markets(n_draw: int, n_keep: int, seed: int, sigma=(0.4, 1.2), nfund=
 
 def main(args):
     TOL["daily_vol_pct"] = (args.vol_lo, args.vol_hi)
+    TOL["retail_share"] = (args.retail_lo, 0.85)
     tag = args.tag
-    draws = sample_markets(args.n_draw, args.n_markets, args.seed, (args.sigma_lo, args.sigma_hi), (args.nfund_lo, args.nfund_hi), args.acf_max, args.draw_episodes, args.draw_steps)
+    draws = sample_markets(args.n_draw, args.n_markets, args.seed, (args.sigma_lo, args.sigma_hi), (args.nfund_lo, args.nfund_hi), args.acf_max, args.draw_episodes, args.draw_steps, (args.nnoise_lo, args.nnoise_hi), (args.mm_lo, args.mm_hi))
     draws.to_csv(Path(args.out) / f"vn_ensemble{tag}_draws.csv", index=False)
     markets = draws[draws.accepted].head(args.n_markets)
     strats_all = rvc.strategies(Path(args.out) / "vn_policy.md")
@@ -124,6 +125,11 @@ if __name__ == "__main__":
     ap.add_argument("--sigma-hi", type=float, default=1.2)
     ap.add_argument("--nfund-lo", type=int, default=25)
     ap.add_argument("--nfund-hi", type=int, default=60)
+    ap.add_argument("--nnoise-lo", type=int, default=350)
+    ap.add_argument("--nnoise-hi", type=int, default=650)
+    ap.add_argument("--mm-lo", type=float, default=0.06)
+    ap.add_argument("--mm-hi", type=float, default=0.14)
+    ap.add_argument("--retail-lo", type=float, default=0.66)
     ap.add_argument("--acf-max", type=float, default=None)
     ap.add_argument("--draw-episodes", type=int, default=2)
     ap.add_argument("--draw-steps", type=int, default=None)

@@ -40,3 +40,33 @@ def real_planted():
                  f"{r['signed global@5']:.2f}", f"{r['signed global@10']:.2f}", f"{r['member flagged p<=0.01 (signed)']:.2f}"]
         rows.append(" & ".join(cells) + r" \\")
     (OUT / "real_planted.tex").write_text(TOP % "lrrrrrrrrr" + "\n".join(rows) + BOT)
+
+
+def calib_markets():
+    f = R / "calib_markets.csv"
+    if not f.exists():
+        return
+    d = pd.read_csv(f)
+    head = r"family & market (draw) & volatility at acceptance (\%) & volatility, 16 episodes (\%) & cancel share & retail share & spread (ticks) \\"
+    rows = [head, r"\midrule"]
+    for _, r in d.iterrows():
+        cells = [r.family, str(int(r.market)), f"{r['vol at acceptance (%)']:.2f}", f"{r['vol, 16-episode mean (%)']:.2f} ({r['vol s.e. (%)']:.2f})",
+                 f"{r['cancel share']:.3f}", f"{r['retail share']:.3f}", f"{r['spread (ticks)']:.2f}"]
+        rows.append(" & ".join(cells) + r" \\")
+    (OUT / "calib_markets.tex").write_text(TOP % "llrrrrr" + "\n".join(rows) + BOT)
+
+
+def block_size():
+    f = R / "block_size_sensitivity.csv"
+    if not f.exists():
+        return
+    d = pd.read_csv(f)
+    rows = [r"& \multicolumn{3}{c}{index level} & \multicolumn{3}{c}{stock level} \\", r"\cmidrule(lr){2-4}\cmidrule(lr){5-7}",
+            r"block size (lots) & gain, last price & kept at $L=60$ & kept at $L=240$ & gain, last price & kept at $L=60$ & kept at $L=240$ \\", r"\midrule"]
+    for b in sorted(d["block size (lots)"].unique()):
+        cells = [str(int(b))]
+        for fam in ("index level", "stock level"):
+            r = d[(d["block size (lots)"] == b) & (d.family == fam)].iloc[0]
+            cells += [f"{r['median gain, last-price reference'] / 1e3:.0f}k", f"{r['median share kept, L=60, ring keeps strategy']:.2f}", f"{r['median share kept, L=240, ring keeps strategy']:.2f}"]
+        rows.append(" & ".join(cells) + r" \\")
+    (OUT / "block_size.tex").write_text(TOP % "lrrrrrr" + "\n".join(rows) + BOT)
