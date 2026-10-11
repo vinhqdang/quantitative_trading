@@ -127,7 +127,8 @@ python experiments/run_case_validation.py --folder DIR   # real enforcement case
 python experiments/case_stats.py --folder DIR            # case stocks against the market
 python experiments/run_pump_events.py                    # needs the Telegram pump archives
 python experiments/make_tables.py && python experiments/make_figures.py
-cd paper && pdflatex main && bibtex main && pdflatex main && pdflatex main
+cd paper && pdflatex main && bibtex main && pdflatex main && pdflatex main          # generic version
+cd paper && pdflatex main_sn && bibtex main_sn && pdflatex main_sn && pdflatex main_sn   # Springer Nature template (sn-jnl, sn-basic)
 ```
 
 On real order-level data: convert to the event schema in `marketsim/exchange.py` and call
