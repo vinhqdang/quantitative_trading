@@ -282,6 +282,22 @@ def fig_tick():
     fig.savefig(OUT / "tick.pdf")
 
 
+def fig_tick_placebo():
+    d = pd.read_csv(R / "tick_placebo_dates.csv")
+    fig, axes = plt.subplots(1, 2, figsize=(5.15, 2.2))
+    for ax, (name, lab, letter) in zip(axes, [("zero-return share", "share of zero-return days", "a"), ("CS spread (%)", "spread estimate (points)", "b")]):
+        s = d[d.outcome == name]
+        pl, true = s[~s.true].DiD, s[s.true].DiD.iloc[0]
+        ax.hist(pl, bins=14, color=BLUE, alpha=0.75, edgecolor="white")
+        ax.axvline(true, color=ORANGE, lw=1.6, ls="--", label="reform date")
+        ax.axvline(0, color=MUTED, lw=0.5)
+        ax.set_xlabel(f"difference-in-differences: {lab}", fontsize=7); panel(ax, letter)
+    axes[0].set_ylabel("placebo dates (n = %d)" % (d[(d.outcome == "CS spread (%)") & ~d.true].shape[0]))
+    axes[0].legend(frameon=False, loc="upper left", fontsize=7)
+    fig.tight_layout(w_pad=0.8)
+    fig.savefig(OUT / "tick_placebo.pdf")
+
+
 def fig_roc():
     from sklearn.metrics import precision_recall_curve, roc_curve
     scen = [("clean", "clean"), ("plus_MM_desks", "+ market-making desks"), ("all_three", "all three honest groups")]
@@ -423,8 +439,8 @@ def fig_calib():
 
 
 if __name__ == "__main__":
-    which = sys.argv[1:] or ["framework", "theory", "power_abm", "frontier", "tradeoff", "cases", "tick", "roc", "block", "real_accounts", "calib"]
+    which = sys.argv[1:] or ["framework", "theory", "power_abm", "frontier", "tradeoff", "cases", "tick", "tick_placebo", "roc", "block", "real_accounts", "calib"]
     for w in which:
         {"framework": fig_framework, "theory": fig_theory, "power_abm": fig_power_abm, "frontier": fig_frontier, "tradeoff": fig_tradeoff,
-         "cases": fig_cases, "tick": fig_tick, "roc": fig_roc, "block": fig_block, "real_accounts": fig_real_accounts, "calib": fig_calib}[w]()
+         "cases": fig_cases, "tick": fig_tick, "tick_placebo": fig_tick_placebo, "roc": fig_roc, "block": fig_block, "real_accounts": fig_real_accounts, "calib": fig_calib}[w]()
         print("done", w)
