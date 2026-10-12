@@ -503,3 +503,339 @@ index level,26,band 7% + inspect 3 per window,24,17679.833333333332,0.5
 index level,26,band 7% + inspect 3 per window,25,52992.25,1.0
 index level,26,band 7% + inspect 3 per window,26,9045.5,0.5
 index level,26,band 7% + inspect 3 per window,27,-33364.333333333336,0.8333333333333334
+stock level,14,band 7%,0,164212.41666666666,
+stock level,14,band 7%,1,52612.5,
+stock level,14,band 7%,2,420230.5,
+stock level,14,band 7%,3,53816.416666666664,
+stock level,14,band 7%,4,52789.916666666664,
+stock level,14,band 7%,5,-36787.833333333336,
+stock level,14,band 7%,6,-5077.5,
+stock level,14,band 7%,7,-14078.166666666666,
+stock level,14,band 7%,8,6489.75,
+stock level,14,band 7%,9,13065.333333333334,
+stock level,14,band 7%,10,15173.666666666666,
+stock level,14,band 7%,11,-9609.0,
+stock level,14,band 7%,12,48392.0,
+stock level,14,band 7%,13,18780.5,
+stock level,14,band 7%,14,45818.666666666664,
+stock level,14,band 7%,15,36123.75,
+stock level,14,band 7%,16,25230.916666666668,
+stock level,14,band 7%,17,-5313.083333333333,
+stock level,14,band 7%,18,27947.666666666668,
+stock level,14,band 7%,19,-14266.0,
+stock level,14,band 7%,20,-15505.583333333334,
+stock level,14,band 7%,21,35196.833333333336,
+stock level,14,band 7%,22,34310.083333333336,
+stock level,14,band 7%,23,8870.25,
+stock level,14,band 7%,24,35249.916666666664,
+stock level,14,band 7%,25,922.9166666666666,
+stock level,14,band 7%,26,12447.5,
+stock level,14,band 7%,27,46739.0,
+stock level,14,band 7% + block at 240-step mean,0,57248.87499999998,
+stock level,14,band 7% + block at 240-step mean,1,12858.333333333308,
+stock level,14,band 7% + block at 240-step mean,2,199490.91666666663,
+stock level,14,band 7% + block at 240-step mean,3,26194.541666666682,
+stock level,14,band 7% + block at 240-step mean,4,-10169.458333333501,
+stock level,14,band 7% + block at 240-step mean,5,-8707.624999999973,
+stock level,14,band 7% + block at 240-step mean,6,1689.1666666665667,
+stock level,14,band 7% + block at 240-step mean,7,29706.208333333227,
+stock level,14,band 7% + block at 240-step mean,8,3119.958333333371,
+stock level,14,band 7% + block at 240-step mean,9,-3880.49999999988,
+stock level,14,band 7% + block at 240-step mean,10,4411.16666666665,
+stock level,14,band 7% + block at 240-step mean,11,8970.16666666648,
+stock level,14,band 7% + block at 240-step mean,12,22259.708333333412,
+stock level,14,band 7% + block at 240-step mean,13,5979.458333333253,
+stock level,14,band 7% + block at 240-step mean,14,-3807.374999999957,
+stock level,14,band 7% + block at 240-step mean,15,4236.250000000098,
+stock level,14,band 7% + block at 240-step mean,16,-5627.416666666625,
+stock level,14,band 7% + block at 240-step mean,17,-8041.208333333422,
+stock level,14,band 7% + block at 240-step mean,18,8932.041666666611,
+stock level,14,band 7% + block at 240-step mean,19,13835.041666666619,
+stock level,14,band 7% + block at 240-step mean,20,-7231.624999999887,
+stock level,14,band 7% + block at 240-step mean,21,10461.41666666654,
+stock level,14,band 7% + block at 240-step mean,22,12233.0000000001,
+stock level,14,band 7% + block at 240-step mean,23,15930.666666666753,
+stock level,14,band 7% + block at 240-step mean,24,-20260.50000000002,
+stock level,14,band 7% + block at 240-step mean,25,4458.333333333358,
+stock level,14,band 7% + block at 240-step mean,26,1941.2500000000061,
+stock level,14,band 7% + block at 240-step mean,27,18433.791666666675,
+stock level,14,band 7% + inspect 3 per window,0,164212.41666666666,1.0
+stock level,14,band 7% + inspect 3 per window,1,52612.5,0.8333333333333334
+stock level,14,band 7% + inspect 3 per window,2,420230.5,1.0
+stock level,14,band 7% + inspect 3 per window,3,53816.416666666664,0.3333333333333333
+stock level,14,band 7% + inspect 3 per window,4,52789.916666666664,0.16666666666666666
+stock level,14,band 7% + inspect 3 per window,5,-36787.833333333336,0.16666666666666666
+stock level,14,band 7% + inspect 3 per window,6,-5077.5,0.5
+stock level,14,band 7% + inspect 3 per window,7,-14078.166666666666,0.5
+stock level,14,band 7% + inspect 3 per window,8,6489.75,0.5
+stock level,14,band 7% + inspect 3 per window,9,13065.333333333334,0.5
+stock level,14,band 7% + inspect 3 per window,10,15173.666666666666,0.16666666666666666
+stock level,14,band 7% + inspect 3 per window,11,-9609.0,0.8333333333333334
+stock level,14,band 7% + inspect 3 per window,12,48392.0,0.8333333333333334
+stock level,14,band 7% + inspect 3 per window,13,18780.5,0.6666666666666666
+stock level,14,band 7% + inspect 3 per window,14,45818.666666666664,0.5
+stock level,14,band 7% + inspect 3 per window,15,36123.75,0.6666666666666666
+stock level,14,band 7% + inspect 3 per window,16,25230.916666666668,1.0
+stock level,14,band 7% + inspect 3 per window,17,-5313.083333333333,1.0
+stock level,14,band 7% + inspect 3 per window,18,27947.666666666668,0.5
+stock level,14,band 7% + inspect 3 per window,19,-14266.0,0.8333333333333334
+stock level,14,band 7% + inspect 3 per window,20,-15505.583333333334,0.8333333333333334
+stock level,14,band 7% + inspect 3 per window,21,35196.833333333336,0.8333333333333334
+stock level,14,band 7% + inspect 3 per window,22,34310.083333333336,0.6666666666666666
+stock level,14,band 7% + inspect 3 per window,23,8870.25,0.5
+stock level,14,band 7% + inspect 3 per window,24,35249.916666666664,0.5
+stock level,14,band 7% + inspect 3 per window,25,922.9166666666666,0.8333333333333334
+stock level,14,band 7% + inspect 3 per window,26,12447.5,0.3333333333333333
+stock level,14,band 7% + inspect 3 per window,27,46739.0,0.6666666666666666
+stock level,19,band 7%,0,145626.41666666666,
+stock level,19,band 7%,1,-6075.916666666667,
+stock level,19,band 7%,2,279718.5833333333,
+stock level,19,band 7%,3,155633.33333333334,
+stock level,19,band 7%,4,31945.166666666668,
+stock level,19,band 7%,5,113642.33333333333,
+stock level,19,band 7%,6,91083.16666666667,
+stock level,19,band 7%,7,17343.166666666668,
+stock level,19,band 7%,8,51289.916666666664,
+stock level,19,band 7%,9,76576.66666666667,
+stock level,19,band 7%,10,50729.416666666664,
+stock level,19,band 7%,11,20982.0,
+stock level,19,band 7%,12,81926.75,
+stock level,19,band 7%,13,40360.666666666664,
+stock level,19,band 7%,14,-18307.833333333332,
+stock level,19,band 7%,15,-17999.916666666668,
+stock level,19,band 7%,16,-53566.75,
+stock level,19,band 7%,17,80177.91666666667,
+stock level,19,band 7%,18,119855.58333333333,
+stock level,19,band 7%,19,57306.333333333336,
+stock level,19,band 7%,20,56377.083333333336,
+stock level,19,band 7%,21,-40772.166666666664,
+stock level,19,band 7%,22,-8525.583333333334,
+stock level,19,band 7%,23,46099.5,
+stock level,19,band 7%,24,-1017.3333333333334,
+stock level,19,band 7%,25,46122.166666666664,
+stock level,19,band 7%,26,11267.75,
+stock level,19,band 7%,27,62854.5,
+stock level,19,band 7% + block at 240-step mean,0,54118.083333333285,
+stock level,19,band 7% + block at 240-step mean,1,785.5416666667783,
+stock level,19,band 7% + block at 240-step mean,2,97137.33333333359,
+stock level,19,band 7% + block at 240-step mean,3,60233.33333333338,
+stock level,19,band 7% + block at 240-step mean,4,18427.458333333336,
+stock level,19,band 7% + block at 240-step mean,5,39776.708333333314,
+stock level,19,band 7% + block at 240-step mean,6,-26951.208333333267,
+stock level,19,band 7% + block at 240-step mean,7,-11048.499999999927,
+stock level,19,band 7% + block at 240-step mean,8,8226.375000000044,
+stock level,19,band 7% + block at 240-step mean,9,-35555.62499999995,
+stock level,19,band 7% + block at 240-step mean,10,-36761.20833333341,
+stock level,19,band 7% + block at 240-step mean,11,3511.166666666582,
+stock level,19,band 7% + block at 240-step mean,12,14987.166666666611,
+stock level,19,band 7% + block at 240-step mean,13,12217.958333333421,
+stock level,19,band 7% + block at 240-step mean,14,11834.875000000053,
+stock level,19,band 7% + block at 240-step mean,15,8779.249999999915,
+stock level,19,band 7% + block at 240-step mean,16,-37654.250000000065,
+stock level,19,band 7% + block at 240-step mean,17,4567.500000000102,
+stock level,19,band 7% + block at 240-step mean,18,39999.33333333338,
+stock level,19,band 7% + block at 240-step mean,19,-6180.125000000026,
+stock level,19,band 7% + block at 240-step mean,20,7664.5833333332985,
+stock level,19,band 7% + block at 240-step mean,21,-24085.708333333376,
+stock level,19,band 7% + block at 240-step mean,22,10534.833333333365,
+stock level,19,band 7% + block at 240-step mean,23,-54325.50000000006,
+stock level,19,band 7% + block at 240-step mean,24,9660.791666666604,
+stock level,19,band 7% + block at 240-step mean,25,-4167.416666666832,
+stock level,19,band 7% + block at 240-step mean,26,4025.0416666666183,
+stock level,19,band 7% + block at 240-step mean,27,29956.583333333354,
+stock level,19,band 7% + inspect 3 per window,0,145626.41666666666,1.0
+stock level,19,band 7% + inspect 3 per window,1,-6075.916666666667,1.0
+stock level,19,band 7% + inspect 3 per window,2,279718.5833333333,1.0
+stock level,19,band 7% + inspect 3 per window,3,155633.33333333334,0.16666666666666666
+stock level,19,band 7% + inspect 3 per window,4,31945.166666666668,0.16666666666666666
+stock level,19,band 7% + inspect 3 per window,5,113642.33333333333,0.5
+stock level,19,band 7% + inspect 3 per window,6,91083.16666666667,0.5
+stock level,19,band 7% + inspect 3 per window,7,17343.166666666668,0.3333333333333333
+stock level,19,band 7% + inspect 3 per window,8,51289.916666666664,0.3333333333333333
+stock level,19,band 7% + inspect 3 per window,9,76576.66666666667,0.8333333333333334
+stock level,19,band 7% + inspect 3 per window,10,50729.416666666664,0.5
+stock level,19,band 7% + inspect 3 per window,11,20982.0,0.8333333333333334
+stock level,19,band 7% + inspect 3 per window,12,81926.75,0.3333333333333333
+stock level,19,band 7% + inspect 3 per window,13,40360.666666666664,0.3333333333333333
+stock level,19,band 7% + inspect 3 per window,14,-18307.833333333332,0.3333333333333333
+stock level,19,band 7% + inspect 3 per window,15,-17999.916666666668,0.16666666666666666
+stock level,19,band 7% + inspect 3 per window,16,-53566.75,1.0
+stock level,19,band 7% + inspect 3 per window,17,80177.91666666667,1.0
+stock level,19,band 7% + inspect 3 per window,18,119855.58333333333,0.5
+stock level,19,band 7% + inspect 3 per window,19,57306.333333333336,0.5
+stock level,19,band 7% + inspect 3 per window,20,56377.083333333336,0.6666666666666666
+stock level,19,band 7% + inspect 3 per window,21,-40772.166666666664,0.5
+stock level,19,band 7% + inspect 3 per window,22,-8525.583333333334,0.0
+stock level,19,band 7% + inspect 3 per window,23,46099.5,0.5
+stock level,19,band 7% + inspect 3 per window,24,-1017.3333333333334,0.3333333333333333
+stock level,19,band 7% + inspect 3 per window,25,46122.166666666664,1.0
+stock level,19,band 7% + inspect 3 per window,26,11267.75,0.3333333333333333
+stock level,19,band 7% + inspect 3 per window,27,62854.5,0.16666666666666666
+stock level,23,band 7%,0,537867.5,
+stock level,23,band 7%,1,55947.666666666664,
+stock level,23,band 7%,2,341489.8333333333,
+stock level,23,band 7%,3,-18061.416666666668,
+stock level,23,band 7%,4,-30843.833333333332,
+stock level,23,band 7%,5,-30612.75,
+stock level,23,band 7%,6,-229.08333333333334,
+stock level,23,band 7%,7,26768.0,
+stock level,23,band 7%,8,70970.58333333333,
+stock level,23,band 7%,9,47599.083333333336,
+stock level,23,band 7%,10,16469.666666666668,
+stock level,23,band 7%,11,47583.5,
+stock level,23,band 7%,12,41995.333333333336,
+stock level,23,band 7%,13,55297.833333333336,
+stock level,23,band 7%,14,40112.333333333336,
+stock level,23,band 7%,15,3221.75,
+stock level,23,band 7%,16,248466.5,
+stock level,23,band 7%,17,55956.333333333336,
+stock level,23,band 7%,18,80162.66666666667,
+stock level,23,band 7%,19,-31868.25,
+stock level,23,band 7%,20,91885.33333333333,
+stock level,23,band 7%,21,44673.333333333336,
+stock level,23,band 7%,22,2609.9166666666665,
+stock level,23,band 7%,23,9397.083333333334,
+stock level,23,band 7%,24,-14094.666666666666,
+stock level,23,band 7%,25,114502.83333333333,
+stock level,23,band 7%,26,45556.75,
+stock level,23,band 7%,27,284169.9166666667,
+stock level,23,band 7% + block at 240-step mean,0,296826.87499999994,
+stock level,23,band 7% + block at 240-step mean,1,13733.08333333327,
+stock level,23,band 7% + block at 240-step mean,2,181980.45833333337,
+stock level,23,band 7% + block at 240-step mean,3,-21079.124999999996,
+stock level,23,band 7% + block at 240-step mean,4,1599.9166666666897,
+stock level,23,band 7% + block at 240-step mean,5,-8207.541666666822,
+stock level,23,band 7% + block at 240-step mean,6,163.62500000011065,
+stock level,23,band 7% + block at 240-step mean,7,-46065.333333333176,
+stock level,23,band 7% + block at 240-step mean,8,-9558.583333333194,
+stock level,23,band 7% + block at 240-step mean,9,-14037.375000000087,
+stock level,23,band 7% + block at 240-step mean,10,87.37499999993572,
+stock level,23,band 7% + block at 240-step mean,11,5467.87500000009,
+stock level,23,band 7% + block at 240-step mean,12,-2458.833333333373,
+stock level,23,band 7% + block at 240-step mean,13,-10815.70833333336,
+stock level,23,band 7% + block at 240-step mean,14,3482.1250000000196,
+stock level,23,band 7% + block at 240-step mean,15,7168.624999999978,
+stock level,23,band 7% + block at 240-step mean,16,67896.7083333333,
+stock level,23,band 7% + block at 240-step mean,17,-9266.583333333443,
+stock level,23,band 7% + block at 240-step mean,18,26228.291666666682,
+stock level,23,band 7% + block at 240-step mean,19,9235.916666666713,
+stock level,23,band 7% + block at 240-step mean,20,17523.87499999994,
+stock level,23,band 7% + block at 240-step mean,21,3734.7916666666533,
+stock level,23,band 7% + block at 240-step mean,22,-2665.083333333339,
+stock level,23,band 7% + block at 240-step mean,23,18040.833333333372,
+stock level,23,band 7% + block at 240-step mean,24,18402.208333333176,
+stock level,23,band 7% + block at 240-step mean,25,-2389.8749999998277,
+stock level,23,band 7% + block at 240-step mean,26,50.500000000034184,
+stock level,23,band 7% + block at 240-step mean,27,147520.95833333323,
+stock level,23,band 7% + inspect 3 per window,0,537867.5,1.0
+stock level,23,band 7% + inspect 3 per window,1,55947.666666666664,1.0
+stock level,23,band 7% + inspect 3 per window,2,341489.8333333333,1.0
+stock level,23,band 7% + inspect 3 per window,3,-18061.416666666668,0.8333333333333334
+stock level,23,band 7% + inspect 3 per window,4,-30843.833333333332,0.8333333333333334
+stock level,23,band 7% + inspect 3 per window,5,-30612.75,0.6666666666666666
+stock level,23,band 7% + inspect 3 per window,6,-229.08333333333334,1.0
+stock level,23,band 7% + inspect 3 per window,7,26768.0,0.8333333333333334
+stock level,23,band 7% + inspect 3 per window,8,70970.58333333333,0.8333333333333334
+stock level,23,band 7% + inspect 3 per window,9,47599.083333333336,0.6666666666666666
+stock level,23,band 7% + inspect 3 per window,10,16469.666666666668,0.8333333333333334
+stock level,23,band 7% + inspect 3 per window,11,47583.5,1.0
+stock level,23,band 7% + inspect 3 per window,12,41995.333333333336,0.8333333333333334
+stock level,23,band 7% + inspect 3 per window,13,55297.833333333336,1.0
+stock level,23,band 7% + inspect 3 per window,14,40112.333333333336,0.8333333333333334
+stock level,23,band 7% + inspect 3 per window,15,3221.75,1.0
+stock level,23,band 7% + inspect 3 per window,16,248466.5,1.0
+stock level,23,band 7% + inspect 3 per window,17,55956.333333333336,1.0
+stock level,23,band 7% + inspect 3 per window,18,80162.66666666667,1.0
+stock level,23,band 7% + inspect 3 per window,19,-31868.25,1.0
+stock level,23,band 7% + inspect 3 per window,20,91885.33333333333,1.0
+stock level,23,band 7% + inspect 3 per window,21,44673.333333333336,1.0
+stock level,23,band 7% + inspect 3 per window,22,2609.9166666666665,0.8333333333333334
+stock level,23,band 7% + inspect 3 per window,23,9397.083333333334,0.8333333333333334
+stock level,23,band 7% + inspect 3 per window,24,-14094.666666666666,0.8333333333333334
+stock level,23,band 7% + inspect 3 per window,25,114502.83333333333,1.0
+stock level,23,band 7% + inspect 3 per window,26,45556.75,0.6666666666666666
+stock level,23,band 7% + inspect 3 per window,27,284169.9166666667,0.8333333333333334
+stock level,39,band 7%,0,187809.25,
+stock level,39,band 7%,1,26988.5,
+stock level,39,band 7%,2,46394.333333333336,
+stock level,39,band 7%,3,-52919.75,
+stock level,39,band 7%,4,34962.166666666664,
+stock level,39,band 7%,5,85703.33333333333,
+stock level,39,band 7%,6,52614.333333333336,
+stock level,39,band 7%,7,-15513.75,
+stock level,39,band 7%,8,26790.25,
+stock level,39,band 7%,9,56021.666666666664,
+stock level,39,band 7%,10,20202.666666666668,
+stock level,39,band 7%,11,43627.916666666664,
+stock level,39,band 7%,12,-2468.0833333333335,
+stock level,39,band 7%,13,68015.08333333333,
+stock level,39,band 7%,14,25338.583333333332,
+stock level,39,band 7%,15,87422.08333333333,
+stock level,39,band 7%,16,28259.083333333332,
+stock level,39,band 7%,17,-38041.166666666664,
+stock level,39,band 7%,18,14874.0,
+stock level,39,band 7%,19,52553.583333333336,
+stock level,39,band 7%,20,-9739.416666666666,
+stock level,39,band 7%,21,-5439.833333333333,
+stock level,39,band 7%,22,73832.75,
+stock level,39,band 7%,23,59338.25,
+stock level,39,band 7%,24,-13643.666666666666,
+stock level,39,band 7%,25,128329.0,
+stock level,39,band 7%,26,60919.5,
+stock level,39,band 7%,27,100866.08333333333,
+stock level,39,band 7% + block at 240-step mean,0,63293.62500000014,
+stock level,39,band 7% + block at 240-step mean,1,80.16666666661331,
+stock level,39,band 7% + block at 240-step mean,2,-32758.791666666893,
+stock level,39,band 7% + block at 240-step mean,3,-35620.79166666655,
+stock level,39,band 7% + block at 240-step mean,4,29501.750000000055,
+stock level,39,band 7% + block at 240-step mean,5,20348.12499999991,
+stock level,39,band 7% + block at 240-step mean,6,-30516.916666666857,
+stock level,39,band 7% + block at 240-step mean,7,22720.625000000033,
+stock level,39,band 7% + block at 240-step mean,8,-3008.7083333333326,
+stock level,39,band 7% + block at 240-step mean,9,-8157.500000000007,
+stock level,39,band 7% + block at 240-step mean,10,31116.208333333372,
+stock level,39,band 7% + block at 240-step mean,11,-33865.83333333323,
+stock level,39,band 7% + block at 240-step mean,12,-9107.666666666652,
+stock level,39,band 7% + block at 240-step mean,13,-5811.999999999902,
+stock level,39,band 7% + block at 240-step mean,14,-136.4166666664355,
+stock level,39,band 7% + block at 240-step mean,15,23018.958333333343,
+stock level,39,band 7% + block at 240-step mean,16,-7481.541666666603,
+stock level,39,band 7% + block at 240-step mean,17,-490.12500000003155,
+stock level,39,band 7% + block at 240-step mean,18,-4220.791666666682,
+stock level,39,band 7% + block at 240-step mean,19,-10966.208333333328,
+stock level,39,band 7% + block at 240-step mean,20,2576.2083333332303,
+stock level,39,band 7% + block at 240-step mean,21,-12042.95833333345,
+stock level,39,band 7% + block at 240-step mean,22,31021.291666666733,
+stock level,39,band 7% + block at 240-step mean,23,-30714.875000000025,
+stock level,39,band 7% + block at 240-step mean,24,8012.583333333475,
+stock level,39,band 7% + block at 240-step mean,25,-23572.04166666654,
+stock level,39,band 7% + block at 240-step mean,26,7738.250000000077,
+stock level,39,band 7% + block at 240-step mean,27,35615.04166666668,
+stock level,39,band 7% + inspect 3 per window,0,187809.25,1.0
+stock level,39,band 7% + inspect 3 per window,1,26988.5,0.5
+stock level,39,band 7% + inspect 3 per window,2,46394.333333333336,1.0
+stock level,39,band 7% + inspect 3 per window,3,-52919.75,0.5
+stock level,39,band 7% + inspect 3 per window,4,34962.166666666664,0.0
+stock level,39,band 7% + inspect 3 per window,5,85703.33333333333,0.16666666666666666
+stock level,39,band 7% + inspect 3 per window,6,52614.333333333336,0.5
+stock level,39,band 7% + inspect 3 per window,7,-15513.75,0.6666666666666666
+stock level,39,band 7% + inspect 3 per window,8,26790.25,0.3333333333333333
+stock level,39,band 7% + inspect 3 per window,9,56021.666666666664,0.5
+stock level,39,band 7% + inspect 3 per window,10,20202.666666666668,0.5
+stock level,39,band 7% + inspect 3 per window,11,43627.916666666664,0.5
+stock level,39,band 7% + inspect 3 per window,12,-2468.0833333333335,0.5
+stock level,39,band 7% + inspect 3 per window,13,68015.08333333333,0.5
+stock level,39,band 7% + inspect 3 per window,14,25338.583333333332,0.5
+stock level,39,band 7% + inspect 3 per window,15,87422.08333333333,0.6666666666666666
+stock level,39,band 7% + inspect 3 per window,16,28259.083333333332,1.0
+stock level,39,band 7% + inspect 3 per window,17,-38041.166666666664,1.0
+stock level,39,band 7% + inspect 3 per window,18,14874.0,0.5
+stock level,39,band 7% + inspect 3 per window,19,52553.583333333336,0.8333333333333334
+stock level,39,band 7% + inspect 3 per window,20,-9739.416666666666,1.0
+stock level,39,band 7% + inspect 3 per window,21,-5439.833333333333,0.5
+stock level,39,band 7% + inspect 3 per window,22,73832.75,0.16666666666666666
+stock level,39,band 7% + inspect 3 per window,23,59338.25,0.8333333333333334
+stock level,39,band 7% + inspect 3 per window,24,-13643.666666666666,0.5
+stock level,39,band 7% + inspect 3 per window,25,128329.0,1.0
+stock level,39,band 7% + inspect 3 per window,26,60919.5,0.16666666666666666
+stock level,39,band 7% + inspect 3 per window,27,100866.08333333333,0.5
