@@ -123,6 +123,13 @@ automated accounts, not a Vietnamese market.
   Inference over time (`results/tick_placebo.md`): the zero-return effect is 4.3 placebo standard deviations below the mean of
   57 placebo dates and no placebo or label permutation is as extreme; the spread estimate is at the 12th percentile of the
   placebo distribution (not distinguishable from noise).
+- **New algorithms** (`marketsim/jitter.py`, `results/jitter_*.md|csv`, `allocation_*.csv`): the circular-shift p-values cannot support
+  a family-wise guarantee beyond about 15 accounts (p >= 1/T); block-jitter surrogates (independent cyclic shifts inside blocks, closed-form
+  mean and variance) give exact p-values of any resolution under local exchangeability: Bonferroni family-wise error 5.0% on exchangeable
+  flows, ring size for a flag 2-3x that for top-5 ranking and growing like sqrt(N ln N), honest family-wise error 1.3-5.8% in agent-based
+  markets with blocks of 25 steps (up to 19% with blocks of 100), void on real order flow (about 20% of accounts rejected); a joint-shift
+  max-T test is invalid (family-wise error up to 1.0 with a ring). Maximin allocation of inspection capacity over stocks (Proposition 9):
+  the rule deters a ring with about a third of the capacity of equal shares (128 vs 384 at fine multiple 5).
 - **Extra checks of the simulation results** (`results/transfer.md`, `menu_random_summary.md`, `ensemble_intervals.md`,
   `case_pooled.md`): a boosting model trained on the generic simulator transfers to ten Vietnam-preset markets (catch@3
   0.86-0.94) while the label-free test is nearly blind in the trend-free family; 24 random strategies added to the four-
@@ -173,6 +180,9 @@ python experiments/run_tick_placebo.py --folder DIR --meta DIR/vn_symbols.csv   
 python experiments/run_transfer.py                       # supervised detector across simulated markets
 python experiments/run_menu_random.py [--resume] && python experiments/analyse_menu_random.py   # larger ring strategy menu
 python experiments/ensemble_intervals.py && python experiments/case_pooled.py   # intervals over markets, pooled case tests
+python experiments/run_jitter.py --stage fwer|regime|kmin|abm|abm_pooled|real|real_calib|maxt && python experiments/analyse_jitter.py   # block-jitter test: family-wise control, ring size, ABM and real flows, max-T counterexample
+python experiments/run_allocation.py --stage replicate --replicates 20   # maximin allocation of inspection capacity over stocks (--stage sim for the agent-based version)
+python experiments/make_figures3.py                      # jitter and allocation figures
 python experiments/run_case_validation.py --folder DIR   # real enforcement cases (add --window 10/60 --tag _w10/_w60)
 python experiments/case_stats.py --folder DIR            # case stocks against the market
 python experiments/run_pump_events.py                    # needs the Telegram pump archives
