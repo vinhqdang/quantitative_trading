@@ -1,0 +1,8 @@
+null,accounts tested,share with p<=0.01,share with p<=0.05
+circular shifts (block 300),2170,0.2626728110599078,0.39493087557603684
+"jitter, block 150",2170,0.31244239631336407,0.39493087557603684
+"jitter, block 75",2170,0.31244239631336407,0.3967741935483871
+"jitter, block 30, tolerances 1-3",2170,0.3009216589861751,0.38755760368663594
+"jitter, block 15, tolerances 1-3",2170,0.28433179723502305,0.3649769585253456
+"stratified permutation (regime proxy: others' flow smoothed over 15 bins, 5 strata), first 4 windows",1072,0.27238805970149255,0.34701492537313433
+"stratified permutation (regime proxy: others' flow smoothed over 5 bins, 10 strata), first 4 windows",1072,0.2126865671641791,0.28824626865671643

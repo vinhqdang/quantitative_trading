@@ -286,8 +286,62 @@ def stage_real_calib(a):
     pd.DataFrame(rows).to_csv(Path(a.out) / "jitter_real_calibration.csv", index=False)
 
 
+# ---- maxt ----------------------------------------------------------------------------------------------------------------------------------
+def _stats(x):
+    tot = x.sum(0)
+    return np.array([(x * _circ_box(tot[None] - x, tol)).sum(1) for tol in TOLS])          # [tolerances, accounts]
+
+
+def _joint_draw(x, rng, block):
+    N = x.shape[0]
+    xs = np.empty_like(x)
+    for a_ in range(0, T, block):
+        b_ = min(a_ + block, T)
+        L = b_ - a_
+        idx = (np.arange(L)[None, :] + rng.integers(0, L, size=N)[:, None]) % L
+        xs[:, a_:b_] = np.take_along_axis(x[:, a_:b_], idx, axis=1)
+    return xs
+
+
+def stage_maxt(a):
+    """Westfall-Young step-down max-T with all accounts shifted jointly, against Bonferroni with the per-account jitter p-values.
+
+    Subset pivotality fails: the reference distribution shifts the ring's members too, which removes the bursts they put into every honest account's
+    aggregate of others, so the honest accounts look extreme against it. Family-wise error = share of windows in which a non-member is rejected.
+    """
+    rng = np.random.default_rng(a.seed)
+    rows = []
+    for N, K, eta in ((100, 0, 0.3), (100, 6, 0.3), (100, 12, 0.3), (100, 12, 1.0), (100, 24, 1.0)):
+        fb = fw = pb = pw = 0
+        for _ in range(a.reps):
+            x = make_flows(rng, N, K, eta)
+            f = np.stack([x, np.zeros_like(x)])
+            _, p, rb = reject_set(f, a.block, a.alpha, rng)
+            obs = _stats(x)
+            G = np.array([_stats(_joint_draw(x, rng, a.block)) for _ in range(a.n_joint)])
+            mu, sd = G.mean(0), G.std(0)
+            Zobs = ((obs - mu) / sd).max(0)
+            Zg = ((G - mu[None]) / sd[None]).max(1)
+            order = np.argsort(-Zobs)
+            rw = np.zeros(N, bool)
+            prev = 0.0
+            for r, i in enumerate(order):
+                padj = max(prev, (1 + (Zg[:, order[r:]].max(1) >= Zobs[i]).sum()) / (a.n_joint + 1))
+                prev = padj
+                if padj <= a.alpha:
+                    rw[i] = True
+                else:
+                    break
+            fb += int(rb[K:].any()); fw += int(rw[K:].any()); pb += int(rb[:K].any()) if K else 0; pw += int(rw[:K].any()) if K else 0
+        rows.append({"N": N, "ring size K": K, "eta": eta, "windows": a.reps, "family-wise error, Bonferroni with jitter p": fb / a.reps,
+                     "family-wise error, joint-shift max-T step-down": fw / a.reps, "ring detected, Bonferroni": pb / a.reps if K else np.nan,
+                     "ring detected, max-T": pw / a.reps if K else np.nan})
+        print(rows[-1], flush=True)
+    pd.DataFrame(rows).to_csv(Path(a.out) / "jitter_maxt.csv", index=False)
+
+
 def main(a):
-    {"fwer": stage_fwer, "regime": stage_regime, "kmin": stage_kmin, "abm": stage_abm, "real": stage_real, "real_calib": stage_real_calib}[a.stage](a)
+    {"fwer": stage_fwer, "regime": stage_regime, "kmin": stage_kmin, "abm": stage_abm, "real": stage_real, "real_calib": stage_real_calib, "maxt": stage_maxt}[a.stage](a)
 
 
 if __name__ == "__main__":
@@ -299,5 +353,6 @@ if __name__ == "__main__":
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--workers", type=int, default=3)
     ap.add_argument("--n-markets", type=int, default=2)
+    ap.add_argument("--n-joint", type=int, default=500)
     ap.add_argument("--out", default="results")
     main(ap.parse_args())
