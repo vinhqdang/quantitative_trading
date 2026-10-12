@@ -1,0 +1,4 @@
+family,market,detector,catch@1,catch@3,catch@5,catch@10
+default preset,Vietnam preset,label-free coincidence,0.14678899082568808,0.27522935779816515,0.3669724770642202,0.4954128440366973
+default preset,Vietnam preset,GBM trained on generic simulator,0.7522935779816514,0.8990825688073395,0.9174311926605505,0.944954128440367
+default preset,Vietnam preset,GBM trained in this market,0.926605504587156,0.9541284403669725,0.9541284403669725,0.963302752293578
