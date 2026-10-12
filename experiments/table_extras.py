@@ -70,3 +70,21 @@ def block_size():
             cells += [f"{r['median gain, last-price reference'] / 1e3:.0f}k", f"{r['median share kept, L=60, ring keeps strategy']:.2f}", f"{r['median share kept, L=240, ring keeps strategy']:.2f}"]
         rows.append(" & ".join(cells) + r" \\")
     (OUT / "block_size.tex").write_text(TOP % "lrrrrrr" + "\n".join(rows) + BOT)
+
+
+def transfer():
+    f = R / "transfer.csv"
+    if not f.exists():
+        return
+    d = pd.read_csv(f)
+    names = {"label-free coincidence": "label-free test", "GBM trained on generic simulator": r"boosting, trained on the generic simulator",
+             "GBM trained in this market": r"boosting, trained in this market"}
+    rows = [r"market family (markets) & detector & catch@1 & catch@3 & catch@5 & catch@10 \\", r"\midrule"]
+    for fam, g in d.groupby("family", sort=False):
+        n = g.market.nunique()
+        m = g.groupby("detector", sort=False)[["catch@1", "catch@3", "catch@5", "catch@10"]].mean()
+        for i, (det, r) in enumerate(m.iterrows()):
+            lab = f"{fam} ({n})" if i == 0 else ""
+            rows.append(" & ".join([lab, names[det]] + [f"{r[c]:.2f}" for c in m.columns]) + r" \\")
+        rows.append(r"\addlinespace")
+    (OUT / "transfer.tex").write_text(TOP % "llrrrr" + "\n".join(rows[:-1]) + BOT)

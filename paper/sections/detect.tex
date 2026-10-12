@@ -88,3 +88,15 @@ Figure~\ref{fig:sens} and the ablation table of Appendix~\ref{app:extra} vary th
 \end{figure}
 
 \paragraph{What the label-free test is for.} The model trained with labels is better in every simulated scenario. The label-free test is useful when there are no labels, which is the regulator's position, and when one cannot trust that a model trained on simulated rings transfers to real ones. Section~\ref{sec:real-accounts} shows that the second concern is justified for the test itself: on real order flow it also faces a background the simulator does not contain.
+
+\subsection{Transfer across simulated markets}\label{sec:transfer}
+
+A supervised model is trained on labelled rings, and the regulator has none, so the natural question is whether a model trained in one simulated configuration works in another. We train the boosting model on 24 labelled episodes of the generic simulator configuration (default ring) and apply it, unchanged, to ten markets of the Vietnam preset: the default preset and three accepted markets from each of the index-level, stock-level and trend-free families of Section~\ref{sec:policy}, with 16 test episodes per market. Table~\ref{tab:transfer} compares it with the label-free test and with the same model trained on labelled episodes of the test market itself. The transferred model loses little against the in-market model (catch@3 of 0.86--0.94 against 0.95--0.97) and is far better than the label-free test, which finds a ring of 12 accounts in 28--38\% of ring-active windows at three inspections in the three families with fewer accounts and in 1\% in the trend-free family. These markets have three to five times as many fundamental traders (118--186 against 34--46) and more market-making activity, so the signal index of Proposition~\ref{prop:power} is much smaller, which is consistent with the law of Section~\ref{sec:powercheck} but was not fitted to these markets.
+
+\begin{table}[t]
+\centering\footnotesize
+\adjustbox{max width=\linewidth}{\input{tables/transfer.tex}}
+\caption{Share of ring-active windows in which a ring member is among the $B$ top-ranked accounts (mean over markets, 16 test episodes per market, default ring): the label-free test, a boosting model trained on the generic simulator and applied unchanged, and the same model trained on 24 labelled episodes of the test market}\label{tab:transfer}
+\end{table}
+
+The result limits what can be concluded in two ways. First, all these markets and the rings in them are produced by the same simulator, so features that identify a ring (such as the order-to-trade ratio and the timing of its orders) are distinctive in every one of them; transfer across simulator parameters says nothing about transfer to real rings, whose behaviour we do not know. Second, the label-free test is not a substitute for a supervised model in a large market: it is the only one of the two whose false-alarm rate can be stated exactly, and in our trend-free markets that guarantee comes with almost no power against a ring of this size.

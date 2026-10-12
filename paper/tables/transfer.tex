@@ -1,0 +1,21 @@
+\begin{tabular}{llrrrr}
+\toprule
+market family (markets) & detector & catch@1 & catch@3 & catch@5 & catch@10 \\
+\midrule
+default preset (1) & label-free test & 0.15 & 0.28 & 0.37 & 0.50 \\
+ & boosting, trained on the generic simulator & 0.75 & 0.90 & 0.92 & 0.94 \\
+ & boosting, trained in this market & 0.93 & 0.95 & 0.95 & 0.96 \\
+\addlinespace
+index level (3) & label-free test & 0.20 & 0.38 & 0.46 & 0.58 \\
+ & boosting, trained on the generic simulator & 0.76 & 0.90 & 0.92 & 0.94 \\
+ & boosting, trained in this market & 0.96 & 0.97 & 0.97 & 0.98 \\
+\addlinespace
+stock level (3) & label-free test & 0.19 & 0.36 & 0.46 & 0.58 \\
+ & boosting, trained on the generic simulator & 0.85 & 0.94 & 0.95 & 0.96 \\
+ & boosting, trained in this market & 0.96 & 0.97 & 0.98 & 0.98 \\
+\addlinespace
+trend-free (3) & label-free test & 0.00 & 0.01 & 0.02 & 0.03 \\
+ & boosting, trained on the generic simulator & 0.73 & 0.86 & 0.89 & 0.93 \\
+ & boosting, trained in this market & 0.94 & 0.96 & 0.97 & 0.98 \\
+\bottomrule
+\end{tabular}
