@@ -35,12 +35,18 @@ def main(args):
     rand = [decode(rng.uniform(size=len(NAMES))) for _ in range(args.n_random)]
     strats = menu + rand
     rows, cells = [], []
+    if args.resume and (out / "menu_random.csv").exists():
+        rows = pd.read_csv(out / "menu_random.csv").to_dict("records")
+        cells = pd.read_csv(out / "menu_random_selection.csv").to_dict("records")
+    done = {(r["family"], r["market"], r["policy"]) for r in rows}
     with make_pool(args.workers) as pool:
         for fam, f in FAMILIES.items():
             d = pd.read_csv(out / f)
             for _, mk in d[d.accepted].head(args.n_markets).iterrows():
                 params = {k: (int(mk[k]) if k in ("n_noise", "n_fund") else float(mk[k])) for k in KEYS}
                 for label, pol_kw, L, kind, B in POLS:
+                    if (fam, int(mk.draw), label) in done:
+                        continue
                     base = replace(vn_config(policy=Policy(label, day_len=240, **pol_kw), **params), block_vwap=L)
                     sel = list(range(31_000_000, 31_000_000 + args.n_sel))
                     rep = list(range(32_000_000, 32_000_000 + args.n_rep))
@@ -82,6 +88,7 @@ if __name__ == "__main__":
     ap.add_argument("--n-sel2", type=int, default=12)
     ap.add_argument("--n-rep", type=int, default=12)
     ap.add_argument("--seed", type=int, default=11)
+    ap.add_argument("--resume", action="store_true", help="skip the cells already in results/menu_random.csv")
     ap.add_argument("--workers", type=int, default=4)
     ap.add_argument("--out", default="results")
     main(ap.parse_args())
