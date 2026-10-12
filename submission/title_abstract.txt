@@ -1,0 +1,11 @@
+TITLE
+Screening for Coordinated Manipulation and Evaluating Exchange Rules in a Calibrated Market Simulator
+
+ABSTRACT
+Prosecuted stock-market manipulation is often carried out by groups of accounts trading in step, yet regulators have few labelled cases to train a detector and the order-level data to test one are rarely public. We ask which rules and how much inspection deter such a ring. We state a label-free coincidence test, show that its circular-shift p-values cannot support a family-wise guarantee for more than a handful of accounts, and replace the surrogates by block jitter, exact under local exchangeability but needing a ring two to three times larger than top-five ranking. The shift of the statistic falls like the inverse square root of the number of accounts, which gives a deterrence condition linking inspection capacity to the fine and a rule for spreading capacity over stocks that needs a third of the capacity of equal shares. In simulated markets matching a Ho Chi Minh stock, a ring that picks its best strategy against each rule is unaffected by the daily price band, loses most of the block value when off-book blocks are priced at a trailing mean, and is deterred by inspection only with enough capacity. On real order flow from a public derivatives venue exchangeability fails for over a quarter of active accounts, and block jitter does not repair it. On that exchange, the 2016 tick reform lowered the share of zero-return days by seven points, and a price-based rank puts 8 of 10 documented cases in the daily top ten on at least one day.
+
+KEYWORDS
+market manipulation, market surveillance, agent-based model, limit order book, exchange rules, regulation
+
+JEL
+G18, G14, C63, D47, K42
