@@ -66,3 +66,28 @@ def test_family_wise_error_at_bonferroni_level_and_power():
         z, p, e, u = jitter_scan(np.stack([x, np.zeros_like(x)]), block=100, n_surr=B, rng=rng, reject_alpha=alpha)
         hits += int(((u == B) & (p <= alpha / n))[:10].any())
     assert hits >= 8
+
+
+def test_pooled_windows_are_calibrated_and_gain_power():
+    from marketsim.jitter import jitter_pooled
+    rng = np.random.default_rng(4)
+    n, L = 80, 4
+    ps = []
+    for _ in range(25):
+        _, p, _, _ = jitter_pooled([_flow(rng, n=n) for _ in range(L)], block=100, n_surr=499, rng=rng)
+        ps.append(p)
+    ps = np.concatenate(ps)
+    assert 0.03 < (ps <= 0.05).mean() < 0.075
+    # a weak signal shared by 6 accounts in every window: pooling over four windows beats a single window
+    single, pooled = [], []
+    for _ in range(15):
+        fl = []
+        for _w in range(L):
+            x = rng.normal(size=(n, 300))
+            sig = (rng.random(300) < 0.2) * 1.2
+            x[:6] += sig
+            fl.append(np.stack([x, np.zeros_like(x)]))
+        z1, _, _, _ = jitter_pooled(fl[:1], block=100, n_surr=0, rng=rng)
+        zl, _, _, _ = jitter_pooled(fl, block=100, n_surr=0, rng=rng)
+        single.append(z1[:6].mean() - z1[6:].mean()); pooled.append(zl[:6].mean() - zl[6:].mean())
+    assert np.mean(pooled) > 1.5 * np.mean(single)

@@ -35,7 +35,46 @@ Let $H$ be a set of accounts for which the condition of Proposition~\ref{prop:ex
 (a) is linearity of expectation applied to Proposition~\ref{prop:exact}; no independence is needed. (b) $p_i$ counts the shift $k=0$ itself. \qedhere
 \end{proof}
 
-With $T=300$ shifts and $\alpha_0=0.05$ the Bonferroni rule can handle only $15$ accounts, while a listed stock has hundreds of active accounts in a window of 300 minutes. Control with exact guarantees therefore needs either a finer resampling (more shifts than steps, as jitter surrogates provide) or ranking without a formal error bound. We use ranking (top-$B$), report the observed false-alarm rate, and treat the formal guarantee as per-account rather than per-family.
+With $T=300$ shifts and $\alpha_0=0.05$ the Bonferroni rule can handle only $15$ accounts, while a listed stock has hundreds of active accounts in a window of 300 minutes. Control with exact guarantees therefore needs either a finer resampling (more surrogates than steps), which Section~\ref{sec:jitter} constructs, or ranking without a formal error bound. For the experiments of Sections~\ref{sec:detect}--\ref{sec:policy} we use ranking (top-$B$) and report the observed false-alarm rate; the family-wise rule is evaluated separately in Section~\ref{sec:jittercheck}.
+
+\subsection{Removing the resolution barrier: block-jitter surrogates}\label{sec:jitter}
+
+The barrier of Proposition~\ref{prop:budget} comes from the family of surrogates, the $T$ cyclic shifts, and not from the statistic. Cut the window into $K$ blocks of $L_1,\dots,L_K$ steps and let $G=\mathbb Z_{L_1}\times\dots\times\mathbb Z_{L_K}$ act on the flow of account $i$ by a cyclic shift \emph{inside each block}, with an independent offset $s_k\in\{0,\dots,L_k-1\}$ for every block (for $K=1$ these are the circular shifts of Section~\ref{sec:stat}); the others' flows stay fixed. Write $S_\tau(x)=\langle x,\tilde y^{\tau}\rangle$ for the coincidence of a flow $x$ with the widened flow $\tilde y^{\tau}$ of all other accounts, $\mu_\tau$ and $\sigma_\tau$ for the mean and standard deviation of $S_\tau(gx)$ over $g$ uniform on $G$, $Z(x)=\max_\tau\,(S_\tau(x)-\mu_\tau)/\sigma_\tau$, and, for $B$ independent uniform $g_1,\dots,g_B\in G$,
+\begin{equation}
+\tilde p_i=\frac{1+\#\{b\le B:\;Z(g_b\,x_i)\ge Z(x_i)\}}{B+1}.
+\label{eq:pjit}
+\end{equation}
+
+\begin{proposition}[block-jitter test]\label{prop:jitter}
+(a)~\emph{Validity.} If, given the others' flows, the law of $x_i$ is invariant under $G$ (\emph{local exchangeability}), then $\Pr(\tilde p_i\le u)\le u$ for every $u$ and every $B$.
+(b)~\emph{Closed form.} $S_\tau(gx)=\sum_k r_{k,\tau}(s_k)$, where $r_{k,\tau}(s)$ is the cross-correlation, at shift $s$, of block $k$ of the account's flow with block $k$ of $\tilde y^\tau$; $\mu_\tau=\sum_k\overline{r_{k,\tau}}$ and $\sigma_\tau^2=\sum_k\mathrm{Var}_s\,r_{k,\tau}$. The tables cost $O(NT\log L)$ and a surrogate costs $K$ look-ups.
+(c)~\emph{Resolution and family-wise control.} There are $\prod_kL_k$ distinct surrogates and $\tilde p_i\ge1/(B+1)$. If local exchangeability holds for every account of a set $H$, with arbitrary dependence between the accounts, and $B+1\ge N/\alpha$, then the rule ``reject $i$ if $\tilde p_i\le\alpha/N$'' makes at least one false rejection in $H$ with probability at most $\alpha$. An account whose number of exceedances passes $\lfloor\alpha(B+1)/N\rfloor-1$ can be dropped from the remaining draws without changing the decision.
+(d)~\emph{Pooling windows.} For $L$ windows, with independent offsets in every block of every window, the sum of the $L$ standardised statistics, divided by $\sqrt L$, obeys (a)--(c) (the group is the product over windows). In the Gaussian model of Proposition~\ref{prop:power}, if the campaign is present in all $L$ windows the mean shift of this statistic is $\sqrt L$ times that of one window.
+\end{proposition}
+\begin{proof}
+(a) $\mu_\tau$ and $\sigma_\tau$ are functions of the orbit $Gx_i$, hence so is $Z$. Given the orbit, local exchangeability makes $x_i$ uniform on it; for $g_b$ uniform on $G$ and independent of $x_i$, $g_bx_i$ is uniform on the orbit and independent of $x_i$. So $Z(x_i),Z(g_1x_i),\dots,Z(g_Bx_i)$ are conditionally i.i.d., and the rank of the first among the $B+1$ values satisfies $\Pr(1+\#\{b:Z(g_bx_i)\ge Z(x_i)\}\le r)\le r/(B+1)$ whatever the ties.
+(b) For a block that starts at $a_k$, $S_\tau$ restricted to the block is $\sum_t x[a_k+(t-a_k+s_k)\bmod L_k]\,\tilde y^\tau[t]=r_{k,\tau}(s_k)$; the offsets are independent and uniform, so the mean and the variance of the sum add over blocks, and $r_{k,\tau}$ is a cross-correlation computed by the fast Fourier transform.
+(c) The orbit has $\prod_kL_k$ points. By the union bound, $\Pr(\exists i\in H:\tilde p_i\le\alpha/N)\le\sum_{i\in H}\Pr(\tilde p_i\le\alpha/N)\le|H|\alpha/N\le\alpha$, each term by (a) conditional on the others' flows, whatever the dependence between accounts. Since $\tilde p_i=(1+e_i)/(B+1)$ with $e_i$ the number of exceedances, which only grows with the number of draws, $\tilde p_i\le\alpha/N$ requires $e_i\le\alpha(B+1)/N-1$.
+(d) The argument of (a) applies to the product group and the statistic $L^{-1/2}\sum_\ell Z_\ell$. In the model the shift of each $Z_\ell$ is $c\rho$ and the $Z_\ell$ have unit variance, so the shift of the sum is $Lc\rho$ and its standard deviation $\sqrt L$. \qedhere
+\end{proof}
+
+Local exchangeability is weaker than the condition of Proposition~\ref{prop:exact} in one respect and different in another. It holds if the account depends on the others only through a common factor that is constant inside each block (a regime that changes at the block boundaries), because shifting inside a block leaves such a factor in place; and it holds without any exchangeability over the whole window. It does not hold when the account reacts to the others within the block: honest bots that answer the same price move within a second, or a regime whose changes fall inside blocks. The statistic then rejects more often than $\alpha$ and the guarantee of~(c) is void; Section~\ref{sec:jittercheck} measures this in simulated and in real flows.
+
+The size of the ring that the rule can see follows from Proposition~\ref{prop:power}.
+
+\begin{corollary}[ring size for a family-wise flag]\label{cor:kmin}
+In the Gaussian model, let a member's statistic be $Z\approx h+\sqrt{T_{\mathrm{eff}}}\,\rho_{N,K}(\eta)+\xi$ with $h$ the mean of the honest statistic, and let $t_{\alpha/N}$ be the $(1-\alpha/N)$ quantile of the honest statistic. A given member exceeds the critical value with probability at least one half if $\rho_{N,K}(\eta)\ge\rho^\ast=(t_{\alpha/N}-h)/\sqrt{T_{\mathrm{eff}}}$, that is if
+\begin{equation}
+K\;\ge\;1+\frac{\rho^\ast\sqrt{(1+\eta)(N-1)}}{\eta\sqrt{1-\rho^{\ast2}(1+\eta)/\eta}},
+\label{eq:kmin}
+\end{equation}
+which is possible only if $\rho^\ast<\sqrt{\eta/(1+\eta)}$. For $\rho^{\ast2}\ll\eta/(1+\eta)$ the bound is $K-1\gtrsim(t_{\alpha/N}-h)\sqrt{(1+\eta)(N-1)}/(\eta\sqrt{T_{\mathrm{eff}}})$ with $t_{\alpha/N}\approx\sqrt{2\ln(N/\alpha)}$, so the ring needed grows like $\sqrt{N\ln N}$; ranking the top $B$ needs $t_{B/N}\approx\sqrt{2\ln(N/B)}$ instead, so a defensible flag requires a ring larger by the factor $\sqrt{\ln(N/\alpha)/\ln(N/B)}$ in this approximation. Pooling $L$ windows divides $K-1$ by $\sqrt L$.
+\end{corollary}
+\begin{proof}
+Set $\sqrt{T_{\mathrm{eff}}}\rho_{N,K}(\eta)=t_{\alpha/N}-h$ in~\eqref{eq:rho}. With $u=K-1$ this is $u^2\eta^2=\rho^{\ast2}(1+\eta)\bigl(N-1+u^2\eta\bigr)$, which gives~\eqref{eq:kmin}; the approximations follow from $\Phi^{-1}(1-x)\approx\sqrt{2\ln(1/x)}$ and from~(d) of Proposition~\ref{prop:jitter}. \qedhere
+\end{proof}
+
+A different route to a family-wise rule is to shift all accounts jointly and use the maximum over accounts as reference (a Westfall--Young step-down). It needs the null distribution of any subset of accounts not to depend on whether the other accounts are null (subset pivotality), and this fails here because the aggregate of the others contains the ring's bursts, which the joint shifts remove; Section~\ref{sec:jittercheck} shows a family-wise error of 0.2 to 1 in the presence of a ring, which is why the rule of Proposition~\ref{prop:jitter} shifts one account at a time.
 
 \subsection{Power: a law in the number of accounts and the size of the ring}\label{sec:power}
 
@@ -98,6 +137,24 @@ $U=\mathbb E[g]-mQ\,\mathbb E[g^+]\le\mathbb E[g^+](1-mQ)\le0$ when $mQ\ge1$, si
 \end{proof}
 
 Proposition~\ref{prop:deter} assumes that the detection event is independent of the gain given the strategy. This fails when larger campaigns are both more profitable and more detectable; in the single-market experiment of Appendix~\ref{app:single} the reported net benefit at $m=5$ implies that the detected episodes carried about three times the average positive gain, which makes mQ smaller than the independence formula gives and the capacity needed larger, so the capacity results below are optimistic for the regulator. Two consequences are used in Section~\ref{sec:frontier}. First, a ring that is exposed in many windows by many accounts needs little capacity to be deterred, which is why adaptive rings shrink: they reduce $K$ and the number of active windows. Second, the advantage of screening over random inspection disappears in large markets unless the signal $S$ is boosted, for example by longer windows or better statistics; with $N=2000$ accounts and a ring of three the saving is about a factor of two.
+
+\subsection{Where to inspect: a maximin allocation over stocks}\label{sec:alloc}
+
+A regulator inspects many stocks, or the same stock on many days, with one capacity $C$ (accounts per period), and the stocks differ in the number of active accounts $N_w$, in the signal $S_w$ of a ring of fixed size and in the prize $g_w$ (the value of the blocks that can be sold off-book, which grows with the size of the stock). A ring chooses the stock $w$ where it acts; the regulator commits to $b=(b_w)_w$ with $\sum_wb_w=C$. Under the screening model, with the ring's detection probability $Q_w(b)=a\{1-[1-q_w(b)]^K\}$, $q_w(b)=\Phi\bigl(S_w+\Phi^{-1}(b/N_w)\bigr)$ and $a\le1$ the share of ring-active windows in which the signal is present, the ring's net benefit in stock $w$ is $U_w(b_w)=g_w\{1-mQ_w(b_w)\}$ (Proposition~\ref{prop:deter}) and the regulator wants $\min_b\max_wU_w(b_w)$.
+
+\begin{proposition}[maximin allocation]\label{prop:alloc}
+For $S_w\ge0$ the detection probability $Q_w$ is increasing and concave in $b$, so $U_w$ is decreasing and convex, and: (a)~$\max_wU_w(b_w)$ is convex in $b$, and a regulator who randomises the allocation (so that the ring does not observe it) cannot lower the ring's expected net benefit in any stock below its value at the mean allocation; a deterministic allocation is optimal. (b)~An optimal allocation equalises the ring's net benefit: there is a level $v^\ast\ge0$ with $U_w(b_w^\ast)=v^\ast$ for every stock that is inspected, $b_w^\ast=0$ for stocks with $g_w\le v^\ast$, and
+\begin{equation}
+b_w^\ast(v)=N_w\,\Phi\Bigl(\Phi^{-1}\bigl(q_w(v)\bigr)-S_w\Bigr),\qquad q_w(v)=1-\Bigl[1-\tfrac{1-v/g_w}{ma}\Bigr]^{1/K},
+\label{eq:balloc}
+\end{equation}
+with $v^\ast$ the root of $\sum_wb_w^\ast(v)=C$ if $C<C_0=\sum_wb_w^\ast(0)$ and $v^\ast=0$ otherwise. (c)~The capacity that deters a ring in every stock is $C_0=\sum_wN_w\Phi\bigl(\Phi^{-1}(q^\circ)-S_w\bigr)$ with $q^\circ=1-(1-1/(ma))^{1/K}$, independent of the prizes $g_w$ (it needs $ma>1$); the uniform allocation needs $W\max_wb_w^\ast(0)\ge C_0$, with equality only if all $b_w^\ast(0)$ are equal.
+\end{proposition}
+\begin{proof}
+(a) $u\mapsto q_w$ has derivative $\exp(-S_wz-S_w^2/2)$ with $z=\Phi^{-1}(b/N_w)$, decreasing in $b$ when $S_w>0$, so $q_w$ is concave; $x\mapsto a\{1-(1-x)^K\}$ is concave and increasing, so $Q_w$ is concave, $U_w$ convex, and the maximum of convex functions is convex. For a random allocation with mean $\bar b$, Jensen gives $\mathbb E\,U_w(b_w)\ge U_w(\bar b_w)$ in every stock, so the ring's best expected net benefit cannot fall below its value at $\bar b$. (b) Minimise $t$ subject to $U_w(b_w)\le t$ and $\sum_wb_w=C$: if an inspected stock had $U_w<t$, capacity could be moved from it to a stock with $U_w=t$, lowering the maximum, so $U_w=t=v^\ast$ for inspected stocks; solving $U_w(b)=v$ for $b$ gives~\eqref{eq:balloc}, and $\sum_wb_w^\ast(v)$ decreases in $v$. (c) is~(b) at $v=0$, where $q_w(0)=q^\circ$ in every stock; $W\max_wb_w^\ast(0)\ge\sum_wb_w^\ast(0)$. \qedhere
+\end{proof}
+
+The rule is the capacity formula of Proposition~\ref{prop:deter} applied stock by stock: a stock gets more inspections when it has more accounts (a larger $N_w$ with the same $S_w$ needs more inspections for the same probability of detection), when its ring signal is weak, and, when capacity is short ($v^\ast>0$), when its prize is large; a stock whose prize is below $v^\ast$ is not inspected at all, which is a statement about priorities and not about legality. To deter, the regulator needs $C_0$ whatever the prizes, so the prizes decide only where the shortfall is placed.
 
 \subsection{A rule that changes the payoff: the block reference price}\label{sec:blocklaw}
 

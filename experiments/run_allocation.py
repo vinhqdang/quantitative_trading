@@ -22,17 +22,17 @@ from scipy.optimize import brentq, least_squares
 from scipy.stats import norm
 
 from marketsim.coordination import scan_episode
-from marketsim.ring_adversary import _pooled, ring_only_config
+from marketsim.ring_adversary import DEFAULT, _pooled, ring_only_config
 from marketsim.sim import SimConfig, ring_utility, run_episode
 
 STOCKS = [(n, 8 * n) for n in (50, 100, 200, 300, 450, 600, 800, 1000)]       # (noise traders, block of shares in lots)
-S0, GAMMA, CEIL, K_RING = 1.20, 0.5, 0.90, 12
+RING = {**DEFAULT, "p_push": 0.2}                                              # a weak ring: low push probability keeps detection probabilities intermediate
+S0, GAMMA, CEIL, K_RING = 1.20 * 0.2 / 0.8, 0.5, 0.90, 12
 
 
 def _ep(args):
     n_noise, block, seed = args
-    cfg = ring_only_config(replace(SimConfig(), n_noise=n_noise, ring_block=block), None)
-    cfg = replace(cfg, steps=3000, n_ring=(1, 1))
+    cfg = ring_only_config(replace(SimConfig(), n_noise=n_noise, ring_block=block), RING)
     ep = run_episode(seed, cfg)
     u = ring_utility(ep)
     members = set(a for ms in ep.extras["ring_members"] for a in ms)

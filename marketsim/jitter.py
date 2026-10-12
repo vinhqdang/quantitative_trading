@@ -30,69 +30,82 @@ def block_bounds(T: int, block: int):
     return [(s, min(s + block, T)) for s in starts]
 
 
-def jitter_scan(flow: np.ndarray, tols=(1, 5, 15), block: int = 100, n_surr: int = 999, signed: bool = True,
-                rng: np.random.Generator | None = None, active: np.ndarray | None = None, tail: str = "pos",
-                chunk: int = 512, reject_alpha: float | None = None, abandon: int | None = None):
-    """flow: [side(2), agent, step] counts of one window. Returns (z, p, exceed, used) per agent.
+def window_tables(flow: np.ndarray, tols, block: int, signed: bool, idx: np.ndarray, tail: str = "pos"):
+    """Cross-correlation tables of one window for the accounts `idx` (rows of the flow tensor).
 
-    z is the observed standardised maximum statistic; p = (1 + exceed) / (n_surr + 1) is exact (for `used` = n_surr). With `reject_alpha` set,
-    accounts whose number of surrogates at least as extreme as the observation exceeds the value that would keep p <= reject_alpha / (number of tested accounts)
-    are dropped from the remaining draws (their p stays above the Bonferroni level, so the decision is unchanged and the cost falls); for them `used` < n_surr
-    and p is not exact.
+    Returns (tables, mu, sd, zobs): tables[b] has shape [len(tols), m, len_b]; mu, sd are [len(tols), m]; zobs is the observed standardised maximum [m].
+    Accounts without any submission in the window get zobs = 0 and a zero table.
     """
-    rng = rng or np.random.default_rng(0)
     ch = ((flow[0] - flow[1])[None] if signed else flow).astype(np.float64)
     C, n, T = ch.shape
-    if active is None:
-        active = ch.any(axis=(0, 2))
-    idx = np.flatnonzero(active)
     m = len(idx)
-    total = ch.sum(axis=1)                                          # [C, T]
-    bounds = block_bounds(T, block)
-    K = len(bounds)
-    sgn = -1.0 if tail == "neg" else 1.0
     nt = len(tols)
-    # tables[b]: [nt, m, len_b]
+    total = ch.sum(axis=1)
+    sgn = -1.0 if tail == "neg" else 1.0
+    O = [np.stack([_circ_box(total[c][None] - ch[c], tol) for c in range(C)]) for tol in tols]
     tables = []
     mu = np.zeros((nt, m))
     var = np.zeros((nt, m))
-    O = [np.stack([_circ_box(total[c][None] - ch[c], tol) for c in range(C)]) for tol in tols]   # list over tol of [C, n, T]
-    for (a, b) in bounds:
+    for (a, b) in block_bounds(T, block):
         Lb = b - a
         tab = np.zeros((nt, m, Lb))
         for ti in range(nt):
             for c in range(C):
                 x = ch[c][idx, a:b]
                 o = O[ti][c][idx, a:b]
-                # r(s) = sum_t o[t] x[(t + s) mod L]
-                r = np.fft.irfft(np.conj(np.fft.rfft(o, axis=1)) * np.fft.rfft(x, axis=1), n=Lb, axis=1)
-                tab[ti] += sgn * r
+                tab[ti] += sgn * np.fft.irfft(np.conj(np.fft.rfft(o, axis=1)) * np.fft.rfft(x, axis=1), n=Lb, axis=1)
         tables.append(tab)
         mu += tab.mean(axis=2)
         var += tab.var(axis=2)
     sd = np.sqrt(var)
-    sd = np.where(sd > 0, sd, 1.0)
-    obs_stat = sum(tab[:, :, 0] for tab in tables)                  # [nt, m]
-    zobs = ((obs_stat - mu) / sd).max(axis=0)                       # [m]
+    sd = np.where(sd > 1e-12, sd, 1.0)
+    obs_stat = sum(tab[:, :, 0] for tab in tables)
+    zobs = ((obs_stat - mu) / sd).max(axis=0)
+    return tables, mu, sd, zobs
+
+
+def _draw_z(tables, mu, sd, al, bsz, rng):
+    """Standardised maximum statistic of bsz independent surrogates for the accounts `al` (indices into the table rows): [bsz, len(al)]."""
+    nt = mu.shape[0]
+    stat = np.zeros((nt, bsz, len(al)))
+    for tab in tables:
+        Lb = tab.shape[2]
+        sh = rng.integers(0, Lb, size=(bsz, len(al)))
+        for ti in range(nt):
+            stat[ti] += tab[ti][al[None, :], sh]
+    return ((stat - mu[:, al][:, None, :]) / sd[:, al][:, None, :]).max(axis=0)
+
+
+def jitter_pooled(flows, tols=(1, 5, 15), block: int = 100, n_surr: int = 999, signed: bool = True, rng: np.random.Generator | None = None,
+                  active: np.ndarray | None = None, chunk: int = 512, reject_alpha: float | None = None, tail: str = "pos"):
+    """Evidence pooled over several windows: the statistic of an account is the sum over windows of its standardised statistic, and the reference
+    distribution is the sum of independent within-block surrogates of every window (the group acts independently in each window), so the p-value is
+    exact under the product of the single-window nulls. flows: list of [side, agent, step] arrays over the same agent index.
+
+    Returns (z, p, exceed, used) with z the observed pooled statistic divided by sqrt(number of windows); accounts that never submit are not tested.
+    """
+    rng = rng or np.random.default_rng(0)
+    L = len(flows)
+    n = flows[0].shape[1]
+    if active is None:
+        active = np.any([f.any(axis=(0, 2)) for f in flows], axis=0)
+    idx = np.flatnonzero(active)
+    m = len(idx)
+    prep = [window_tables(f, tols, block, signed, idx, tail) for f in flows]
+    zobs = sum(pr[3] for pr in prep) / np.sqrt(L)
     exceed = np.zeros(m, dtype=np.int64)
     used = np.zeros(m, dtype=np.int64)
     alive = np.ones(m, dtype=bool)
-    k_allowed = None
-    if reject_alpha is not None:
-        k_allowed = int(np.floor(reject_alpha * (n_surr + 1) / m)) - 1       # exceedances that still allow p <= alpha/m
+    k_allowed = None if reject_alpha is None else int(np.floor(reject_alpha * (n_surr + 1) / m)) - 1
     done = 0
     while done < n_surr and alive.any():
         bsz = min(chunk, n_surr - done)
         al = np.flatnonzero(alive)
-        zmax = np.full((bsz, len(al)), -np.inf)
-        stat = np.zeros((nt, bsz, len(al)))
-        for k, (a, b) in enumerate(bounds):
-            Lb = b - a
-            sh = rng.integers(0, Lb, size=(bsz, len(al)))
-            for ti in range(nt):
-                stat[ti] += tables[k][ti][al[None, :], sh]
-        z = ((stat - mu[:, al][:, None, :]) / sd[:, al][:, None, :]).max(axis=0)
-        exceed[al] += (z >= zobs[al][None, :]).sum(axis=0)
+        tot = np.zeros((bsz, len(al)))
+        for tables, mu, sd, _ in prep:
+            tot += _draw_z(tables, mu, sd, al, bsz, rng)
+        tot /= np.sqrt(L)
+        exceed[al] += (tot >= zobs[al][None, :]).sum(axis=0)
         used[al] += bsz
         done += bsz
         if k_allowed is not None:
@@ -101,6 +114,19 @@ def jitter_scan(flow: np.ndarray, tols=(1, 5, 15), block: int = 100, n_surr: int
     zz = np.zeros(n); pp = np.ones(n); ee = np.zeros(n, dtype=np.int64); uu = np.zeros(n, dtype=np.int64)
     zz[idx], pp[idx], ee[idx], uu[idx] = zobs, p_act, exceed, used
     return zz, pp, ee, uu
+
+
+def jitter_scan(flow: np.ndarray, tols=(1, 5, 15), block: int = 100, n_surr: int = 999, signed: bool = True,
+                rng: np.random.Generator | None = None, active: np.ndarray | None = None, tail: str = "pos",
+                chunk: int = 512, reject_alpha: float | None = None):
+    """flow: [side(2), agent, step] counts of one window. Returns (z, p, exceed, used) per agent.
+
+    z is the observed standardised maximum statistic; p = (1 + exceed) / (n_surr + 1) is exact (for `used` = n_surr). With `reject_alpha` set,
+    accounts whose number of surrogates at least as extreme as the observation exceeds the value that would keep p <= reject_alpha / (number of tested accounts)
+    are dropped from the remaining draws (their p stays above the Bonferroni level, so the decision is unchanged and the cost falls); for them `used` < n_surr
+    and p is not exact.
+    """
+    return jitter_pooled([flow], tols, block, n_surr, signed, rng, active, chunk, reject_alpha, tail)
 
 
 def bonferroni_rejections(p: np.ndarray, used: np.ndarray, n_surr: int, active: np.ndarray, alpha: float = 0.05) -> np.ndarray:

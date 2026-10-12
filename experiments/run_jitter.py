@@ -26,7 +26,7 @@ import pandas as pd
 from scipy.stats import norm
 
 from marketsim.coordination import coincidence_scan, submission_flow_from_events
-from marketsim.jitter import _circ_box, jitter_scan
+from marketsim.jitter import _circ_box, jitter_pooled, jitter_scan
 
 T = 300
 TOLS = (1, 5, 15)
@@ -340,8 +340,70 @@ def stage_maxt(a):
     pd.DataFrame(rows).to_csv(Path(a.out) / "jitter_maxt.csv", index=False)
 
 
+def _abm_pooled_task(args):
+    from marketsim.features import label_windows
+    from marketsim.sim import SimConfig, run_episode
+    from marketsim.vietnam import vn_config
+    name, params, seed, ring, alpha, block, L = args
+    cfg = SimConfig() if params is None else vn_config(**params)
+    cfg = replace(cfg, **HONEST, n_ring=(1, 1) if ring else (0, 0))
+    ep = run_episode(seed, cfg)
+    n_agent = int(ep.agents.aid.max()) + 1
+    F = submission_flow_from_events(ep.events, n_agent, cfg.steps, cfg.warmup, 300)
+    rng = np.random.default_rng(seed)
+    if ring:
+        act_pairs = pd.DataFrame([(a_, w) for w in range(F.shape[0]) for a_ in np.flatnonzero(F[w].sum(axis=(0, 2)) > 0)], columns=["agent", "window"])
+        lab = label_windows(ep, act_pairs.assign(pad=0), 300)[["agent", "window", "y"]]
+    out = []
+    for b0 in range(0, F.shape[0], L):
+        ws = list(range(b0, min(b0 + L, F.shape[0])))
+        if len(ws) < 2:
+            continue
+        act = np.any([F[w].any(axis=(0, 2)) for w in ws], axis=0)
+        m = int(act.sum())
+        B = n_draws(m, alpha)
+        z, p, e, u = jitter_pooled([F[w] for w in ws], TOLS, block, B, True, rng, active=act, reject_alpha=alpha)
+        rej = (u == B) & (p <= alpha / m)
+        members = np.zeros(n_agent, bool)
+        if ring:
+            members[lab[(lab.window.isin(ws)) & (lab.y == 1)].agent.unique()] = True
+        order = np.argsort(-np.where(act, z, -np.inf))
+        out.append({"market": name, "ring": ring, "windows pooled": len(ws), "active accounts": m, "ring active": bool(members.any()),
+                    "member rejected": bool(rej[members].any()), "non-member rejected": bool(rej[~members].any()),
+                    "catch@5 (pooled z)": bool(members[order[:5]].any()) if members.any() else False})
+    return out
+
+
+def stage_abm_pooled(a):
+    out = Path(a.out)
+    markets = [("generic simulator", None)]
+    for fam, f in (("index level", "vn_ensemble_draws.csv"), ("stock level", "vn_ensemble_stock_draws.csv"), ("trend-free", "vn_ensemble_acf_draws.csv")):
+        d = pd.read_csv(out / f)
+        for _, mk in d[d.accepted].head(a.n_markets).iterrows():
+            markets.append((f"{fam} {int(mk.draw)}", {k: (int(mk[k]) if k in ("n_noise", "n_fund") else float(mk[k])) for k in KEYS}))
+    jobs = []
+    for name, params in markets:
+        for i in range(a.reps):
+            jobs.append((name, params, 41_000_000 + i, True, a.alpha, a.block, a.pool))
+            jobs.append((name, params, 42_000_000 + i, False, a.alpha, a.block, a.pool))
+    with ProcessPoolExecutor(a.workers, mp_context=mp.get_context("spawn")) as pool:
+        res = [r for rr in pool.map(_abm_pooled_task, jobs, chunksize=2) for r in rr]
+    df = pd.DataFrame(res)
+    df.to_csv(out / "jitter_abm_pooled_blocks.csv", index=False)
+    summ = []
+    for (mk, ring), g in df.groupby(["market", "ring"], sort=False):
+        act = g[g["ring active"]]
+        summ.append({"market": mk, "ring in market": ring, "blocks": len(g), "mean active accounts": g["active accounts"].mean(),
+                     "family-wise error (non-member rejected)": g["non-member rejected"].mean(), "ring blocks": len(act),
+                     "member rejected": act["member rejected"].mean() if len(act) else np.nan,
+                     "catch@5 (pooled z)": act["catch@5 (pooled z)"].mean() if len(act) else np.nan})
+    s = pd.DataFrame(summ)
+    s.to_csv(out / "jitter_abm_pooled.csv", index=False)
+    print(s.round(3).to_markdown(index=False))
+
+
 def main(a):
-    {"fwer": stage_fwer, "regime": stage_regime, "kmin": stage_kmin, "abm": stage_abm, "real": stage_real, "real_calib": stage_real_calib, "maxt": stage_maxt}[a.stage](a)
+    {"fwer": stage_fwer, "regime": stage_regime, "kmin": stage_kmin, "abm": stage_abm, "real": stage_real, "real_calib": stage_real_calib, "maxt": stage_maxt, "abm_pooled": stage_abm_pooled}[a.stage](a)
 
 
 if __name__ == "__main__":
@@ -354,5 +416,6 @@ if __name__ == "__main__":
     ap.add_argument("--workers", type=int, default=3)
     ap.add_argument("--n-markets", type=int, default=2)
     ap.add_argument("--n-joint", type=int, default=500)
+    ap.add_argument("--pool", type=int, default=4)
     ap.add_argument("--out", default="results")
     main(ap.parse_args())
