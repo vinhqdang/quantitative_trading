@@ -1,0 +1,7 @@
+eta,quantity,exponent of N,points
+0.1,"K at power 1/2, family-wise rejection (simulated)",0.6043872549019604,4
+0.1,K at catch@5 = 1/2 (simulated),0.6278778497044752,5
+0.1,"K at power 1/2, family-wise rejection (formula)",0.7252383115092033,5
+0.3,"K at power 1/2, family-wise rejection (simulated)",0.5110248829761028,5
+0.3,K at catch@5 = 1/2 (simulated),0.5951461988304095,5
+0.3,"K at power 1/2, family-wise rejection (formula)",0.6262737197878797,5
