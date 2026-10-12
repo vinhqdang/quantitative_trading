@@ -1,121 +1,41 @@
 m,capacity C,allocation,ring's best net benefit,stock where it acts,mean net benefit over stocks,stocks with net benefit > 0
-5,8,uniform,-11903.99,1000,-25031.94875,0
-5,8,proportional to N,6894.55,100,-21703.8425,2
-5,8,"rule, signal from scaling law",12933.33,300,-9371.130000000001,5
-5,8,"rule, signal fitted per stock",11901.1,200,-16321.99875,3
-5,8,oracle (empirical curves),-11903.99,1000,-25031.94875,0
-5,12,uniform,-11903.99,1000,-27622.4925,0
-5,12,proportional to N,6894.55,100,-27946.81125,2
-5,12,"rule, signal from scaling law",12933.33,300,-13336.536250000001,5
-5,12,"rule, signal fitted per stock",6894.55,100,-27099.698749999996,2
-5,12,oracle (empirical curves),-17586.48,450,-31251.18625,0
-5,16,uniform,-23722.5,50,-35472.705,0
-5,16,proportional to N,2153.7,50,-34764.92375,1
-5,16,"rule, signal from scaling law",12933.33,300,-18795.96125,4
-5,16,"rule, signal fitted per stock",6894.55,100,-31050.9925,2
-5,16,oracle (empirical curves),-23701.75,600,-32971.17375,0
-5,24,uniform,-25183.65,50,-42927.2175,0
-5,24,proportional to N,-22195.4,50,-44091.0175,0
-5,24,"rule, signal from scaling law",6894.55,100,-34989.104999999996,2
-5,24,"rule, signal fitted per stock",-22195.4,50,-44091.0175,0
-5,24,oracle (empirical curves),-23701.75,600,-32971.17375,0
-5,32,uniform,-25183.65,50,-45733.4675,0
-5,32,proportional to N,-22195.4,50,-48147.58624999999,0
-5,32,"rule, signal from scaling law",6894.55,100,-39428.3425,2
-5,32,"rule, signal fitted per stock",-22195.4,50,-48147.58624999999,0
-5,32,oracle (empirical curves),-23701.75,600,-32971.17375,0
-5,48,uniform,-25183.65,50,-50323.942500000005,0
-5,48,proportional to N,-22195.4,50,-52908.29875,0
-5,48,"rule, signal from scaling law",2153.7,50,-49472.455,1
-5,48,"rule, signal fitted per stock",-22195.4,50,-52908.29875,0
-5,48,oracle (empirical curves),-23701.75,600,-32971.17375,0
-5,64,uniform,-25183.65,50,-52967.36125,0
-5,64,proportional to N,-22195.4,50,-55685.93625,0
-5,64,"rule, signal from scaling law",-22195.4,50,-55303.06125,0
-5,64,"rule, signal fitted per stock",-22195.4,50,-55685.93625,0
-5,64,oracle (empirical curves),-23701.75,600,-32971.17375,0
-5,96,uniform,-25183.65,50,-54696.2675,0
-5,96,proportional to N,-23722.5,50,-57506.11750000001,0
-5,96,"rule, signal from scaling law",-23722.5,50,-57506.11750000001,0
-5,96,"rule, signal fitted per stock",-23722.5,50,-57506.11750000001,0
-5,96,oracle (empirical curves),-23701.75,600,-32971.17375,0
-5,128,uniform,-25183.65,50,-56774.27375,0
-5,128,proportional to N,-25183.65,50,-57915.08,0
-5,128,"rule, signal from scaling law",-23722.5,50,-57732.43625,0
-5,128,"rule, signal fitted per stock",-25183.65,50,-57915.08,0
-5,128,oracle (empirical curves),-23701.75,600,-32971.17375,0
-5,192,uniform,-25183.65,50,-57915.08,0
-5,192,proportional to N,-25183.65,50,-57915.08,0
-5,192,"rule, signal from scaling law",-25183.65,50,-57915.08,0
-5,192,"rule, signal fitted per stock",-25183.65,50,-57915.08,0
-5,192,oracle (empirical curves),-23701.75,600,-32971.17375,0
-5,256,uniform,-25183.65,50,-57915.08,0
-5,256,proportional to N,-25183.65,50,-57915.08,0
-5,256,"rule, signal from scaling law",-25183.65,50,-57915.08,0
-5,256,"rule, signal fitted per stock",-25183.65,50,-57915.08,0
-5,256,oracle (empirical curves),-23701.75,600,-32971.17375,0
-5,384,uniform,-25183.65,50,-57915.08,0
-5,384,proportional to N,-25183.65,50,-57915.08,0
-5,384,"rule, signal from scaling law",-25183.65,50,-57915.08,0
-5,384,"rule, signal fitted per stock",-25183.65,50,-57915.08,0
-5,384,oracle (empirical curves),-23701.75,600,-32971.17375,0
-10,8,uniform,-41992.59,1000,-61885.55499999999,0
-10,8,proportional to N,6894.55,100,-55229.3425,2
-10,8,"rule, signal from scaling law",12933.33,300,-36673.642499999994,4
-10,8,"rule, signal fitted per stock",6894.55,100,-55229.3425,2
-10,8,oracle (empirical curves),-41992.59,1000,-61885.55499999999,0
-10,12,uniform,-41992.59,1000,-67066.6425,0
-10,12,proportional to N,6894.55,100,-67715.28,2
-10,12,"rule, signal from scaling law",11901.1,200,-55026.880000000005,3
-10,12,"rule, signal fitted per stock",6894.55,100,-67715.28,2
-10,12,oracle (empirical curves),-46020.13,450,-74324.03,0
-10,16,uniform,-49598.7,50,-82767.0675,0
-10,16,proportional to N,2153.7,50,-81351.505,1
-10,16,"rule, signal from scaling law",6894.55,100,-73923.6425,2
-10,16,"rule, signal fitted per stock",2153.7,50,-81351.505,1
-10,16,oracle (empirical curves),-46020.13,450,-75071.0925,0
-10,24,uniform,-52521.0,50,-97676.0925,0
-10,24,proportional to N,-46544.5,50,-100003.6925,0
-10,24,"rule, signal from scaling law",2153.7,50,-94730.73000000001,1
-10,24,"rule, signal fitted per stock",-46544.5,50,-100003.6925,0
-10,24,oracle (empirical curves),-46020.13,450,-75071.0925,0
-10,32,uniform,-52521.0,50,-103288.5925,0
-10,32,proportional to N,-46544.5,50,-108116.83,0
-10,32,"rule, signal from scaling law",2153.7,50,-102029.555,1
-10,32,"rule, signal fitted per stock",-46544.5,50,-108116.83,0
-10,32,oracle (empirical curves),-46020.13,450,-75071.0925,0
-10,48,uniform,-52521.0,50,-112469.5425,0
-10,48,proportional to N,-46544.5,50,-117638.255,0
-10,48,"rule, signal from scaling law",-46544.5,50,-117912.7675,0
-10,48,"rule, signal fitted per stock",-46544.5,50,-117638.255,0
-10,48,oracle (empirical curves),-46020.13,450,-75071.0925,0
-10,64,uniform,-52521.0,50,-117756.38,0
-10,64,proportional to N,-46544.5,50,-123193.53,0
-10,64,"rule, signal from scaling law",-46544.5,50,-122427.78,0
-10,64,"rule, signal fitted per stock",-46544.5,50,-123193.53,0
-10,64,oracle (empirical curves),-46020.13,450,-75071.0925,0
-10,96,uniform,-52521.0,50,-121214.1925,0
-10,96,proportional to N,-49598.7,50,-126833.8925,0
-10,96,"rule, signal from scaling law",-49598.7,50,-126833.8925,0
-10,96,"rule, signal fitted per stock",-49598.7,50,-126833.8925,0
-10,96,oracle (empirical curves),-46020.13,450,-75071.0925,0
-10,128,uniform,-52521.0,50,-125370.20499999999,0
-10,128,proportional to N,-52521.0,50,-127651.8175,0
-10,128,"rule, signal from scaling law",-49598.7,50,-127286.53,0
-10,128,"rule, signal fitted per stock",-52521.0,50,-127651.8175,0
-10,128,oracle (empirical curves),-46020.13,450,-75071.0925,0
-10,192,uniform,-52521.0,50,-127651.8175,0
-10,192,proportional to N,-52521.0,50,-127651.8175,0
-10,192,"rule, signal from scaling law",-52521.0,50,-127651.8175,0
-10,192,"rule, signal fitted per stock",-52521.0,50,-127651.8175,0
-10,192,oracle (empirical curves),-46020.13,450,-75071.0925,0
-10,256,uniform,-52521.0,50,-127651.8175,0
-10,256,proportional to N,-52521.0,50,-127651.8175,0
-10,256,"rule, signal from scaling law",-52521.0,50,-127651.8175,0
-10,256,"rule, signal fitted per stock",-52521.0,50,-127651.8175,0
-10,256,oracle (empirical curves),-46020.13,450,-75071.0925,0
-10,384,uniform,-52521.0,50,-127651.8175,0
-10,384,proportional to N,-52521.0,50,-127651.8175,0
-10,384,"rule, signal from scaling law",-52521.0,50,-127651.8175,0
-10,384,"rule, signal fitted per stock",-52521.0,50,-127651.8175,0
-10,384,oracle (empirical curves),-46020.13,450,-75071.0925,0
+5,16,uniform,46746.13935028914,2500,10583.0392369953,5
+5,16,proportional to N,38702.97309700059,2500,14003.944296093816,8
+5,16,"rule, signal from scaling law",29572.51430565375,2500,16402.396361892144,8
+5,16,"rule, signal fitted per stock",33172.14707268172,1600,16880.664481390177,8
+5,16,oracle (empirical curves),29572.51430565375,2500,16193.143103666565,8
+5,32,uniform,39256.23749084145,2500,5131.173873504622,4
+5,32,proportional to N,29572.51430565375,2500,8948.50625385461,7
+5,32,"rule, signal from scaling law",21829.628647946818,1000,13312.747905781636,8
+5,32,"rule, signal fitted per stock",25908.154399425246,1000,13745.727056986201,8
+5,32,oracle (empirical curves),25273.81411041572,1000,13393.26027886735,8
+5,64,uniform,37663.55810426784,2500,-639.293349599343,3
+5,64,proportional to N,13833.672727953293,2500,1276.1231911627074,4
+5,64,"rule, signal from scaling law",9301.207658300676,1000,6155.415813622703,8
+5,64,"rule, signal fitted per stock",12241.090317551243,400,7576.710887809862,8
+5,64,oracle (empirical curves),9301.207658300676,1000,6436.6730242976055,8
+5,128,uniform,20891.63885225637,2500,-10816.429043261658,2
+5,128,proportional to N,-2811.9704437925793,1600,-10240.704447145567,0
+5,128,"rule, signal from scaling law",-5577.490943610061,640,-7825.065797755564,0
+5,128,"rule, signal fitted per stock",5179.434379404137,100,-5761.642146304284,1
+5,128,oracle (empirical curves),-2811.9704437925793,1600,-8412.428843421723,0
+10,16,uniform,44151.21708686337,2500,929.9078731770733,4
+10,16,proportional to N,28064.884580286285,2500,7771.717991374103,6
+10,16,"rule, signal from scaling law",24639.473821406198,1000,12423.42427925093,8
+10,16,"rule, signal fitted per stock",25908.154399425246,1000,12150.115606519603,8
+10,16,oracle (empirical curves),25908.154399425246,1000,13026.13094276171,8
+10,32,uniform,29171.413367968005,2500,-9973.822853804288,3
+10,32,proportional to N,9803.966997592592,2500,-2339.158093104308,4
+10,32,"rule, signal from scaling law",10235.720783301103,1000,2274.862914892884,5
+10,32,"rule, signal fitted per stock",12241.090317551243,400,4763.174303120514,7
+10,32,oracle (empirical curves),12130.882724613435,640,3427.3076290045383,5
+10,64,uniform,25986.054594820776,2500,-21514.757300012214,2
+10,64,proportional to N,-10620.383155711843,250,-17683.92421848811,0
+10,64,"rule, signal from scaling law",-3918.0745054172016,250,-15694.685045884817,0
+10,64,"rule, signal fitted per stock",5179.434379404137,100,-11942.47346645752,1
+10,64,oracle (empirical curves),-10620.383155711843,250,-17004.182016379156,0
+10,128,uniform,-7557.783909202167,2500,-41869.028687336846,0
+10,128,proportional to N,-29012.619141999912,100,-40717.57949510466,0
+10,128,"rule, signal from scaling law",-19807.168441621474,100,-37693.88508419957,0
+10,128,"rule, signal fitted per stock",-19807.168441621474,100,-37145.07063770921,0
+10,128,oracle (empirical curves),-30663.236032376746,400,-43120.47110600721,0

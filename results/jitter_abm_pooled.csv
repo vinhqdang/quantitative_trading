@@ -1,0 +1,15 @@
+market,ring in market,blocks,mean active accounts,family-wise error (non-member rejected),ring blocks,member rejected,catch@5 (pooled z)
+generic simulator,True,100,113.28,0.16,49,0.5510204081632653,0.9387755102040817
+generic simulator,False,100,101.21,0.12,0,,
+index level 1,True,100,521.61,0.17,53,0.05660377358490566,0.41509433962264153
+index level 1,False,100,508.2,0.26,0,,
+index level 5,True,100,630.91,0.34,51,0.0392156862745098,0.19607843137254902
+index level 5,False,100,620.41,0.46,0,,
+stock level 14,True,100,722.62,0.32,49,0.02040816326530612,0.24489795918367346
+stock level 14,False,100,710.59,0.4,0,,
+stock level 19,True,100,448.1,0.69,47,0.02127659574468085,0.10638297872340426
+stock level 19,False,100,437.28,0.64,0,,
+trend-free 9,True,100,1097.39,0.8,47,0.0,0.0
+trend-free 9,False,100,1085.76,0.79,0,,
+trend-free 11,True,100,665.69,0.97,51,0.0,0.0
+trend-free 11,False,100,653.94,0.99,0,,

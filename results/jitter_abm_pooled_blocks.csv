@@ -1,0 +1,1401 @@
+market,ring,windows pooled,active accounts,ring active,member rejected,non-member rejected,catch@5 (pooled z)
+generic simulator,True,4,121,False,False,False,False
+generic simulator,True,4,112,True,False,False,True
+generic simulator,True,4,115,True,True,False,True
+generic simulator,True,4,112,True,False,True,False
+generic simulator,True,3,113,False,False,False,False
+generic simulator,False,4,97,False,False,False,False
+generic simulator,False,4,107,False,False,False,False
+generic simulator,False,4,102,False,False,False,False
+generic simulator,False,4,97,False,False,False,False
+generic simulator,False,3,97,False,False,False,False
+generic simulator,True,4,105,False,False,False,False
+generic simulator,True,4,104,False,False,False,False
+generic simulator,True,4,105,False,False,False,False
+generic simulator,True,4,105,True,False,False,True
+generic simulator,True,3,106,True,True,False,True
+generic simulator,False,4,98,False,False,False,False
+generic simulator,False,4,102,False,False,False,False
+generic simulator,False,4,108,False,False,False,False
+generic simulator,False,4,108,False,False,True,False
+generic simulator,False,3,99,False,False,False,False
+generic simulator,True,4,103,False,False,False,False
+generic simulator,True,4,114,False,False,False,False
+generic simulator,True,4,111,True,False,False,True
+generic simulator,True,4,113,True,True,False,True
+generic simulator,True,3,112,True,False,True,False
+generic simulator,False,4,97,False,False,False,False
+generic simulator,False,4,107,False,False,False,False
+generic simulator,False,4,97,False,False,False,False
+generic simulator,False,4,106,False,False,False,False
+generic simulator,False,3,98,False,False,False,False
+generic simulator,True,4,108,False,False,False,False
+generic simulator,True,4,109,True,True,False,True
+generic simulator,True,4,109,True,False,False,True
+generic simulator,True,4,109,False,False,False,False
+generic simulator,True,3,108,False,False,False,False
+generic simulator,False,4,108,False,False,True,False
+generic simulator,False,4,97,False,False,False,False
+generic simulator,False,4,97,False,False,False,False
+generic simulator,False,4,108,False,False,False,False
+generic simulator,False,3,97,False,False,False,False
+generic simulator,True,4,108,True,True,True,True
+generic simulator,True,4,110,True,True,False,True
+generic simulator,True,4,103,True,False,False,True
+generic simulator,True,4,113,False,False,False,False
+generic simulator,True,3,104,False,False,False,False
+generic simulator,False,4,97,False,False,False,False
+generic simulator,False,4,98,False,False,False,False
+generic simulator,False,4,97,False,False,False,False
+generic simulator,False,4,108,False,False,False,False
+generic simulator,False,3,107,False,False,True,False
+generic simulator,True,4,115,False,False,False,False
+generic simulator,True,4,116,True,True,False,True
+generic simulator,True,4,117,True,False,False,True
+generic simulator,True,4,121,False,False,False,False
+generic simulator,True,3,125,False,False,True,False
+generic simulator,False,4,97,False,False,False,False
+generic simulator,False,4,97,False,False,True,False
+generic simulator,False,4,96,False,False,False,False
+generic simulator,False,4,108,False,False,False,False
+generic simulator,False,3,98,False,False,False,False
+generic simulator,True,4,124,True,False,False,True
+generic simulator,True,4,118,True,True,False,True
+generic simulator,True,4,125,True,False,False,True
+generic simulator,True,4,124,False,False,False,False
+generic simulator,True,3,125,False,False,False,False
+generic simulator,False,4,97,False,False,False,False
+generic simulator,False,4,104,False,False,True,False
+generic simulator,False,4,98,False,False,False,False
+generic simulator,False,4,98,False,False,False,False
+generic simulator,False,3,98,False,False,False,False
+generic simulator,True,4,110,False,False,True,False
+generic simulator,True,4,120,False,False,False,False
+generic simulator,True,4,119,True,True,False,True
+generic simulator,True,4,113,True,True,False,True
+generic simulator,True,3,107,False,False,False,False
+generic simulator,False,4,98,False,False,False,False
+generic simulator,False,4,98,False,False,False,False
+generic simulator,False,4,101,False,False,False,False
+generic simulator,False,4,97,False,False,False,False
+generic simulator,False,3,97,False,False,True,False
+generic simulator,True,4,123,True,True,True,True
+generic simulator,True,4,113,True,True,False,True
+generic simulator,True,4,123,False,False,False,False
+generic simulator,True,4,114,False,False,False,False
+generic simulator,True,3,113,False,False,False,False
+generic simulator,False,4,102,False,False,False,False
+generic simulator,False,4,99,False,False,False,False
+generic simulator,False,4,96,False,False,True,False
+generic simulator,False,4,100,False,False,False,False
+generic simulator,False,3,97,False,False,False,False
+generic simulator,True,4,116,True,False,False,True
+generic simulator,True,4,120,True,False,False,True
+generic simulator,True,4,118,False,False,False,False
+generic simulator,True,4,124,False,False,True,False
+generic simulator,True,3,115,False,False,False,False
+generic simulator,False,4,106,False,False,False,False
+generic simulator,False,4,98,False,False,False,False
+generic simulator,False,4,98,False,False,False,False
+generic simulator,False,4,97,False,False,False,False
+generic simulator,False,3,99,False,False,False,False
+generic simulator,True,4,110,False,False,False,False
+generic simulator,True,4,113,True,True,False,True
+generic simulator,True,4,121,True,True,False,True
+generic simulator,True,4,110,False,False,False,False
+generic simulator,True,3,111,False,False,True,False
+generic simulator,False,4,106,False,False,True,False
+generic simulator,False,4,107,False,False,True,False
+generic simulator,False,4,108,False,False,False,False
+generic simulator,False,4,108,False,False,False,False
+generic simulator,False,3,98,False,False,False,False
+generic simulator,True,4,106,False,False,False,False
+generic simulator,True,4,106,False,False,False,False
+generic simulator,True,4,106,False,False,False,False
+generic simulator,True,4,116,True,False,False,True
+generic simulator,True,3,113,True,True,True,True
+generic simulator,False,4,105,False,False,False,False
+generic simulator,False,4,100,False,False,False,False
+generic simulator,False,4,103,False,False,False,False
+generic simulator,False,4,108,False,False,False,False
+generic simulator,False,3,96,False,False,False,False
+generic simulator,True,4,112,True,False,False,True
+generic simulator,True,4,120,True,True,False,True
+generic simulator,True,4,123,True,False,False,True
+generic simulator,True,4,112,False,False,False,False
+generic simulator,True,3,113,False,False,True,False
+generic simulator,False,4,97,False,False,False,False
+generic simulator,False,4,107,False,False,False,False
+generic simulator,False,4,98,False,False,False,False
+generic simulator,False,4,99,False,False,False,False
+generic simulator,False,3,97,False,False,False,False
+generic simulator,True,4,122,True,False,True,True
+generic simulator,True,4,112,True,True,False,True
+generic simulator,True,4,122,True,True,False,True
+generic simulator,True,4,119,False,False,False,False
+generic simulator,True,3,118,False,False,False,False
+generic simulator,False,4,105,False,False,False,False
+generic simulator,False,4,104,False,False,False,False
+generic simulator,False,4,108,False,False,True,False
+generic simulator,False,4,97,False,False,False,False
+generic simulator,False,3,108,False,False,False,False
+generic simulator,True,4,103,False,False,False,False
+generic simulator,True,4,113,False,False,False,False
+generic simulator,True,4,104,False,False,True,False
+generic simulator,True,4,104,True,True,False,True
+generic simulator,True,3,104,True,True,False,True
+generic simulator,False,4,98,False,False,False,False
+generic simulator,False,4,108,False,False,False,False
+generic simulator,False,4,107,False,False,False,False
+generic simulator,False,4,99,False,False,False,False
+generic simulator,False,3,104,False,False,False,False
+generic simulator,True,4,108,False,False,False,False
+generic simulator,True,4,108,False,False,False,False
+generic simulator,True,4,107,True,True,False,True
+generic simulator,True,4,110,True,True,False,True
+generic simulator,True,3,108,False,False,False,False
+generic simulator,False,4,98,False,False,False,False
+generic simulator,False,4,97,False,False,False,False
+generic simulator,False,4,97,False,False,False,False
+generic simulator,False,4,98,False,False,False,False
+generic simulator,False,3,115,False,False,False,False
+generic simulator,True,4,113,True,False,False,True
+generic simulator,True,4,116,True,True,False,True
+generic simulator,True,4,112,False,False,False,False
+generic simulator,True,4,113,False,False,False,False
+generic simulator,True,3,120,False,False,False,False
+generic simulator,False,4,99,False,False,False,False
+generic simulator,False,4,99,False,False,False,False
+generic simulator,False,4,106,False,False,False,False
+generic simulator,False,4,108,False,False,False,False
+generic simulator,False,3,98,False,False,False,False
+generic simulator,True,4,110,False,False,False,False
+generic simulator,True,4,112,True,False,True,True
+generic simulator,True,4,114,True,True,True,True
+generic simulator,True,4,119,True,False,False,True
+generic simulator,True,3,111,False,False,False,False
+generic simulator,False,4,97,False,False,False,False
+generic simulator,False,4,108,False,False,False,False
+generic simulator,False,4,113,False,False,False,False
+generic simulator,False,4,99,False,False,False,False
+generic simulator,False,3,100,False,False,False,False
+generic simulator,True,4,115,True,False,False,False
+generic simulator,True,4,122,True,True,True,True
+generic simulator,True,4,114,True,False,False,True
+generic simulator,True,4,114,False,False,False,False
+generic simulator,True,3,115,False,False,False,False
+generic simulator,False,4,106,False,False,False,False
+generic simulator,False,4,106,False,False,False,False
+generic simulator,False,4,97,False,False,True,False
+generic simulator,False,4,97,False,False,False,False
+generic simulator,False,3,97,False,False,False,False
+generic simulator,True,4,113,True,False,False,True
+generic simulator,True,4,113,True,True,False,True
+generic simulator,True,4,114,True,True,False,True
+generic simulator,True,4,111,False,False,True,False
+generic simulator,True,3,113,False,False,False,False
+generic simulator,False,4,98,False,False,True,False
+generic simulator,False,4,97,False,False,False,False
+generic simulator,False,4,98,False,False,False,False
+generic simulator,False,4,104,False,False,False,False
+generic simulator,False,3,106,False,False,False,False
+index level 1,True,4,520,False,False,True,False
+index level 1,True,4,526,False,False,False,False
+index level 1,True,4,514,False,False,False,False
+index level 1,True,4,522,True,False,False,True
+index level 1,True,3,521,True,False,False,False
+index level 1,False,4,515,False,False,True,False
+index level 1,False,4,511,False,False,False,False
+index level 1,False,4,512,False,False,False,False
+index level 1,False,4,505,False,False,False,False
+index level 1,False,3,505,False,False,True,False
+index level 1,True,4,507,False,False,False,False
+index level 1,True,4,510,True,False,True,False
+index level 1,True,4,513,True,False,False,True
+index level 1,True,4,511,True,False,False,True
+index level 1,True,3,512,False,False,False,False
+index level 1,False,4,514,False,False,False,False
+index level 1,False,4,514,False,False,False,False
+index level 1,False,4,510,False,False,False,False
+index level 1,False,4,512,False,False,True,False
+index level 1,False,3,507,False,False,False,False
+index level 1,True,4,518,True,False,False,False
+index level 1,True,4,520,True,False,False,False
+index level 1,True,4,519,True,False,True,False
+index level 1,True,4,526,False,False,False,False
+index level 1,True,3,521,False,False,False,False
+index level 1,False,4,500,False,False,False,False
+index level 1,False,4,497,False,False,False,False
+index level 1,False,4,507,False,False,False,False
+index level 1,False,4,512,False,False,False,False
+index level 1,False,3,506,False,False,False,False
+index level 1,True,4,523,True,False,False,True
+index level 1,True,4,524,True,False,False,True
+index level 1,True,4,512,False,False,True,False
+index level 1,True,4,524,False,False,False,False
+index level 1,True,3,522,False,False,False,False
+index level 1,False,4,508,False,False,False,False
+index level 1,False,4,508,False,False,False,False
+index level 1,False,4,504,False,False,True,False
+index level 1,False,4,506,False,False,True,False
+index level 1,False,3,496,False,False,False,False
+index level 1,True,4,523,False,False,True,False
+index level 1,True,4,530,True,False,False,False
+index level 1,True,4,529,True,False,False,True
+index level 1,True,4,523,True,False,True,False
+index level 1,True,3,533,False,False,False,False
+index level 1,False,4,508,False,False,True,False
+index level 1,False,4,511,False,False,True,False
+index level 1,False,4,506,False,False,False,False
+index level 1,False,4,508,False,False,True,False
+index level 1,False,3,507,False,False,True,False
+index level 1,True,4,524,False,False,False,False
+index level 1,True,4,524,False,False,False,False
+index level 1,True,4,513,True,False,False,False
+index level 1,True,4,523,True,False,True,True
+index level 1,True,3,523,False,False,False,False
+index level 1,False,4,511,False,False,False,False
+index level 1,False,4,508,False,False,False,False
+index level 1,False,4,515,False,False,False,False
+index level 1,False,4,512,False,False,True,False
+index level 1,False,3,507,False,False,False,False
+index level 1,True,4,523,False,False,False,False
+index level 1,True,4,522,False,False,False,False
+index level 1,True,4,516,True,False,True,True
+index level 1,True,4,521,True,False,False,False
+index level 1,True,3,526,False,False,False,False
+index level 1,False,4,510,False,False,False,False
+index level 1,False,4,510,False,False,False,False
+index level 1,False,4,506,False,False,False,False
+index level 1,False,4,510,False,False,True,False
+index level 1,False,3,511,False,False,False,False
+index level 1,True,4,521,False,False,True,False
+index level 1,True,4,524,False,False,False,False
+index level 1,True,4,522,True,False,False,False
+index level 1,True,4,522,True,False,False,True
+index level 1,True,3,524,True,False,False,False
+index level 1,False,4,509,False,False,True,False
+index level 1,False,4,505,False,False,True,False
+index level 1,False,4,502,False,False,False,False
+index level 1,False,4,511,False,False,False,False
+index level 1,False,3,503,False,False,False,False
+index level 1,True,4,525,False,False,False,False
+index level 1,True,4,528,False,False,False,False
+index level 1,True,4,527,True,False,False,True
+index level 1,True,4,527,True,False,True,True
+index level 1,True,3,524,False,False,False,False
+index level 1,False,4,509,False,False,True,False
+index level 1,False,4,508,False,False,False,False
+index level 1,False,4,510,False,False,False,False
+index level 1,False,4,506,False,False,False,False
+index level 1,False,3,506,False,False,False,False
+index level 1,True,4,524,False,False,False,False
+index level 1,True,4,530,True,False,False,False
+index level 1,True,4,524,True,False,False,False
+index level 1,True,4,524,True,False,True,False
+index level 1,True,3,525,False,False,True,False
+index level 1,False,4,502,False,False,False,False
+index level 1,False,4,506,False,False,False,False
+index level 1,False,4,508,False,False,False,False
+index level 1,False,4,517,False,False,False,False
+index level 1,False,3,499,False,False,True,False
+index level 1,True,4,521,True,False,False,False
+index level 1,True,4,525,True,False,False,True
+index level 1,True,4,525,True,False,False,False
+index level 1,True,4,531,False,False,False,False
+index level 1,True,3,524,False,False,False,False
+index level 1,False,4,504,False,False,True,False
+index level 1,False,4,509,False,False,False,False
+index level 1,False,4,512,False,False,False,False
+index level 1,False,4,506,False,False,True,False
+index level 1,False,3,508,False,False,False,False
+index level 1,True,4,513,False,False,False,False
+index level 1,True,4,531,True,True,False,True
+index level 1,True,4,511,True,False,False,False
+index level 1,True,4,520,True,False,True,False
+index level 1,True,3,524,False,False,True,False
+index level 1,False,4,507,False,False,False,False
+index level 1,False,4,511,False,False,False,False
+index level 1,False,4,510,False,False,False,False
+index level 1,False,4,506,False,False,True,False
+index level 1,False,3,508,False,False,False,False
+index level 1,True,4,520,False,False,False,False
+index level 1,True,4,517,False,False,True,False
+index level 1,True,4,517,True,False,False,False
+index level 1,True,4,520,True,True,False,True
+index level 1,True,3,520,True,True,False,True
+index level 1,False,4,508,False,False,False,False
+index level 1,False,4,509,False,False,False,False
+index level 1,False,4,514,False,False,False,False
+index level 1,False,4,508,False,False,False,False
+index level 1,False,3,509,False,False,False,False
+index level 1,True,4,528,True,False,False,True
+index level 1,True,4,522,True,False,False,False
+index level 1,True,4,523,True,False,False,False
+index level 1,True,4,527,False,False,False,False
+index level 1,True,3,527,False,False,False,False
+index level 1,False,4,513,False,False,False,False
+index level 1,False,4,508,False,False,False,False
+index level 1,False,4,511,False,False,False,False
+index level 1,False,4,506,False,False,False,False
+index level 1,False,3,503,False,False,False,False
+index level 1,True,4,519,False,False,False,False
+index level 1,True,4,516,True,False,False,False
+index level 1,True,4,515,True,False,True,False
+index level 1,True,4,517,True,False,False,False
+index level 1,True,3,515,False,False,False,False
+index level 1,False,4,510,False,False,False,False
+index level 1,False,4,509,False,False,False,False
+index level 1,False,4,507,False,False,True,False
+index level 1,False,4,516,False,False,False,False
+index level 1,False,3,503,False,False,True,False
+index level 1,True,4,517,True,False,False,True
+index level 1,True,4,515,True,False,True,False
+index level 1,True,4,534,False,False,False,False
+index level 1,True,4,529,False,False,False,False
+index level 1,True,3,526,False,False,False,False
+index level 1,False,4,510,False,False,False,False
+index level 1,False,4,515,False,False,True,False
+index level 1,False,4,513,False,False,False,False
+index level 1,False,4,515,False,False,False,False
+index level 1,False,3,502,False,False,False,False
+index level 1,True,4,519,False,False,False,False
+index level 1,True,4,517,True,False,False,False
+index level 1,True,4,516,True,False,False,True
+index level 1,True,4,520,True,False,False,False
+index level 1,True,3,515,False,False,False,False
+index level 1,False,4,514,False,False,False,False
+index level 1,False,4,506,False,False,True,False
+index level 1,False,4,509,False,False,False,False
+index level 1,False,4,512,False,False,False,False
+index level 1,False,3,508,False,False,False,False
+index level 1,True,4,522,False,False,False,False
+index level 1,True,4,523,True,False,False,False
+index level 1,True,4,520,True,False,False,True
+index level 1,True,4,522,True,False,False,False
+index level 1,True,3,521,False,False,False,False
+index level 1,False,4,507,False,False,True,False
+index level 1,False,4,516,False,False,False,False
+index level 1,False,4,513,False,False,False,False
+index level 1,False,4,504,False,False,True,False
+index level 1,False,3,506,False,False,False,False
+index level 1,True,4,524,False,False,False,False
+index level 1,True,4,522,False,False,False,False
+index level 1,True,4,522,False,False,False,False
+index level 1,True,4,519,True,False,False,True
+index level 1,True,3,523,True,False,False,True
+index level 1,False,4,507,False,False,False,False
+index level 1,False,4,509,False,False,False,False
+index level 1,False,4,506,False,False,False,False
+index level 1,False,4,507,False,False,True,False
+index level 1,False,3,506,False,False,False,False
+index level 1,True,4,516,False,False,False,False
+index level 1,True,4,533,True,False,False,False
+index level 1,True,4,529,True,False,False,True
+index level 1,True,4,520,True,False,False,False
+index level 1,True,3,520,False,False,False,False
+index level 1,False,4,506,False,False,False,False
+index level 1,False,4,508,False,False,True,False
+index level 1,False,4,507,False,False,False,False
+index level 1,False,4,502,False,False,False,False
+index level 1,False,3,507,False,False,False,False
+index level 5,True,4,638,True,False,True,False
+index level 5,True,4,636,True,False,True,False
+index level 5,True,4,638,False,False,False,False
+index level 5,True,4,635,False,False,False,False
+index level 5,True,3,636,False,False,False,False
+index level 5,False,4,620,False,False,True,False
+index level 5,False,4,620,False,False,True,False
+index level 5,False,4,623,False,False,False,False
+index level 5,False,4,622,False,False,True,False
+index level 5,False,3,618,False,False,False,False
+index level 5,True,4,628,False,False,True,False
+index level 5,True,4,631,True,False,False,False
+index level 5,True,4,633,True,False,True,True
+index level 5,True,4,633,True,False,False,False
+index level 5,True,3,632,False,False,True,False
+index level 5,False,4,622,False,False,True,False
+index level 5,False,4,621,False,False,True,False
+index level 5,False,4,623,False,False,True,False
+index level 5,False,4,619,False,False,False,False
+index level 5,False,3,623,False,False,False,False
+index level 5,True,4,634,False,False,False,False
+index level 5,True,4,637,True,False,True,False
+index level 5,True,4,636,True,False,False,True
+index level 5,True,4,629,False,False,True,False
+index level 5,True,3,634,False,False,False,False
+index level 5,False,4,622,False,False,False,False
+index level 5,False,4,613,False,False,True,False
+index level 5,False,4,618,False,False,True,False
+index level 5,False,4,623,False,False,False,False
+index level 5,False,3,622,False,False,False,False
+index level 5,True,4,636,True,False,False,False
+index level 5,True,4,636,True,False,True,False
+index level 5,True,4,631,True,False,True,False
+index level 5,True,4,636,False,False,False,False
+index level 5,True,3,634,False,False,True,False
+index level 5,False,4,622,False,False,False,False
+index level 5,False,4,623,False,False,True,False
+index level 5,False,4,623,False,False,False,False
+index level 5,False,4,623,False,False,True,False
+index level 5,False,3,619,False,False,False,False
+index level 5,True,4,633,False,False,False,False
+index level 5,True,4,632,False,False,True,False
+index level 5,True,4,631,True,False,True,False
+index level 5,True,4,634,True,False,False,True
+index level 5,True,3,631,True,False,False,False
+index level 5,False,4,619,False,False,True,False
+index level 5,False,4,623,False,False,True,False
+index level 5,False,4,620,False,False,True,False
+index level 5,False,4,623,False,False,True,False
+index level 5,False,3,618,False,False,False,False
+index level 5,True,4,637,False,False,False,False
+index level 5,True,4,635,False,False,True,False
+index level 5,True,4,627,True,False,True,False
+index level 5,True,4,635,True,False,False,False
+index level 5,True,3,636,True,False,True,False
+index level 5,False,4,623,False,False,False,False
+index level 5,False,4,622,False,False,True,False
+index level 5,False,4,623,False,False,True,False
+index level 5,False,4,622,False,False,False,False
+index level 5,False,3,621,False,False,True,False
+index level 5,True,4,634,False,False,True,False
+index level 5,True,4,632,False,False,False,False
+index level 5,True,4,634,False,False,False,False
+index level 5,True,4,636,True,False,True,False
+index level 5,True,3,633,True,False,False,False
+index level 5,False,4,622,False,False,True,False
+index level 5,False,4,621,False,False,True,False
+index level 5,False,4,621,False,False,False,False
+index level 5,False,4,618,False,False,False,False
+index level 5,False,3,620,False,False,False,False
+index level 5,True,4,633,False,False,False,False
+index level 5,True,4,630,False,False,True,False
+index level 5,True,4,631,False,False,False,False
+index level 5,True,4,633,True,False,False,False
+index level 5,True,3,631,True,False,False,True
+index level 5,False,4,622,False,False,True,False
+index level 5,False,4,620,False,False,True,False
+index level 5,False,4,623,False,False,False,False
+index level 5,False,4,623,False,False,False,False
+index level 5,False,3,622,False,False,True,False
+index level 5,True,4,630,False,False,True,False
+index level 5,True,4,630,True,False,False,True
+index level 5,True,4,631,True,False,True,False
+index level 5,True,4,626,False,False,False,False
+index level 5,True,3,627,False,False,False,False
+index level 5,False,4,621,False,False,False,False
+index level 5,False,4,616,False,False,False,False
+index level 5,False,4,623,False,False,False,False
+index level 5,False,4,623,False,False,False,False
+index level 5,False,3,618,False,False,False,False
+index level 5,True,4,623,False,False,False,False
+index level 5,True,4,628,True,False,True,False
+index level 5,True,4,626,True,False,False,False
+index level 5,True,4,623,True,False,False,False
+index level 5,True,3,624,False,False,False,False
+index level 5,False,4,613,False,False,False,False
+index level 5,False,4,623,False,False,False,False
+index level 5,False,4,620,False,False,False,False
+index level 5,False,4,618,False,False,False,False
+index level 5,False,3,622,False,False,False,False
+index level 5,True,4,627,False,False,True,False
+index level 5,True,4,618,True,False,False,False
+index level 5,True,4,622,True,False,False,False
+index level 5,True,4,629,True,False,False,False
+index level 5,True,3,622,False,False,False,False
+index level 5,False,4,623,False,False,False,False
+index level 5,False,4,620,False,False,True,False
+index level 5,False,4,619,False,False,True,False
+index level 5,False,4,623,False,False,False,False
+index level 5,False,3,617,False,False,False,False
+index level 5,True,4,630,True,False,False,False
+index level 5,True,4,635,True,True,False,True
+index level 5,True,4,635,True,False,False,False
+index level 5,True,4,635,False,False,False,False
+index level 5,True,3,635,False,False,True,False
+index level 5,False,4,618,False,False,False,False
+index level 5,False,4,619,False,False,True,False
+index level 5,False,4,623,False,False,True,False
+index level 5,False,4,621,False,False,True,False
+index level 5,False,3,618,False,False,True,False
+index level 5,True,4,629,False,False,True,False
+index level 5,True,4,628,False,False,True,False
+index level 5,True,4,628,True,True,False,True
+index level 5,True,4,626,True,False,False,False
+index level 5,True,3,629,False,False,False,False
+index level 5,False,4,619,False,False,True,False
+index level 5,False,4,623,False,False,True,False
+index level 5,False,4,623,False,False,True,False
+index level 5,False,4,615,False,False,True,False
+index level 5,False,3,618,False,False,True,False
+index level 5,True,4,632,False,False,True,False
+index level 5,True,4,632,True,False,False,False
+index level 5,True,4,633,True,False,False,False
+index level 5,True,4,633,True,False,False,False
+index level 5,True,3,632,False,False,False,False
+index level 5,False,4,622,False,False,False,False
+index level 5,False,4,621,False,False,False,False
+index level 5,False,4,622,False,False,True,False
+index level 5,False,4,620,False,False,True,False
+index level 5,False,3,622,False,False,True,False
+index level 5,True,4,634,False,False,False,False
+index level 5,True,4,628,False,False,True,False
+index level 5,True,4,632,True,False,True,False
+index level 5,True,4,634,True,False,False,True
+index level 5,True,3,629,True,False,False,False
+index level 5,False,4,623,False,False,True,False
+index level 5,False,4,620,False,False,False,False
+index level 5,False,4,616,False,False,False,False
+index level 5,False,4,621,False,False,True,False
+index level 5,False,3,619,False,False,False,False
+index level 5,True,4,631,True,False,False,True
+index level 5,True,4,629,True,False,True,False
+index level 5,True,4,630,False,False,True,False
+index level 5,True,4,629,False,False,False,False
+index level 5,True,3,631,False,False,False,False
+index level 5,False,4,620,False,False,False,False
+index level 5,False,4,620,False,False,False,False
+index level 5,False,4,622,False,False,False,False
+index level 5,False,4,615,False,False,True,False
+index level 5,False,3,616,False,False,False,False
+index level 5,True,4,627,True,False,True,False
+index level 5,True,4,626,True,False,True,False
+index level 5,True,4,625,True,False,False,False
+index level 5,True,4,634,False,False,False,False
+index level 5,True,3,630,False,False,False,False
+index level 5,False,4,621,False,False,False,False
+index level 5,False,4,623,False,False,False,False
+index level 5,False,4,618,False,False,True,False
+index level 5,False,4,622,False,False,False,False
+index level 5,False,3,614,False,False,True,False
+index level 5,True,4,630,False,False,False,False
+index level 5,True,4,630,False,False,False,False
+index level 5,True,4,630,False,False,False,False
+index level 5,True,4,623,True,False,False,False
+index level 5,True,3,625,True,False,False,False
+index level 5,False,4,622,False,False,False,False
+index level 5,False,4,619,False,False,False,False
+index level 5,False,4,622,False,False,False,False
+index level 5,False,4,623,False,False,True,False
+index level 5,False,3,621,False,False,False,False
+index level 5,True,4,626,True,False,True,False
+index level 5,True,4,621,True,False,False,True
+index level 5,True,4,628,False,False,False,False
+index level 5,True,4,626,False,False,False,False
+index level 5,True,3,624,False,False,False,False
+index level 5,False,4,618,False,False,True,False
+index level 5,False,4,616,False,False,False,False
+index level 5,False,4,623,False,False,False,False
+index level 5,False,4,623,False,False,False,False
+index level 5,False,3,614,False,False,False,False
+index level 5,True,4,638,False,False,False,False
+index level 5,True,4,637,True,False,False,False
+index level 5,True,4,637,True,False,False,False
+index level 5,True,4,637,True,False,False,False
+index level 5,True,3,631,False,False,True,False
+index level 5,False,4,616,False,False,False,False
+index level 5,False,4,622,False,False,False,False
+index level 5,False,4,623,False,False,True,False
+index level 5,False,4,622,False,False,True,False
+index level 5,False,3,619,False,False,True,False
+stock level 14,True,4,733,False,False,False,False
+stock level 14,True,4,735,False,False,True,False
+stock level 14,True,4,734,False,False,True,False
+stock level 14,True,4,734,True,False,True,False
+stock level 14,True,3,732,True,False,False,False
+stock level 14,False,4,706,False,False,False,False
+stock level 14,False,4,712,False,False,True,False
+stock level 14,False,4,711,False,False,True,False
+stock level 14,False,4,707,False,False,True,False
+stock level 14,False,3,711,False,False,False,False
+stock level 14,True,4,723,True,False,False,True
+stock level 14,True,4,722,True,False,False,False
+stock level 14,True,4,721,False,False,False,False
+stock level 14,True,4,729,False,False,False,False
+stock level 14,True,3,730,False,False,False,False
+stock level 14,False,4,708,False,False,False,False
+stock level 14,False,4,710,False,False,True,False
+stock level 14,False,4,709,False,False,False,False
+stock level 14,False,4,707,False,False,True,False
+stock level 14,False,3,708,False,False,True,False
+stock level 14,True,4,714,True,False,True,False
+stock level 14,True,4,722,True,False,False,True
+stock level 14,True,4,723,True,False,False,False
+stock level 14,True,4,723,False,False,True,False
+stock level 14,True,3,722,False,False,False,False
+stock level 14,False,4,713,False,False,False,False
+stock level 14,False,4,714,False,False,False,False
+stock level 14,False,4,709,False,False,False,False
+stock level 14,False,4,714,False,False,False,False
+stock level 14,False,3,712,False,False,False,False
+stock level 14,True,4,723,False,False,False,False
+stock level 14,True,4,723,True,False,True,False
+stock level 14,True,4,722,True,False,True,False
+stock level 14,True,4,723,False,False,False,False
+stock level 14,True,3,730,False,False,False,False
+stock level 14,False,4,707,False,False,False,False
+stock level 14,False,4,715,False,False,False,False
+stock level 14,False,4,704,False,False,False,False
+stock level 14,False,4,717,False,False,True,False
+stock level 14,False,3,706,False,False,False,False
+stock level 14,True,4,724,False,False,False,False
+stock level 14,True,4,730,False,False,False,False
+stock level 14,True,4,727,True,False,True,False
+stock level 14,True,4,724,True,False,True,False
+stock level 14,True,3,722,False,False,False,False
+stock level 14,False,4,712,False,False,True,False
+stock level 14,False,4,713,False,False,False,False
+stock level 14,False,4,710,False,False,True,False
+stock level 14,False,4,714,False,False,False,False
+stock level 14,False,3,708,False,False,False,False
+stock level 14,True,4,718,False,False,False,False
+stock level 14,True,4,721,False,False,False,False
+stock level 14,True,4,717,False,False,False,False
+stock level 14,True,4,716,True,False,False,False
+stock level 14,True,3,719,True,False,False,True
+stock level 14,False,4,707,False,False,True,False
+stock level 14,False,4,715,False,False,True,False
+stock level 14,False,4,712,False,False,True,False
+stock level 14,False,4,710,False,False,False,False
+stock level 14,False,3,709,False,False,True,False
+stock level 14,True,4,720,False,False,True,False
+stock level 14,True,4,723,False,False,False,False
+stock level 14,True,4,727,True,False,False,True
+stock level 14,True,4,724,True,False,True,False
+stock level 14,True,3,720,False,False,True,False
+stock level 14,False,4,714,False,False,True,False
+stock level 14,False,4,716,False,False,True,False
+stock level 14,False,4,714,False,False,True,False
+stock level 14,False,4,713,False,False,True,False
+stock level 14,False,3,712,False,False,False,False
+stock level 14,True,4,724,False,False,False,False
+stock level 14,True,4,725,False,False,False,False
+stock level 14,True,4,729,True,False,True,False
+stock level 14,True,4,725,True,False,True,False
+stock level 14,True,3,716,True,False,False,False
+stock level 14,False,4,707,False,False,False,False
+stock level 14,False,4,708,False,False,False,False
+stock level 14,False,4,712,False,False,True,False
+stock level 14,False,4,708,False,False,False,False
+stock level 14,False,3,714,False,False,False,False
+stock level 14,True,4,726,True,False,False,True
+stock level 14,True,4,726,True,False,False,True
+stock level 14,True,4,726,False,False,False,False
+stock level 14,True,4,729,False,False,False,False
+stock level 14,True,3,733,False,False,True,False
+stock level 14,False,4,709,False,False,False,False
+stock level 14,False,4,709,False,False,False,False
+stock level 14,False,4,716,False,False,False,False
+stock level 14,False,4,712,False,False,False,False
+stock level 14,False,3,712,False,False,True,False
+stock level 14,True,4,727,True,False,False,False
+stock level 14,True,4,728,True,False,False,False
+stock level 14,True,4,729,True,False,True,False
+stock level 14,True,4,727,False,False,False,False
+stock level 14,True,3,725,False,False,False,False
+stock level 14,False,4,714,False,False,True,False
+stock level 14,False,4,709,False,False,False,False
+stock level 14,False,4,712,False,False,False,False
+stock level 14,False,4,710,False,False,True,False
+stock level 14,False,3,710,False,False,False,False
+stock level 14,True,4,722,False,False,True,False
+stock level 14,True,4,716,False,False,False,False
+stock level 14,True,4,716,True,False,True,False
+stock level 14,True,4,720,True,False,True,False
+stock level 14,True,3,717,True,False,False,False
+stock level 14,False,4,708,False,False,True,False
+stock level 14,False,4,708,False,False,True,False
+stock level 14,False,4,709,False,False,False,False
+stock level 14,False,4,710,False,False,True,False
+stock level 14,False,3,713,False,False,False,False
+stock level 14,True,4,713,False,False,False,False
+stock level 14,True,4,712,False,False,False,False
+stock level 14,True,4,707,True,False,False,False
+stock level 14,True,4,708,True,False,False,False
+stock level 14,True,3,712,False,False,True,False
+stock level 14,False,4,711,False,False,True,False
+stock level 14,False,4,715,False,False,True,False
+stock level 14,False,4,716,False,False,False,False
+stock level 14,False,4,712,False,False,False,False
+stock level 14,False,3,711,False,False,True,False
+stock level 14,True,4,727,False,False,False,False
+stock level 14,True,4,728,True,False,False,False
+stock level 14,True,4,728,True,False,False,True
+stock level 14,True,4,729,True,False,False,False
+stock level 14,True,3,726,False,False,True,False
+stock level 14,False,4,709,False,False,False,False
+stock level 14,False,4,716,False,False,True,False
+stock level 14,False,4,708,False,False,False,False
+stock level 14,False,4,717,False,False,True,False
+stock level 14,False,3,714,False,False,False,False
+stock level 14,True,4,720,True,True,False,True
+stock level 14,True,4,721,True,False,True,False
+stock level 14,True,4,723,False,False,False,False
+stock level 14,True,4,720,False,False,True,False
+stock level 14,True,3,718,False,False,True,False
+stock level 14,False,4,708,False,False,False,False
+stock level 14,False,4,712,False,False,True,False
+stock level 14,False,4,711,False,False,True,False
+stock level 14,False,4,708,False,False,False,False
+stock level 14,False,3,711,False,False,False,False
+stock level 14,True,4,720,False,False,False,False
+stock level 14,True,4,721,False,False,False,False
+stock level 14,True,4,722,True,False,False,False
+stock level 14,True,4,720,True,False,True,True
+stock level 14,True,3,719,False,False,False,False
+stock level 14,False,4,713,False,False,False,False
+stock level 14,False,4,703,False,False,False,False
+stock level 14,False,4,715,False,False,True,False
+stock level 14,False,4,709,False,False,True,False
+stock level 14,False,3,710,False,False,False,False
+stock level 14,True,4,715,False,False,False,False
+stock level 14,True,4,720,True,False,False,False
+stock level 14,True,4,723,True,False,False,False
+stock level 14,True,4,719,True,False,True,False
+stock level 14,True,3,715,False,False,False,False
+stock level 14,False,4,706,False,False,True,False
+stock level 14,False,4,715,False,False,False,False
+stock level 14,False,4,709,False,False,False,False
+stock level 14,False,4,714,False,False,False,False
+stock level 14,False,3,704,False,False,False,False
+stock level 14,True,4,721,False,False,False,False
+stock level 14,True,4,719,False,False,False,False
+stock level 14,True,4,719,True,False,False,False
+stock level 14,True,4,721,True,False,False,False
+stock level 14,True,3,717,True,False,True,True
+stock level 14,False,4,708,False,False,False,False
+stock level 14,False,4,705,False,False,False,False
+stock level 14,False,4,704,False,False,True,False
+stock level 14,False,4,707,False,False,False,False
+stock level 14,False,3,701,False,False,False,False
+stock level 14,True,4,725,True,False,True,False
+stock level 14,True,4,722,True,False,False,False
+stock level 14,True,4,721,True,False,False,True
+stock level 14,True,4,723,False,False,True,False
+stock level 14,True,3,723,False,False,True,False
+stock level 14,False,4,711,False,False,False,False
+stock level 14,False,4,714,False,False,False,False
+stock level 14,False,4,715,False,False,True,False
+stock level 14,False,4,709,False,False,True,False
+stock level 14,False,3,709,False,False,False,False
+stock level 14,True,4,706,False,False,False,False
+stock level 14,True,4,718,True,False,False,False
+stock level 14,True,4,713,True,False,False,False
+stock level 14,True,4,718,True,False,False,False
+stock level 14,True,3,713,False,False,False,False
+stock level 14,False,4,710,False,False,False,False
+stock level 14,False,4,712,False,False,False,False
+stock level 14,False,4,711,False,False,False,False
+stock level 14,False,4,709,False,False,True,False
+stock level 14,False,3,708,False,False,False,False
+stock level 14,True,4,727,False,False,False,False
+stock level 14,True,4,735,True,False,True,False
+stock level 14,True,4,728,True,False,False,True
+stock level 14,True,4,736,False,False,False,False
+stock level 14,True,3,735,False,False,True,False
+stock level 14,False,4,708,False,False,False,False
+stock level 14,False,4,712,False,False,False,False
+stock level 14,False,4,716,False,False,True,False
+stock level 14,False,4,713,False,False,True,False
+stock level 14,False,3,711,False,False,False,False
+stock level 19,True,4,441,False,False,False,False
+stock level 19,True,4,449,False,False,True,False
+stock level 19,True,4,450,True,False,False,False
+stock level 19,True,4,450,True,False,True,False
+stock level 19,True,3,447,False,False,True,False
+stock level 19,False,4,436,False,False,True,False
+stock level 19,False,4,439,False,False,True,False
+stock level 19,False,4,439,False,False,False,False
+stock level 19,False,4,440,False,False,True,False
+stock level 19,False,3,437,False,False,False,False
+stock level 19,True,4,447,False,False,True,False
+stock level 19,True,4,443,True,False,True,False
+stock level 19,True,4,445,True,True,True,True
+stock level 19,True,4,441,False,False,True,False
+stock level 19,True,3,439,False,False,True,False
+stock level 19,False,4,440,False,False,False,False
+stock level 19,False,4,438,False,False,True,False
+stock level 19,False,4,439,False,False,True,False
+stock level 19,False,4,439,False,False,False,False
+stock level 19,False,3,436,False,False,False,False
+stock level 19,True,4,446,True,False,True,False
+stock level 19,True,4,446,True,False,True,False
+stock level 19,True,4,447,True,False,False,False
+stock level 19,True,4,446,False,False,True,False
+stock level 19,True,3,446,False,False,False,False
+stock level 19,False,4,440,False,False,False,False
+stock level 19,False,4,438,False,False,True,False
+stock level 19,False,4,438,False,False,True,False
+stock level 19,False,4,437,False,False,True,False
+stock level 19,False,3,430,False,False,True,False
+stock level 19,True,4,442,True,False,True,False
+stock level 19,True,4,447,True,False,False,False
+stock level 19,True,4,446,False,False,True,False
+stock level 19,True,4,445,False,False,False,False
+stock level 19,True,3,444,False,False,True,False
+stock level 19,False,4,439,False,False,False,False
+stock level 19,False,4,440,False,False,True,False
+stock level 19,False,4,439,False,False,False,False
+stock level 19,False,4,440,False,False,True,False
+stock level 19,False,3,438,False,False,False,False
+stock level 19,True,4,442,True,False,True,False
+stock level 19,True,4,447,True,False,True,False
+stock level 19,True,4,447,True,False,True,False
+stock level 19,True,4,447,False,False,False,False
+stock level 19,True,3,442,False,False,True,False
+stock level 19,False,4,440,False,False,True,False
+stock level 19,False,4,432,False,False,True,False
+stock level 19,False,4,439,False,False,False,False
+stock level 19,False,4,440,False,False,True,False
+stock level 19,False,3,433,False,False,True,False
+stock level 19,True,4,457,False,False,True,False
+stock level 19,True,4,456,False,False,True,False
+stock level 19,True,4,458,True,False,True,False
+stock level 19,True,4,454,True,False,True,False
+stock level 19,True,3,457,True,False,False,False
+stock level 19,False,4,430,False,False,True,False
+stock level 19,False,4,439,False,False,False,False
+stock level 19,False,4,440,False,False,False,False
+stock level 19,False,4,440,False,False,False,False
+stock level 19,False,3,430,False,False,False,False
+stock level 19,True,4,446,False,False,True,False
+stock level 19,True,4,449,False,False,False,False
+stock level 19,True,4,451,False,False,False,False
+stock level 19,True,4,452,True,False,True,False
+stock level 19,True,3,450,True,False,True,False
+stock level 19,False,4,440,False,False,False,False
+stock level 19,False,4,439,False,False,False,False
+stock level 19,False,4,439,False,False,False,False
+stock level 19,False,4,433,False,False,True,False
+stock level 19,False,3,439,False,False,False,False
+stock level 19,True,4,454,False,False,True,False
+stock level 19,True,4,453,True,False,True,True
+stock level 19,True,4,453,True,False,False,True
+stock level 19,True,4,454,False,False,True,False
+stock level 19,True,3,454,False,False,False,False
+stock level 19,False,4,440,False,False,False,False
+stock level 19,False,4,440,False,False,False,False
+stock level 19,False,4,439,False,False,True,False
+stock level 19,False,4,435,False,False,True,False
+stock level 19,False,3,439,False,False,False,False
+stock level 19,True,4,450,False,False,True,False
+stock level 19,True,4,449,False,False,True,False
+stock level 19,True,4,451,True,False,True,False
+stock level 19,True,4,455,True,False,True,False
+stock level 19,True,3,445,False,False,False,False
+stock level 19,False,4,438,False,False,False,False
+stock level 19,False,4,440,False,False,True,False
+stock level 19,False,4,439,False,False,False,False
+stock level 19,False,4,439,False,False,True,False
+stock level 19,False,3,430,False,False,True,False
+stock level 19,True,4,448,False,False,True,False
+stock level 19,True,4,442,True,False,False,False
+stock level 19,True,4,451,True,False,True,False
+stock level 19,True,4,451,False,False,True,False
+stock level 19,True,3,451,False,False,True,False
+stock level 19,False,4,440,False,False,False,False
+stock level 19,False,4,431,False,False,True,False
+stock level 19,False,4,438,False,False,True,False
+stock level 19,False,4,435,False,False,True,False
+stock level 19,False,3,440,False,False,True,False
+stock level 19,True,4,444,True,False,False,True
+stock level 19,True,4,443,True,False,True,False
+stock level 19,True,4,443,True,False,True,False
+stock level 19,True,4,443,False,False,True,False
+stock level 19,True,3,436,False,False,True,False
+stock level 19,False,4,434,False,False,True,False
+stock level 19,False,4,440,False,False,False,False
+stock level 19,False,4,440,False,False,True,False
+stock level 19,False,4,435,False,False,True,False
+stock level 19,False,3,439,False,False,False,False
+stock level 19,True,4,441,True,False,True,False
+stock level 19,True,4,445,True,False,True,False
+stock level 19,True,4,447,True,False,True,False
+stock level 19,True,4,444,False,False,False,False
+stock level 19,True,3,444,False,False,True,False
+stock level 19,False,4,437,False,False,True,False
+stock level 19,False,4,440,False,False,True,False
+stock level 19,False,4,440,False,False,True,False
+stock level 19,False,4,439,False,False,True,False
+stock level 19,False,3,433,False,False,True,False
+stock level 19,True,4,446,True,False,False,False
+stock level 19,True,4,447,True,False,False,False
+stock level 19,True,4,444,True,False,True,False
+stock level 19,True,4,446,False,False,False,False
+stock level 19,True,3,445,False,False,True,False
+stock level 19,False,4,440,False,False,False,False
+stock level 19,False,4,440,False,False,True,False
+stock level 19,False,4,437,False,False,True,False
+stock level 19,False,4,431,False,False,True,False
+stock level 19,False,3,436,False,False,False,False
+stock level 19,True,4,454,True,False,False,False
+stock level 19,True,4,452,True,False,True,False
+stock level 19,True,4,453,False,False,True,False
+stock level 19,True,4,447,False,False,True,False
+stock level 19,True,3,454,False,False,False,False
+stock level 19,False,4,439,False,False,False,False
+stock level 19,False,4,440,False,False,True,False
+stock level 19,False,4,440,False,False,True,False
+stock level 19,False,4,436,False,False,True,False
+stock level 19,False,3,436,False,False,True,False
+stock level 19,True,4,450,False,False,False,False
+stock level 19,True,4,455,True,False,True,False
+stock level 19,True,4,455,True,False,True,False
+stock level 19,True,4,451,False,False,True,False
+stock level 19,True,3,447,False,False,True,False
+stock level 19,False,4,433,False,False,True,False
+stock level 19,False,4,433,False,False,True,False
+stock level 19,False,4,437,False,False,True,False
+stock level 19,False,4,433,False,False,True,False
+stock level 19,False,3,434,False,False,False,False
+stock level 19,True,4,447,False,False,False,False
+stock level 19,True,4,447,True,False,True,False
+stock level 19,True,4,446,True,False,True,False
+stock level 19,True,4,447,False,False,True,False
+stock level 19,True,3,446,False,False,False,False
+stock level 19,False,4,440,False,False,False,False
+stock level 19,False,4,438,False,False,True,False
+stock level 19,False,4,440,False,False,True,False
+stock level 19,False,4,438,False,False,True,False
+stock level 19,False,3,436,False,False,True,False
+stock level 19,True,4,450,False,False,True,False
+stock level 19,True,4,450,False,False,True,False
+stock level 19,True,4,449,False,False,True,False
+stock level 19,True,4,451,True,False,False,False
+stock level 19,True,3,450,True,False,False,False
+stock level 19,False,4,440,False,False,False,False
+stock level 19,False,4,436,False,False,True,False
+stock level 19,False,4,435,False,False,True,False
+stock level 19,False,4,440,False,False,False,False
+stock level 19,False,3,439,False,False,True,False
+stock level 19,True,4,446,False,False,False,False
+stock level 19,True,4,439,False,False,True,False
+stock level 19,True,4,441,True,False,True,False
+stock level 19,True,4,447,True,False,True,False
+stock level 19,True,3,444,False,False,True,False
+stock level 19,False,4,433,False,False,False,False
+stock level 19,False,4,439,False,False,True,False
+stock level 19,False,4,431,False,False,True,False
+stock level 19,False,4,439,False,False,True,False
+stock level 19,False,3,436,False,False,False,False
+stock level 19,True,4,459,True,False,False,True
+stock level 19,True,4,458,True,False,True,False
+stock level 19,True,4,454,False,False,True,False
+stock level 19,True,4,456,False,False,True,False
+stock level 19,True,3,450,False,False,True,False
+stock level 19,False,4,430,False,False,False,False
+stock level 19,False,4,436,False,False,True,False
+stock level 19,False,4,437,False,False,True,False
+stock level 19,False,4,440,False,False,True,False
+stock level 19,False,3,438,False,False,True,False
+stock level 19,True,4,443,False,False,False,False
+stock level 19,True,4,450,True,False,False,False
+stock level 19,True,4,449,True,False,False,False
+stock level 19,True,4,449,True,False,True,False
+stock level 19,True,3,443,False,False,True,False
+stock level 19,False,4,435,False,False,True,False
+stock level 19,False,4,440,False,False,True,False
+stock level 19,False,4,438,False,False,True,False
+stock level 19,False,4,439,False,False,True,False
+stock level 19,False,3,435,False,False,True,False
+trend-free 9,True,4,1103,True,False,True,False
+trend-free 9,True,4,1105,True,False,False,False
+trend-free 9,True,4,1093,True,False,True,False
+trend-free 9,True,4,1108,False,False,True,False
+trend-free 9,True,3,1104,False,False,True,False
+trend-free 9,False,4,1091,False,False,True,False
+trend-free 9,False,4,1090,False,False,True,False
+trend-free 9,False,4,1089,False,False,True,False
+trend-free 9,False,4,1073,False,False,True,False
+trend-free 9,False,3,1089,False,False,True,False
+trend-free 9,True,4,1105,True,False,True,False
+trend-free 9,True,4,1103,True,False,True,False
+trend-free 9,True,4,1085,False,False,True,False
+trend-free 9,True,4,1095,False,False,True,False
+trend-free 9,True,3,1095,False,False,True,False
+trend-free 9,False,4,1093,False,False,True,False
+trend-free 9,False,4,1092,False,False,True,False
+trend-free 9,False,4,1083,False,False,False,False
+trend-free 9,False,4,1075,False,False,True,False
+trend-free 9,False,3,1084,False,False,False,False
+trend-free 9,True,4,1107,False,False,True,False
+trend-free 9,True,4,1104,True,False,True,False
+trend-free 9,True,4,1099,True,False,True,False
+trend-free 9,True,4,1097,True,False,False,False
+trend-free 9,True,3,1092,False,False,True,False
+trend-free 9,False,4,1092,False,False,True,False
+trend-free 9,False,4,1076,False,False,True,False
+trend-free 9,False,4,1085,False,False,True,False
+trend-free 9,False,4,1084,False,False,False,False
+trend-free 9,False,3,1085,False,False,True,False
+trend-free 9,True,4,1102,False,False,True,False
+trend-free 9,True,4,1112,True,False,True,False
+trend-free 9,True,4,1097,True,False,False,False
+trend-free 9,True,4,1093,False,False,False,False
+trend-free 9,True,3,1109,False,False,True,False
+trend-free 9,False,4,1088,False,False,True,False
+trend-free 9,False,4,1085,False,False,True,False
+trend-free 9,False,4,1075,False,False,False,False
+trend-free 9,False,4,1086,False,False,True,False
+trend-free 9,False,3,1075,False,False,True,False
+trend-free 9,True,4,1097,True,False,False,False
+trend-free 9,True,4,1087,True,False,False,False
+trend-free 9,True,4,1095,False,False,True,False
+trend-free 9,True,4,1106,False,False,True,False
+trend-free 9,True,3,1105,False,False,True,False
+trend-free 9,False,4,1085,False,False,True,False
+trend-free 9,False,4,1080,False,False,True,False
+trend-free 9,False,4,1075,False,False,False,False
+trend-free 9,False,4,1090,False,False,True,False
+trend-free 9,False,3,1091,False,False,True,False
+trend-free 9,True,4,1106,True,False,True,False
+trend-free 9,True,4,1086,True,False,False,False
+trend-free 9,True,4,1099,False,False,True,False
+trend-free 9,True,4,1098,False,False,True,False
+trend-free 9,True,3,1096,False,False,False,False
+trend-free 9,False,4,1094,False,False,True,False
+trend-free 9,False,4,1084,False,False,True,False
+trend-free 9,False,4,1087,False,False,True,False
+trend-free 9,False,4,1094,False,False,True,False
+trend-free 9,False,3,1083,False,False,True,False
+trend-free 9,True,4,1100,True,False,True,False
+trend-free 9,True,4,1102,True,False,True,False
+trend-free 9,True,4,1103,False,False,False,False
+trend-free 9,True,4,1110,False,False,True,False
+trend-free 9,True,3,1101,False,False,True,False
+trend-free 9,False,4,1092,False,False,True,False
+trend-free 9,False,4,1084,False,False,True,False
+trend-free 9,False,4,1086,False,False,True,False
+trend-free 9,False,4,1074,False,False,False,False
+trend-free 9,False,3,1078,False,False,True,False
+trend-free 9,True,4,1102,True,False,True,False
+trend-free 9,True,4,1111,True,False,False,False
+trend-free 9,True,4,1092,False,False,True,False
+trend-free 9,True,4,1091,False,False,False,False
+trend-free 9,True,3,1104,False,False,False,False
+trend-free 9,False,4,1094,False,False,True,False
+trend-free 9,False,4,1085,False,False,True,False
+trend-free 9,False,4,1095,False,False,True,False
+trend-free 9,False,4,1088,False,False,True,False
+trend-free 9,False,3,1093,False,False,True,False
+trend-free 9,True,4,1091,True,False,False,False
+trend-free 9,True,4,1080,True,False,True,False
+trend-free 9,True,4,1090,False,False,True,False
+trend-free 9,True,4,1090,False,False,True,False
+trend-free 9,True,3,1082,False,False,False,False
+trend-free 9,False,4,1090,False,False,True,False
+trend-free 9,False,4,1088,False,False,False,False
+trend-free 9,False,4,1082,False,False,True,False
+trend-free 9,False,4,1085,False,False,False,False
+trend-free 9,False,3,1074,False,False,False,False
+trend-free 9,True,4,1103,True,False,True,False
+trend-free 9,True,4,1088,True,False,True,False
+trend-free 9,True,4,1099,False,False,True,False
+trend-free 9,True,4,1099,False,False,True,False
+trend-free 9,True,3,1098,False,False,False,False
+trend-free 9,False,4,1091,False,False,True,False
+trend-free 9,False,4,1094,False,False,True,False
+trend-free 9,False,4,1091,False,False,True,False
+trend-free 9,False,4,1085,False,False,True,False
+trend-free 9,False,3,1073,False,False,True,False
+trend-free 9,True,4,1096,False,False,True,False
+trend-free 9,True,4,1092,True,False,True,False
+trend-free 9,True,4,1108,True,False,True,False
+trend-free 9,True,4,1101,False,False,True,False
+trend-free 9,True,3,1096,False,False,True,False
+trend-free 9,False,4,1091,False,False,True,False
+trend-free 9,False,4,1073,False,False,True,False
+trend-free 9,False,4,1079,False,False,True,False
+trend-free 9,False,4,1076,False,False,True,False
+trend-free 9,False,3,1077,False,False,False,False
+trend-free 9,True,4,1106,False,False,False,False
+trend-free 9,True,4,1107,False,False,True,False
+trend-free 9,True,4,1109,True,False,True,False
+trend-free 9,True,4,1091,True,False,True,False
+trend-free 9,True,3,1091,False,False,True,False
+trend-free 9,False,4,1095,False,False,True,False
+trend-free 9,False,4,1094,False,False,True,False
+trend-free 9,False,4,1088,False,False,False,False
+trend-free 9,False,4,1081,False,False,True,False
+trend-free 9,False,3,1094,False,False,True,False
+trend-free 9,True,4,1098,False,False,True,False
+trend-free 9,True,4,1089,True,False,True,False
+trend-free 9,True,4,1100,True,False,True,False
+trend-free 9,True,4,1100,False,False,True,False
+trend-free 9,True,3,1089,False,False,False,False
+trend-free 9,False,4,1073,False,False,True,False
+trend-free 9,False,4,1074,False,False,True,False
+trend-free 9,False,4,1085,False,False,True,False
+trend-free 9,False,4,1094,False,False,True,False
+trend-free 9,False,3,1083,False,False,True,False
+trend-free 9,True,4,1089,False,False,True,False
+trend-free 9,True,4,1099,True,False,True,False
+trend-free 9,True,4,1102,True,False,True,False
+trend-free 9,True,4,1107,True,False,True,False
+trend-free 9,True,3,1090,False,False,True,False
+trend-free 9,False,4,1092,False,False,False,False
+trend-free 9,False,4,1086,False,False,True,False
+trend-free 9,False,4,1094,False,False,True,False
+trend-free 9,False,4,1086,False,False,True,False
+trend-free 9,False,3,1093,False,False,True,False
+trend-free 9,True,4,1086,True,False,True,False
+trend-free 9,True,4,1096,True,False,False,False
+trend-free 9,True,4,1106,True,False,True,False
+trend-free 9,True,4,1086,False,False,True,False
+trend-free 9,True,3,1098,False,False,False,False
+trend-free 9,False,4,1075,False,False,True,False
+trend-free 9,False,4,1088,False,False,True,False
+trend-free 9,False,4,1092,False,False,True,False
+trend-free 9,False,4,1083,False,False,True,False
+trend-free 9,False,3,1084,False,False,True,False
+trend-free 9,True,4,1097,False,False,True,False
+trend-free 9,True,4,1103,False,False,True,False
+trend-free 9,True,4,1098,False,False,True,False
+trend-free 9,True,4,1095,True,False,True,False
+trend-free 9,True,3,1102,True,False,True,False
+trend-free 9,False,4,1087,False,False,False,False
+trend-free 9,False,4,1084,False,False,True,False
+trend-free 9,False,4,1086,False,False,True,False
+trend-free 9,False,4,1093,False,False,True,False
+trend-free 9,False,3,1094,False,False,True,False
+trend-free 9,True,4,1102,False,False,True,False
+trend-free 9,True,4,1092,False,False,True,False
+trend-free 9,True,4,1097,True,False,True,False
+trend-free 9,True,4,1092,True,False,True,False
+trend-free 9,True,3,1091,True,False,True,False
+trend-free 9,False,4,1084,False,False,False,False
+trend-free 9,False,4,1085,False,False,True,False
+trend-free 9,False,4,1091,False,False,True,False
+trend-free 9,False,4,1082,False,False,False,False
+trend-free 9,False,3,1088,False,False,True,False
+trend-free 9,True,4,1095,False,False,True,False
+trend-free 9,True,4,1104,False,False,True,False
+trend-free 9,True,4,1101,True,False,True,False
+trend-free 9,True,4,1086,True,False,True,False
+trend-free 9,True,3,1099,False,False,True,False
+trend-free 9,False,4,1089,False,False,True,False
+trend-free 9,False,4,1074,False,False,True,False
+trend-free 9,False,4,1075,False,False,True,False
+trend-free 9,False,4,1085,False,False,True,False
+trend-free 9,False,3,1088,False,False,False,False
+trend-free 9,True,4,1099,False,False,True,False
+trend-free 9,True,4,1101,False,False,True,False
+trend-free 9,True,4,1091,True,False,True,False
+trend-free 9,True,4,1103,True,False,True,False
+trend-free 9,True,3,1091,True,False,True,False
+trend-free 9,False,4,1080,False,False,False,False
+trend-free 9,False,4,1088,False,False,True,False
+trend-free 9,False,4,1095,False,False,False,False
+trend-free 9,False,4,1095,False,False,True,False
+trend-free 9,False,3,1089,False,False,True,False
+trend-free 9,True,4,1084,False,False,True,False
+trend-free 9,True,4,1094,True,False,True,False
+trend-free 9,True,4,1091,True,False,True,False
+trend-free 9,True,4,1083,True,False,True,False
+trend-free 9,True,3,1097,False,False,False,False
+trend-free 9,False,4,1095,False,False,True,False
+trend-free 9,False,4,1087,False,False,False,False
+trend-free 9,False,4,1089,False,False,False,False
+trend-free 9,False,4,1084,False,False,False,False
+trend-free 9,False,3,1084,False,False,True,False
+trend-free 11,True,4,663,False,False,True,False
+trend-free 11,True,4,674,False,False,True,False
+trend-free 11,True,4,663,True,False,True,False
+trend-free 11,True,4,674,True,False,True,False
+trend-free 11,True,3,656,True,False,True,False
+trend-free 11,False,4,658,False,False,True,False
+trend-free 11,False,4,654,False,False,True,False
+trend-free 11,False,4,655,False,False,True,False
+trend-free 11,False,4,660,False,False,True,False
+trend-free 11,False,3,650,False,False,True,False
+trend-free 11,True,4,665,False,False,True,False
+trend-free 11,True,4,670,False,False,True,False
+trend-free 11,True,4,676,False,False,False,False
+trend-free 11,True,4,669,True,False,True,False
+trend-free 11,True,3,667,True,False,True,False
+trend-free 11,False,4,650,False,False,True,False
+trend-free 11,False,4,661,False,False,True,False
+trend-free 11,False,4,661,False,False,True,False
+trend-free 11,False,4,661,False,False,True,False
+trend-free 11,False,3,651,False,False,True,False
+trend-free 11,True,4,661,False,False,True,False
+trend-free 11,True,4,670,False,False,True,False
+trend-free 11,True,4,653,True,False,True,False
+trend-free 11,True,4,662,True,False,True,False
+trend-free 11,True,3,662,True,False,False,False
+trend-free 11,False,4,652,False,False,True,False
+trend-free 11,False,4,653,False,False,True,False
+trend-free 11,False,4,660,False,False,True,False
+trend-free 11,False,4,650,False,False,True,False
+trend-free 11,False,3,647,False,False,True,False
+trend-free 11,True,4,658,False,False,True,False
+trend-free 11,True,4,657,False,False,True,False
+trend-free 11,True,4,662,True,False,True,False
+trend-free 11,True,4,667,True,False,True,False
+trend-free 11,True,3,648,True,False,True,False
+trend-free 11,False,4,642,False,False,True,False
+trend-free 11,False,4,662,False,False,True,False
+trend-free 11,False,4,646,False,False,True,False
+trend-free 11,False,4,655,False,False,True,False
+trend-free 11,False,3,651,False,False,True,False
+trend-free 11,True,4,679,False,False,True,False
+trend-free 11,True,4,664,True,False,True,False
+trend-free 11,True,4,679,True,False,True,False
+trend-free 11,True,4,662,False,False,True,False
+trend-free 11,True,3,661,False,False,True,False
+trend-free 11,False,4,662,False,False,True,False
+trend-free 11,False,4,659,False,False,True,False
+trend-free 11,False,4,653,False,False,True,False
+trend-free 11,False,4,657,False,False,True,False
+trend-free 11,False,3,651,False,False,True,False
+trend-free 11,True,4,670,False,False,True,False
+trend-free 11,True,4,668,True,False,True,False
+trend-free 11,True,4,667,True,False,True,False
+trend-free 11,True,4,674,False,False,True,False
+trend-free 11,True,3,662,False,False,True,False
+trend-free 11,False,4,658,False,False,True,False
+trend-free 11,False,4,641,False,False,True,False
+trend-free 11,False,4,658,False,False,True,False
+trend-free 11,False,4,658,False,False,True,False
+trend-free 11,False,3,643,False,False,True,False
+trend-free 11,True,4,670,True,False,True,False
+trend-free 11,True,4,672,True,False,True,False
+trend-free 11,True,4,668,True,False,True,False
+trend-free 11,True,4,681,False,False,True,False
+trend-free 11,True,3,668,False,False,True,False
+trend-free 11,False,4,651,False,False,True,False
+trend-free 11,False,4,662,False,False,True,False
+trend-free 11,False,4,661,False,False,True,False
+trend-free 11,False,4,652,False,False,True,False
+trend-free 11,False,3,662,False,False,True,False
+trend-free 11,True,4,655,False,False,True,False
+trend-free 11,True,4,661,True,False,True,False
+trend-free 11,True,4,670,True,False,True,False
+trend-free 11,True,4,658,False,False,True,False
+trend-free 11,True,3,672,False,False,True,False
+trend-free 11,False,4,661,False,False,True,False
+trend-free 11,False,4,660,False,False,True,False
+trend-free 11,False,4,641,False,False,True,False
+trend-free 11,False,4,650,False,False,True,False
+trend-free 11,False,3,653,False,False,True,False
+trend-free 11,True,4,669,False,False,True,False
+trend-free 11,True,4,659,True,False,True,False
+trend-free 11,True,4,669,True,False,True,False
+trend-free 11,True,4,659,False,False,True,False
+trend-free 11,True,3,664,False,False,True,False
+trend-free 11,False,4,652,False,False,True,False
+trend-free 11,False,4,651,False,False,True,False
+trend-free 11,False,4,661,False,False,True,False
+trend-free 11,False,4,654,False,False,True,False
+trend-free 11,False,3,662,False,False,True,False
+trend-free 11,True,4,654,False,False,True,False
+trend-free 11,True,4,659,True,False,True,False
+trend-free 11,True,4,667,True,False,True,False
+trend-free 11,True,4,668,True,False,True,False
+trend-free 11,True,3,648,False,False,True,False
+trend-free 11,False,4,660,False,False,True,False
+trend-free 11,False,4,649,False,False,True,False
+trend-free 11,False,4,652,False,False,True,False
+trend-free 11,False,4,643,False,False,True,False
+trend-free 11,False,3,651,False,False,True,False
+trend-free 11,True,4,661,False,False,True,False
+trend-free 11,True,4,671,True,False,True,False
+trend-free 11,True,4,669,True,False,True,False
+trend-free 11,True,4,671,True,False,True,False
+trend-free 11,True,3,668,False,False,False,False
+trend-free 11,False,4,662,False,False,True,False
+trend-free 11,False,4,652,False,False,True,False
+trend-free 11,False,4,652,False,False,True,False
+trend-free 11,False,4,652,False,False,True,False
+trend-free 11,False,3,656,False,False,True,False
+trend-free 11,True,4,671,False,False,True,False
+trend-free 11,True,4,669,True,False,True,False
+trend-free 11,True,4,672,True,False,True,False
+trend-free 11,True,4,673,True,False,True,False
+trend-free 11,True,3,666,False,False,True,False
+trend-free 11,False,4,653,False,False,True,False
+trend-free 11,False,4,654,False,False,True,False
+trend-free 11,False,4,650,False,False,True,False
+trend-free 11,False,4,659,False,False,True,False
+trend-free 11,False,3,651,False,False,False,False
+trend-free 11,True,4,664,True,False,True,False
+trend-free 11,True,4,668,True,False,True,False
+trend-free 11,True,4,652,True,False,True,False
+trend-free 11,True,4,658,False,False,True,False
+trend-free 11,True,3,667,False,False,True,False
+trend-free 11,False,4,656,False,False,True,False
+trend-free 11,False,4,660,False,False,True,False
+trend-free 11,False,4,656,False,False,True,False
+trend-free 11,False,4,650,False,False,True,False
+trend-free 11,False,3,652,False,False,True,False
+trend-free 11,True,4,672,False,False,True,False
+trend-free 11,True,4,661,False,False,True,False
+trend-free 11,True,4,661,False,False,True,False
+trend-free 11,True,4,661,True,False,True,False
+trend-free 11,True,3,667,True,False,True,False
+trend-free 11,False,4,655,False,False,True,False
+trend-free 11,False,4,651,False,False,True,False
+trend-free 11,False,4,660,False,False,True,False
+trend-free 11,False,4,654,False,False,True,False
+trend-free 11,False,3,656,False,False,True,False
+trend-free 11,True,4,665,True,False,True,False
+trend-free 11,True,4,661,True,False,True,False
+trend-free 11,True,4,668,True,False,True,False
+trend-free 11,True,4,673,False,False,True,False
+trend-free 11,True,3,665,False,False,True,False
+trend-free 11,False,4,652,False,False,True,False
+trend-free 11,False,4,652,False,False,True,False
+trend-free 11,False,4,641,False,False,True,False
+trend-free 11,False,4,659,False,False,True,False
+trend-free 11,False,3,641,False,False,True,False
+trend-free 11,True,4,669,False,False,True,False
+trend-free 11,True,4,668,True,False,True,False
+trend-free 11,True,4,666,True,False,True,False
+trend-free 11,True,4,668,False,False,True,False
+trend-free 11,True,3,668,False,False,True,False
+trend-free 11,False,4,655,False,False,True,False
+trend-free 11,False,4,657,False,False,True,False
+trend-free 11,False,4,657,False,False,True,False
+trend-free 11,False,4,656,False,False,True,False
+trend-free 11,False,3,646,False,False,True,False
+trend-free 11,True,4,666,False,False,True,False
+trend-free 11,True,4,676,True,False,True,False
+trend-free 11,True,4,662,True,False,True,False
+trend-free 11,True,4,666,False,False,True,False
+trend-free 11,True,3,676,False,False,True,False
+trend-free 11,False,4,654,False,False,True,False
+trend-free 11,False,4,649,False,False,True,False
+trend-free 11,False,4,660,False,False,True,False
+trend-free 11,False,4,661,False,False,True,False
+trend-free 11,False,3,656,False,False,True,False
+trend-free 11,True,4,651,False,False,True,False
+trend-free 11,True,4,662,False,False,True,False
+trend-free 11,True,4,668,True,False,True,False
+trend-free 11,True,4,672,True,False,True,False
+trend-free 11,True,3,651,False,False,True,False
+trend-free 11,False,4,660,False,False,True,False
+trend-free 11,False,4,657,False,False,True,False
+trend-free 11,False,4,651,False,False,True,False
+trend-free 11,False,4,661,False,False,True,False
+trend-free 11,False,3,658,False,False,True,False
+trend-free 11,True,4,669,True,False,True,False
+trend-free 11,True,4,673,True,False,True,False
+trend-free 11,True,4,672,True,False,True,False
+trend-free 11,True,4,670,False,False,True,False
+trend-free 11,True,3,670,False,False,True,False
+trend-free 11,False,4,660,False,False,True,False
+trend-free 11,False,4,648,False,False,True,False
+trend-free 11,False,4,660,False,False,True,False
+trend-free 11,False,4,641,False,False,True,False
+trend-free 11,False,3,660,False,False,True,False
+trend-free 11,True,4,668,False,False,True,False
+trend-free 11,True,4,665,False,False,True,False
+trend-free 11,True,4,663,True,False,True,False
+trend-free 11,True,4,663,True,False,True,False
+trend-free 11,True,3,659,True,False,True,False
+trend-free 11,False,4,650,False,False,True,False
+trend-free 11,False,4,658,False,False,True,False
+trend-free 11,False,4,654,False,False,True,False
+trend-free 11,False,4,641,False,False,True,False
+trend-free 11,False,3,641,False,False,True,False

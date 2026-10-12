@@ -195,7 +195,7 @@ def stage_abm(a):
     with ProcessPoolExecutor(a.workers, mp_context=mp.get_context("spawn")) as pool:
         res = [r for rr in pool.map(_abm_task, jobs, chunksize=2) for r in rr]
     df = pd.DataFrame(res)
-    df.to_csv(out / "jitter_abm_windows.csv", index=False)
+    df.to_csv(out / f"jitter_abm_windows{a.tag}.csv", index=False)
     summ = []
     for (mk, ring), g in df.groupby(["market", "ring"], sort=False):
         act = g[g["ring active"]]
@@ -206,7 +206,7 @@ def stage_abm(a):
                      "catch@5 (circular z)": act["catch@5 (circular z)"].mean() if len(act) else np.nan,
                      "circular Bonferroni rejects any": g["circular Bonferroni rejects"].mean()})
     s = pd.DataFrame(summ)
-    s.to_csv(out / "jitter_abm.csv", index=False)
+    s.to_csv(out / f"jitter_abm{a.tag}.csv", index=False)
     print(s.round(3).to_markdown(index=False))
 
 
@@ -389,7 +389,7 @@ def stage_abm_pooled(a):
     with ProcessPoolExecutor(a.workers, mp_context=mp.get_context("spawn")) as pool:
         res = [r for rr in pool.map(_abm_pooled_task, jobs, chunksize=2) for r in rr]
     df = pd.DataFrame(res)
-    df.to_csv(out / "jitter_abm_pooled_blocks.csv", index=False)
+    df.to_csv(out / f"jitter_abm_pooled_blocks{a.tag}.csv", index=False)
     summ = []
     for (mk, ring), g in df.groupby(["market", "ring"], sort=False):
         act = g[g["ring active"]]
@@ -398,7 +398,7 @@ def stage_abm_pooled(a):
                      "member rejected": act["member rejected"].mean() if len(act) else np.nan,
                      "catch@5 (pooled z)": act["catch@5 (pooled z)"].mean() if len(act) else np.nan})
     s = pd.DataFrame(summ)
-    s.to_csv(out / "jitter_abm_pooled.csv", index=False)
+    s.to_csv(out / f"jitter_abm_pooled{a.tag}.csv", index=False)
     print(s.round(3).to_markdown(index=False))
 
 
@@ -417,5 +417,6 @@ if __name__ == "__main__":
     ap.add_argument("--n-markets", type=int, default=2)
     ap.add_argument("--n-joint", type=int, default=500)
     ap.add_argument("--pool", type=int, default=4)
+    ap.add_argument("--tag", default="")
     ap.add_argument("--out", default="results")
     main(ap.parse_args())

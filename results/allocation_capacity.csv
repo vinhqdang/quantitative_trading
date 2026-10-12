@@ -1,11 +1,11 @@
 m,allocation,smallest capacity with no positive net benefit
-5,uniform,8
-5,proportional to N,24
-5,"rule, signal from scaling law",64
-5,"rule, signal fitted per stock",24
-5,oracle (empirical curves),8
-10,uniform,8
-10,proportional to N,24
-10,"rule, signal from scaling law",48
-10,"rule, signal fitted per stock",24
-10,oracle (empirical curves),8
+5,uniform,
+5,proportional to N,128.0
+5,"rule, signal from scaling law",128.0
+5,"rule, signal fitted per stock",
+5,oracle (empirical curves),128.0
+10,uniform,128.0
+10,proportional to N,64.0
+10,"rule, signal from scaling law",64.0
+10,"rule, signal fitted per stock",128.0
+10,oracle (empirical curves),64.0

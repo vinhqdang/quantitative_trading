@@ -21,13 +21,16 @@ import pandas as pd
 from scipy.optimize import brentq, least_squares
 from scipy.stats import norm
 
-from marketsim.coordination import scan_episode
+from marketsim.coordination import coincidence_scan, scan_episode
 from marketsim.ring_adversary import DEFAULT, _pooled, ring_only_config
 from marketsim.sim import SimConfig, ring_utility, run_episode
 
 STOCKS = [(n, 8 * n) for n in (50, 100, 200, 300, 450, 600, 800, 1000)]       # (noise traders, block of shares in lots)
 RING = {**DEFAULT, "p_push": 0.2}                                              # a weak ring: low push probability keeps detection probabilities intermediate
 S0, GAMMA, CEIL, K_RING = 1.20 * 0.2 / 0.8, 0.5, 0.90, 12
+SYN_N = (100, 160, 250, 400, 640, 1000, 1600, 2500)       # active accounts of the synthetic stocks
+SYN_K, SYN_ETA, SYN_C = 8, 0.25, 7.3                      # ring size, signal-to-noise ratio of a member, sqrt(T_eff) fitted in theory_checks.py
+T_WIN = 300
 
 
 def _ep(args):
@@ -51,8 +54,31 @@ def stage_sim(a):
     jobs = [(n, blk, 51_000_000 + 1000 * i + j) for i, (n, blk) in enumerate(STOCKS) for j in range(a.reps)]
     with ProcessPoolExecutor(a.workers, mp_context=mp.get_context("spawn")) as pool:
         res = list(pool.map(_ep, jobs, chunksize=2))
-    pd.DataFrame(res).to_csv(Path(a.out) / "allocation_episodes.csv", index=False)
+    pd.DataFrame(res).to_csv(Path(a.out) / "allocation_abm_episodes.csv", index=False)
     print(pd.DataFrame(res).groupby("n_noise").agg(gain=("gain", "mean"), active=("active", "mean"), caught5=("rank", lambda r: (r <= 5).mean())))
+
+
+def _syn_ep(args):
+    N, seed = args
+    rng = np.random.default_rng(seed)
+    x = rng.normal(size=(N, T_WIN))
+    pi = 0.2
+    b = np.sqrt(SYN_ETA / (pi * (1 - pi)))
+    sig = (rng.random(T_WIN) < pi).astype(float)
+    x[:SYN_K] += b * sig
+    z, _ = coincidence_scan(np.stack([x, np.zeros_like(x)]), (1, 5, 15), signed=True)
+    rank = 1 + int((z[SYN_K:] >= z[:SYN_K].max()).sum())
+    prize = 200.0 * N ** 0.7
+    gain = prize * float(np.exp(0.5 * rng.normal() - 0.125))
+    return {"n_noise": N, "block": 0, "seed": seed, "gain": gain, "rank": rank, "active": float(N)}
+
+
+def stage_synth(a):
+    jobs = [(N, 61_000_000 + 10_000 * i + j) for i, N in enumerate(SYN_N) for j in range(a.reps)]
+    with ProcessPoolExecutor(a.workers, mp_context=mp.get_context("spawn")) as pool:
+        res = list(pool.map(_syn_ep, jobs, chunksize=8))
+    pd.DataFrame(res).to_csv(Path(a.out) / "allocation_episodes.csv", index=False)
+    print(pd.DataFrame(res).groupby("n_noise").agg(gain=("gain", "mean"), caught5=("rank", lambda r: (r <= 5).mean()), caught50=("rank", lambda r: (r <= 50).mean())))
 
 
 # ---- model -------------------------------------------------------------------------------------------------------------------------------------
@@ -130,8 +156,7 @@ def oracle_allocation(curves, C):
     return b
 
 
-def stage_solve(a):
-    d = pd.read_csv(Path(a.out) / "allocation_episodes.csv")
+def _solve(d, a):
     stocks = sorted(d.n_noise.unique())
     W = len(stocks)
     Nw = np.array([d[d.n_noise == s].active.mean() for s in stocks])
@@ -139,6 +164,12 @@ def stage_solve(a):
     tst = {s: d[(d.n_noise == s) & (d.seed % 2 == 1)] for s in stocks}
     gw = np.array([sel[s].gain.clip(lower=0).mean() for s in stocks])
     bmax = int(Nw.max())
+    if a.law == "prop3":
+        K_RING_ = SYN_K
+        S_law = SYN_C * (SYN_K - 1) * SYN_ETA / np.sqrt((1 + SYN_ETA) * ((Nw - 1) + (SYN_K - 1) ** 2 * SYN_ETA))
+    else:
+        K_RING_ = K_RING
+        S_law = S0 * (100.0 / Nw) ** GAMMA
     # per-stock fitted signal S_w by least squares of the model onto the empirical probability of being caught on the selection episodes
     S_fit = []
     for s, N in zip(stocks, Nw):
@@ -146,17 +177,16 @@ def stage_solve(a):
         bs = np.array([1, 2, 3, 5, 8, 12, 20, 40, 80, 160])
         bs = bs[bs < N]
         emp = np.array([(r <= b).mean() for b in bs])
-        res = least_squares(lambda S: Q_ring(bs, N, S[0]) - emp, [1.0], bounds=(-3, 6))
+        res = least_squares(lambda S: Q_ring(bs, N, S[0], K_RING_, a.ceil) - emp, [1.0], bounds=(-3, 6))
         S_fit.append(float(res.x[0]))
     S_fit = np.array(S_fit)
-    S_law = S0 * (100.0 / Nw) ** GAMMA
     curves = {m: [np.array([net_benefit(sel[s], b, m) for b in range(bmax + 1)]) for s in stocks] for m in (5, 10)}
     rows, alloc_rows = [], []
     for m in (5, 10):
         for C in a.capacities:
             allocs = {"uniform": integerise(np.full(W, C / W), C), "proportional to N": integerise(C * Nw / Nw.sum(), C),
-                      "rule, signal from scaling law": integerise(rule_allocation(C, Nw, gw, S_law, m), C),
-                      "rule, signal fitted per stock": integerise(rule_allocation(C, Nw, gw, S_fit, m), C),
+                      "rule, signal from scaling law": integerise(rule_allocation(C, Nw, gw, S_law, m, K_RING_, a.ceil), C),
+                      "rule, signal fitted per stock": integerise(rule_allocation(C, Nw, gw, S_fit, m, K_RING_, a.ceil), C),
                       "oracle (empirical curves)": oracle_allocation(curves[m], C)}
             for name, b in allocs.items():
                 u = np.array([net_benefit(tst[s], int(bw), m) for s, bw in zip(stocks, b)])
@@ -166,9 +196,8 @@ def stage_solve(a):
                     alloc_rows += [{"m": m, "capacity C": C, "allocation": name, "n_noise": s, "N_w": N, "prize g_w": g, "b_w": int(bw)}
                                    for s, N, g, bw in zip(stocks, Nw, gw, b)]
     df = pd.DataFrame(rows)
-    df.to_csv(Path(a.out) / "allocation_results.csv", index=False)
-    pd.DataFrame(alloc_rows).to_csv(Path(a.out) / "allocation_shown.csv", index=False)
-    pd.DataFrame({"n_noise": stocks, "N_w": Nw, "prize g_w": gw, "S fitted": S_fit, "S scaling law": S_law}).to_csv(Path(a.out) / "allocation_stocks.csv", index=False)
+    shown = pd.DataFrame(alloc_rows)
+    st = pd.DataFrame({"n_noise": stocks, "N_w": Nw, "prize g_w": gw, "S fitted": S_fit, "S scaling law": S_law})
     # capacity needed to leave the ring no positive net benefit on the held-out episodes
     need = []
     for m in (5, 10):
@@ -176,15 +205,51 @@ def stage_solve(a):
             g = df[(df.m == m) & (df.allocation == name)].sort_values("capacity C")
             ok = g[g["ring's best net benefit"] <= 0]
             need.append({"m": m, "allocation": name, "smallest capacity with no positive net benefit": int(ok["capacity C"].min()) if len(ok) else np.nan})
-    need = pd.DataFrame(need)
-    need.to_csv(Path(a.out) / "allocation_capacity.csv", index=False)
-    print(pd.DataFrame({"n_noise": stocks, "N_w": Nw.round(0), "g_w": gw.round(0), "S_fit": S_fit.round(2), "S_law": S_law.round(2)}).to_string(index=False))
+    return df, pd.DataFrame(need), st, shown
+
+
+def stage_solve(a):
+    d = pd.read_csv(Path(a.out) / a.episodes)
+    df, need, st, shown = _solve(d, a)
+    df.to_csv(Path(a.out) / f"allocation_results{a.tag}.csv", index=False)
+    shown.to_csv(Path(a.out) / f"allocation_shown{a.tag}.csv", index=False)
+    st.to_csv(Path(a.out) / f"allocation_stocks{a.tag}.csv", index=False)
+    need.to_csv(Path(a.out) / f"allocation_capacity{a.tag}.csv", index=False)
+    print(st.round(2).to_string(index=False))
     print(need.to_string(index=False))
     print(df[df.m == 5].pivot_table(index="capacity C", columns="allocation", values="ring's best net benefit").round(0).to_string())
 
 
+def stage_replicate(a):
+    """Independent replications of the whole synthetic experiment (new episodes each time): mean and spread of the ring's best net benefit and of the capacity needed."""
+    allres, allneed = [], []
+    with ProcessPoolExecutor(a.workers, mp_context=mp.get_context("spawn")) as pool:
+        for r in range(a.replicates):
+            jobs = [(N, 62_000_000 + 1_000_000 * r + 10_000 * i + j) for i, N in enumerate(SYN_N) for j in range(a.reps)]
+            d = pd.DataFrame(list(pool.map(_syn_ep, jobs, chunksize=8)))
+            df, need, st, shown = _solve(d, a)
+            df["replicate"] = r
+            need["replicate"] = r
+            allres.append(df)
+            allneed.append(need)
+            if r == 0:
+                shown.to_csv(Path(a.out) / f"allocation_shown{a.tag}.csv", index=False)
+                st.to_csv(Path(a.out) / f"allocation_stocks{a.tag}.csv", index=False)
+            print("replicate", r, "done", flush=True)
+    res = pd.concat(allres)
+    need = pd.concat(allneed)
+    res.to_csv(Path(a.out) / f"allocation_results{a.tag}.csv", index=False)
+    need.to_csv(Path(a.out) / f"allocation_capacity{a.tag}.csv", index=False)
+    summ = res.groupby(["m", "capacity C", "allocation"])["ring's best net benefit"].agg(["mean", "std"]).reset_index()
+    summ.to_csv(Path(a.out) / f"allocation_summary{a.tag}.csv", index=False)
+    cs = need.groupby(["m", "allocation"])["smallest capacity with no positive net benefit"].agg(["median", "min", "max", "mean"]).reset_index()
+    cs.to_csv(Path(a.out) / f"allocation_capacity_summary{a.tag}.csv", index=False)
+    print(cs.to_string(index=False))
+    print(summ[summ.m == 5].pivot(index="capacity C", columns="allocation", values="mean").round(0).to_string())
+
+
 def main(a):
-    {"sim": stage_sim, "solve": stage_solve}[a.stage](a)
+    {"sim": stage_sim, "synth": stage_synth, "solve": stage_solve, "replicate": stage_replicate}[a.stage](a)
 
 
 if __name__ == "__main__":
@@ -194,5 +259,10 @@ if __name__ == "__main__":
     ap.add_argument("--workers", type=int, default=2)
     ap.add_argument("--capacities", type=int, nargs="+", default=[8, 16, 24, 32, 48, 64, 96, 128, 192, 256, 384, 512])
     ap.add_argument("--show-C", type=int, default=64)
+    ap.add_argument("--law", default="prop3", choices=["prop3", "scaling"])
+    ap.add_argument("--ceil", type=float, default=1.0)
+    ap.add_argument("--episodes", default="allocation_episodes.csv")
+    ap.add_argument("--tag", default="")
+    ap.add_argument("--replicates", type=int, default=20)
     ap.add_argument("--out", default="results")
     main(ap.parse_args())
