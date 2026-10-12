@@ -88,3 +88,19 @@ def transfer():
             rows.append(" & ".join([lab, names[det]] + [f"{r[c]:.2f}" for c in m.columns]) + r" \\")
         rows.append(r"\addlinespace")
     (OUT / "transfer.tex").write_text(TOP % "llrrrr" + "\n".join(rows[:-1]) + BOT)
+
+
+def menu_random():
+    f = R / "menu_random_summary.csv"
+    if not f.exists():
+        return
+    d = pd.read_csv(f)
+    rows = [r"& & \multicolumn{2}{c}{gain, band only (thousand)} & \multicolumn{2}{c}{block at 240 steps: ratio to band only} & \multicolumn{2}{c}{inspection of 3: markets with net benefit $>0$} \\",
+            r"\cmidrule(lr){3-4}\cmidrule(lr){5-6}\cmidrule(lr){7-8}",
+            r"family & markets & menu of 4 & larger menu & menu of 4 & larger menu & menu of 4 & larger menu \\", r"\midrule"]
+    for _, r in d.iterrows():
+        cells = [r.family, str(int(r.markets)), f"{r['band 7%: gain, menu of 4 (median)'] / 1e3:.0f}", f"{r['band 7%: gain, larger menu (median)'] / 1e3:.0f}",
+                 f"{r['block 240 / band, menu of 4: median']:.2f}", f"{r['block 240 / band, menu + random: median']:.2f}",
+                 r["inspect 3, menu of 4: markets with net U5>0"], r["inspect 3, menu + random: markets with net U5>0"]]
+        rows.append(" & ".join(cells) + r" \\")
+    (OUT / "menu_random.tex").write_text(TOP % "lrrrrrrr" + "\n".join(rows) + BOT)

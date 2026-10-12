@@ -120,6 +120,15 @@ automated accounts, not a Vietnamese market.
   stocks. Share of zero-return days falls by 0.071 [0.050, 0.092]; the Corwin-Schultz spread falls by 0.061 points
   [-0.133, 0.008] (about 8%), concentrated in low-priced stocks. The simulator predicts larger effects than observed for
   cuts of the tick by 5 to 10 times and similar ones for a halving. The reform's old tick could not be established.
+  Inference over time (`results/tick_placebo.md`): the zero-return effect is 4.3 placebo standard deviations below the mean of
+  57 placebo dates and no placebo or label permutation is as extreme; the spread estimate is at the 12th percentile of the
+  placebo distribution (not distinguishable from noise).
+- **Extra checks of the simulation results** (`results/transfer.md`, `menu_random_summary.md`, `ensemble_intervals.md`,
+  `case_pooled.md`): a boosting model trained on the generic simulator transfers to ten Vietnam-preset markets (catch@3
+  0.86-0.94) while the label-free test is nearly blind in the trend-free family; 24 random strategies added to the four-
+  strategy menu do not raise the ring's gain against the band or block pricing; block pricing lowers the gain in all 15
+  markets with a positive baseline (median share kept 0.12, bootstrap interval -0.01 to 0.24); the case results hold as a
+  pooled test over the ten cases.
 
 ## Limits
 
@@ -160,6 +169,10 @@ python experiments/run_calib_sim.py [--check-all]        # simulated returns and
 python experiments/run_case_eventstudy.py --folder DIR   # cases in event time
 python experiments/run_tick_sim.py                       # simulated tick cuts
 python experiments/run_tick_reform.py --folder DIR       # real tick-reform DiD (daily panel)
+python experiments/run_tick_placebo.py --folder DIR --meta DIR/vn_symbols.csv   # placebo dates, label permutation, pre-trend
+python experiments/run_transfer.py                       # supervised detector across simulated markets
+python experiments/run_menu_random.py [--resume] && python experiments/analyse_menu_random.py   # larger ring strategy menu
+python experiments/ensemble_intervals.py && python experiments/case_pooled.py   # intervals over markets, pooled case tests
 python experiments/run_case_validation.py --folder DIR   # real enforcement cases (add --window 10/60 --tag _w10/_w60)
 python experiments/case_stats.py --folder DIR            # case stocks against the market
 python experiments/run_pump_events.py                    # needs the Telegram pump archives
