@@ -35,7 +35,7 @@ cool-down & 30--120 steps & pause between cycles\\
 \caption{Ring strategy space $\Theta$ (11 parameters).}\label{tab:space}
 \end{table}
 
-\subsection{Calibration to Vietnam}\label{sec:calib}
+\subsection{Calibration to a HOSE stock}\label{sec:calib}
 
 \paragraph{Moments.} Prices are in ticks of the Ho Chi Minh Stock Exchange (HOSE): a stock at 25,000 Vietnamese dong (VND) with a 50 VND tick has a relative tick of 20\,bp, and the daily band is $\pm 7\%$ of the previous close. Rules and statistics come from broker summaries and press (Appendix~\ref{app:calib}); the exchange rulebooks could not be fetched. We add measurements from public datasets (Table~\ref{tab:data}). Table~\ref{tab:calib} compares the first preset with the real moments. Cancel share, relative tick and daily volatility are matched; the spread (3 ticks against one tick in 73\% of futures quotes), the tails (excess kurtosis 4--5 daily and 40 at one minute) and the serial correlation of daily returns are not: simulated daily returns trend, with a lag-1 autocorrelation of 0.49 at index level and 0.60 at stock level against $-0.03$ for VN30 and 0.03 on average for HOSE stocks (Figure~\ref{fig:calibration}c). The trending comes from a slow adjustment of the price to the latent value; a family of markets in which it is calibrated away is analysed in Section~\ref{sec:acf}.
 
