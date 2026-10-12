@@ -1,0 +1,7 @@
+family,market,policy,menu,strategy,selection score,gain,gain_se,caught,net_U5
+index level,1,band 7%,menu of 4,2,114603.72222222222,92627.625,47513.33692729214,,
+index level,1,band 7%,menu + 24 random,2,114603.72222222222,92627.625,47513.33692729214,,
+index level,1,band 7% + block at 240-step mean,menu of 4,2,24097.47222222223,17141.166666666806,34256.424340479716,,
+index level,1,band 7% + block at 240-step mean,menu + 24 random,2,24097.47222222223,17141.166666666806,34256.424340479716,,
+index level,1,band 7% + inspect 3 per window,menu of 4,3,-2702.5,5697.875,19969.31814904041,0.25,-7205.875
+index level,1,band 7% + inspect 3 per window,menu + 24 random,3,-2702.5,5697.875,19969.31814904041,0.25,-7205.875
