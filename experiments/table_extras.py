@@ -104,3 +104,49 @@ def menu_random():
                  r["inspect 3, menu of 4: markets with net U5>0"], r["inspect 3, menu + random: markets with net U5>0"]]
         rows.append(" & ".join(cells) + r" \\")
     (OUT / "menu_random.tex").write_text(TOP % "lrrrrrrr" + "\n".join(rows) + BOT)
+
+
+def allocation():
+    f, g = R / "allocation_capacity.csv", R / "allocation_summary.csv"
+    if not f.exists() or not g.exists():
+        return
+    cap = pd.read_csv(f)
+    sm = pd.read_csv(g)
+    names = [("uniform", "uniform"), ("proportional to N", r"proportional to $N_w$"), ("rule, signal from scaling law", r"rule, signal from Proposition~\ref{prop:power}"),
+             ("rule, signal fitted per stock", "rule, signal fitted per stock"), ("oracle (empirical curves)", "oracle (selection episodes)")]
+    rows = [r"allocation & \multicolumn{2}{c}{capacity that leaves no positive net benefit} & \multicolumn{2}{c}{ring's best net benefit at $C=64$ (thousand)} \\",
+            r"\cmidrule(lr){2-3}\cmidrule(lr){4-5}", r"& $m=5$ & $m=10$ & $m=5$ & $m=10$ \\", r"\midrule"]
+    for key, lab in names:
+        cells = [lab]
+        for m in (5, 10):
+            c = cap[(cap.m == m) & (cap.allocation == key)]["smallest capacity with no positive net benefit"]
+            cells.append(f"{c.median():.0f} ({c.min():.0f}--{c.max():.0f})")
+        for m in (5, 10):
+            r = sm[(sm.m == m) & (sm.allocation == key) & (sm["capacity C"] == 64)].iloc[0]
+            cells.append(f"{r['mean'] / 1e3:.1f} ({r['std'] / 1e3:.1f})")
+        rows.append(" & ".join(cells) + r" \\")
+    (OUT / "allocation.tex").write_text(TOP % "lrrrr" + "\n".join(rows) + BOT)
+
+
+def jitter_abm():
+    parts = {}
+    for blk, f in ((100, "jitter_abm.csv"), (25, "jitter_abm_b25.csv")):
+        if not (R / f).exists():
+            return
+        parts[blk] = pd.read_csv(R / f)
+    def fam(m):
+        return "generic simulator" if m.startswith("generic") else m.rsplit(" ", 1)[0]
+    rows = [r"& & \multicolumn{2}{c}{block 100} & \multicolumn{2}{c}{block 25} & \\", r"\cmidrule(lr){3-4}\cmidrule(lr){5-6}",
+            r"markets & accounts per window & honest family-wise error & member rejected & honest family-wise error & member rejected & member in top 5 \\", r"\midrule"]
+    d100, d25 = parts[100], parts[25]
+    for d in (d100, d25):
+        d["fam"] = d.market.map(fam)
+    for f in ["generic simulator", "index level", "stock level", "trend-free"]:
+        a = d100[d100.fam == f]
+        b = d25[d25.fam == f]
+        cells = [f if f == "generic simulator" else f"{f} (2)", f"{a[a['ring in market']]['mean active accounts'].mean():.0f}",
+                 f"{a[~a['ring in market']]['family-wise error (non-member rejected)'].mean():.3f}", f"{a[a['ring in market']]['member rejected'].mean():.3f}",
+                 f"{b[~b['ring in market']]['family-wise error (non-member rejected)'].mean():.3f}", f"{b[b['ring in market']]['member rejected'].mean():.3f}",
+                 f"{a[a['ring in market']]['catch@5 (jitter z)'].mean():.2f}"]
+        rows.append(" & ".join(cells) + r" \\")
+    (OUT / "jitter_abm.tex").write_text(TOP % "lrrrrrr" + "\n".join(rows) + BOT)

@@ -1,0 +1,12 @@
+\begin{tabular}{lrrrrrr}
+\toprule
+& & \multicolumn{2}{c}{block 100} & \multicolumn{2}{c}{block 25} & \\
+\cmidrule(lr){3-4}\cmidrule(lr){5-6}
+markets & accounts per window & honest family-wise error & member rejected & honest family-wise error & member rejected & member in top 5 \\
+\midrule
+generic simulator & 108 & 0.035 & 0.052 & 0.013 & 0.027 & 0.87 \\
+index level (2) & 561 & 0.065 & 0.009 & 0.030 & 0.009 & 0.21 \\
+stock level (2) & 570 & 0.130 & 0.003 & 0.049 & 0.000 & 0.18 \\
+trend-free (2) & 859 & 0.143 & 0.003 & 0.058 & 0.000 & 0.05 \\
+\bottomrule
+\end{tabular}

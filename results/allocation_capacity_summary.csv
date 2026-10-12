@@ -1,0 +1,11 @@
+m,allocation,median,min,max,mean
+5,oracle (empirical curves),160.0,128,256,153.6
+5,proportional to N,160.0,128,160,147.2
+5,"rule, signal fitted per stock",160.0,128,192,147.2
+5,"rule, signal from scaling law",128.0,128,160,134.4
+5,uniform,384.0,256,512,422.4
+10,oracle (empirical curves),64.0,48,160,80.8
+10,proportional to N,64.0,48,96,69.6
+10,"rule, signal fitted per stock",96.0,96,96,96.0
+10,"rule, signal from scaling law",64.0,64,96,67.2
+10,uniform,176.0,128,256,182.4

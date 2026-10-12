@@ -1,11 +1,201 @@
-m,allocation,smallest capacity with no positive net benefit
-5,uniform,
-5,proportional to N,128.0
-5,"rule, signal from scaling law",128.0
-5,"rule, signal fitted per stock",
-5,oracle (empirical curves),128.0
-10,uniform,128.0
-10,proportional to N,64.0
-10,"rule, signal from scaling law",64.0
-10,"rule, signal fitted per stock",128.0
-10,oracle (empirical curves),64.0
+m,allocation,smallest capacity with no positive net benefit,replicate
+5,uniform,256,0
+5,proportional to N,128,0
+5,"rule, signal from scaling law",160,0
+5,"rule, signal fitted per stock",160,0
+5,oracle (empirical curves),128,0
+10,uniform,128,0
+10,proportional to N,48,0
+10,"rule, signal from scaling law",64,0
+10,"rule, signal fitted per stock",96,0
+10,oracle (empirical curves),96,0
+5,uniform,384,1
+5,proportional to N,128,1
+5,"rule, signal from scaling law",128,1
+5,"rule, signal fitted per stock",160,1
+5,oracle (empirical curves),192,1
+10,uniform,192,1
+10,proportional to N,64,1
+10,"rule, signal from scaling law",64,1
+10,"rule, signal fitted per stock",96,1
+10,oracle (empirical curves),96,1
+5,uniform,512,2
+5,proportional to N,160,2
+5,"rule, signal from scaling law",128,2
+5,"rule, signal fitted per stock",128,2
+5,oracle (empirical curves),160,2
+10,uniform,160,2
+10,proportional to N,64,2
+10,"rule, signal from scaling law",64,2
+10,"rule, signal fitted per stock",96,2
+10,oracle (empirical curves),96,2
+5,uniform,384,3
+5,proportional to N,128,3
+5,"rule, signal from scaling law",128,3
+5,"rule, signal fitted per stock",128,3
+5,oracle (empirical curves),128,3
+10,uniform,128,3
+10,proportional to N,48,3
+10,"rule, signal from scaling law",64,3
+10,"rule, signal fitted per stock",96,3
+10,oracle (empirical curves),48,3
+5,uniform,384,4
+5,proportional to N,128,4
+5,"rule, signal from scaling law",128,4
+5,"rule, signal fitted per stock",160,4
+5,oracle (empirical curves),160,4
+10,uniform,160,4
+10,proportional to N,48,4
+10,"rule, signal from scaling law",64,4
+10,"rule, signal fitted per stock",96,4
+10,oracle (empirical curves),48,4
+5,uniform,512,5
+5,proportional to N,160,5
+5,"rule, signal from scaling law",128,5
+5,"rule, signal fitted per stock",128,5
+5,oracle (empirical curves),160,5
+10,uniform,128,5
+10,proportional to N,64,5
+10,"rule, signal from scaling law",64,5
+10,"rule, signal fitted per stock",96,5
+10,oracle (empirical curves),64,5
+5,uniform,384,6
+5,proportional to N,128,6
+5,"rule, signal from scaling law",128,6
+5,"rule, signal fitted per stock",128,6
+5,oracle (empirical curves),160,6
+10,uniform,192,6
+10,proportional to N,64,6
+10,"rule, signal from scaling law",64,6
+10,"rule, signal fitted per stock",96,6
+10,oracle (empirical curves),64,6
+5,uniform,512,7
+5,proportional to N,160,7
+5,"rule, signal from scaling law",128,7
+5,"rule, signal fitted per stock",128,7
+5,oracle (empirical curves),192,7
+10,uniform,160,7
+10,proportional to N,64,7
+10,"rule, signal from scaling law",64,7
+10,"rule, signal fitted per stock",96,7
+10,oracle (empirical curves),64,7
+5,uniform,512,8
+5,proportional to N,160,8
+5,"rule, signal from scaling law",160,8
+5,"rule, signal fitted per stock",160,8
+5,oracle (empirical curves),160,8
+10,uniform,256,8
+10,proportional to N,96,8
+10,"rule, signal from scaling law",96,8
+10,"rule, signal fitted per stock",96,8
+10,oracle (empirical curves),128,8
+5,uniform,384,9
+5,proportional to N,128,9
+5,"rule, signal from scaling law",128,9
+5,"rule, signal fitted per stock",128,9
+5,oracle (empirical curves),128,9
+10,uniform,192,9
+10,proportional to N,64,9
+10,"rule, signal from scaling law",64,9
+10,"rule, signal fitted per stock",96,9
+10,oracle (empirical curves),64,9
+5,uniform,512,10
+5,proportional to N,160,10
+5,"rule, signal from scaling law",128,10
+5,"rule, signal fitted per stock",128,10
+5,oracle (empirical curves),160,10
+10,uniform,256,10
+10,proportional to N,96,10
+10,"rule, signal from scaling law",64,10
+10,"rule, signal fitted per stock",96,10
+10,oracle (empirical curves),64,10
+5,uniform,512,11
+5,proportional to N,160,11
+5,"rule, signal from scaling law",128,11
+5,"rule, signal fitted per stock",160,11
+5,oracle (empirical curves),128,11
+10,uniform,192,11
+10,proportional to N,64,11
+10,"rule, signal from scaling law",64,11
+10,"rule, signal fitted per stock",96,11
+10,oracle (empirical curves),48,11
+5,uniform,512,12
+5,proportional to N,160,12
+5,"rule, signal from scaling law",128,12
+5,"rule, signal fitted per stock",160,12
+5,oracle (empirical curves),128,12
+10,uniform,192,12
+10,proportional to N,64,12
+10,"rule, signal from scaling law",64,12
+10,"rule, signal fitted per stock",96,12
+10,oracle (empirical curves),96,12
+5,uniform,384,13
+5,proportional to N,160,13
+5,"rule, signal from scaling law",128,13
+5,"rule, signal fitted per stock",160,13
+5,oracle (empirical curves),128,13
+10,uniform,128,13
+10,proportional to N,64,13
+10,"rule, signal from scaling law",64,13
+10,"rule, signal fitted per stock",96,13
+10,oracle (empirical curves),64,13
+5,uniform,256,14
+5,proportional to N,160,14
+5,"rule, signal from scaling law",160,14
+5,"rule, signal fitted per stock",160,14
+5,oracle (empirical curves),160,14
+10,uniform,160,14
+10,proportional to N,96,14
+10,"rule, signal from scaling law",96,14
+10,"rule, signal fitted per stock",96,14
+10,oracle (empirical curves),160,14
+5,uniform,320,15
+5,proportional to N,160,15
+5,"rule, signal from scaling law",128,15
+5,"rule, signal fitted per stock",160,15
+5,oracle (empirical curves),128,15
+10,uniform,192,15
+10,proportional to N,64,15
+10,"rule, signal from scaling law",64,15
+10,"rule, signal fitted per stock",96,15
+10,oracle (empirical curves),64,15
+5,uniform,512,16
+5,proportional to N,160,16
+5,"rule, signal from scaling law",160,16
+5,"rule, signal fitted per stock",192,16
+5,oracle (empirical curves),256,16
+10,uniform,256,16
+10,proportional to N,96,16
+10,"rule, signal from scaling law",64,16
+10,"rule, signal fitted per stock",96,16
+10,oracle (empirical curves),96,16
+5,uniform,384,17
+5,proportional to N,128,17
+5,"rule, signal from scaling law",128,17
+5,"rule, signal fitted per stock",128,17
+5,oracle (empirical curves),160,17
+10,uniform,160,17
+10,proportional to N,64,17
+10,"rule, signal from scaling law",64,17
+10,"rule, signal fitted per stock",96,17
+10,oracle (empirical curves),96,17
+5,uniform,320,18
+5,proportional to N,128,18
+5,"rule, signal from scaling law",128,18
+5,"rule, signal fitted per stock",160,18
+5,oracle (empirical curves),128,18
+10,uniform,160,18
+10,proportional to N,64,18
+10,"rule, signal from scaling law",64,18
+10,"rule, signal fitted per stock",96,18
+10,oracle (empirical curves),64,18
+5,uniform,512,19
+5,proportional to N,160,19
+5,"rule, signal from scaling law",128,19
+5,"rule, signal fitted per stock",128,19
+5,oracle (empirical curves),128,19
+10,uniform,256,19
+10,proportional to N,96,19
+10,"rule, signal from scaling law",64,19
+10,"rule, signal fitted per stock",96,19
+10,oracle (empirical curves),96,19

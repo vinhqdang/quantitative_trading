@@ -54,7 +54,7 @@ def fig_alloc():
     sh = pd.read_csv(R / "allocation_shown.csv")
     sm = pd.read_csv(R / "allocation_summary.csv")
     ep = pd.read_csv(R / "allocation_episodes.csv")
-    fig, axes = plt.subplots(1, 3, figsize=(5.15, 2.35))
+    fig, axes = plt.subplots(1, 3, figsize=(5.15, 2.4))
     ax = axes[0]
     for N, c in zip((100, 400, 1000, 2500), (BLUE, AQUA, PLUM, ORANGE)):
         r = ep[ep.n_noise == N]["rank"].to_numpy()
@@ -73,7 +73,7 @@ def fig_alloc():
         t = s[s.allocation == nm].sort_values("N_w")
         ax.bar(xs + (i - 1.5) * 0.2, t.b_w, 0.2, color=c, label=lab)
     ax.set_xticks(xs); ax.set_xticklabels(sorted(s.N_w.unique().astype(int)), rotation=60)
-    ax.set_yscale("symlog", linthresh=1); ax.set_xlabel("accounts in the stock"); ax.set_ylabel("inspected per period"); ax.legend(frameon=False, loc="upper left", ncol=2); panel(ax, "b")
+    ax.set_yscale("symlog", linthresh=1); ax.set_xlabel("accounts in the stock"); ax.set_ylabel("inspected per period"); panel(ax, "b")
     ax = axes[2]
     for nm, c, lab in names:
         t = sm[(sm.m == 5) & (sm.allocation == nm)].sort_values("capacity C")
@@ -81,7 +81,7 @@ def fig_alloc():
         ax.fill_between(t["capacity C"], (t["mean"] - t["std"]) / 1e3, (t["mean"] + t["std"]) / 1e3, color=c, alpha=0.12, lw=0)
     ax.axhline(0, color=INK, lw=0.6)
     ax.set_xscale("log"); ax.set_xticks([16, 64, 256, 1024]); ax.set_xticklabels([16, 64, 256, 1024])
-    ax.set_xlabel("total capacity C"); ax.set_ylabel("ring's best net benefit (k)"); panel(ax, "c")
+    ax.set_xlabel("total capacity C"); ax.set_ylabel("ring's best net benefit (k)"); ax.legend(frameon=False, loc="lower left", fontsize=5.5, labelspacing=0.25); panel(ax, "c")
     fig.tight_layout(w_pad=0.7)
     fig.savefig(OUT / "alloc.pdf")
 

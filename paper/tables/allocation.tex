@@ -1,0 +1,13 @@
+\begin{tabular}{lrrrr}
+\toprule
+allocation & \multicolumn{2}{c}{capacity that leaves no positive net benefit} & \multicolumn{2}{c}{ring's best net benefit at $C=64$ (thousand)} \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}
+& $m=5$ & $m=10$ & $m=5$ & $m=10$ \\
+\midrule
+uniform & 384 (256--512) & 176 (128--256) & 37.5 (3.8) & 26.4 (6.8) \\
+proportional to $N_w$ & 160 (128--160) & 64 (48--96) & 20.3 (5.2) & -3.0 (6.0) \\
+rule, signal from Proposition~\ref{prop:power} & 128 (128--160) & 64 (64--96) & 13.2 (2.8) & -3.8 (2.2) \\
+rule, signal fitted per stock & 160 (128--192) & 96 (96--96) & 13.9 (2.6) & 5.2 (0.6) \\
+oracle (selection episodes) & 160 (128--256) & 64 (48--160) & 15.9 (4.7) & -0.3 (6.2) \\
+\bottomrule
+\end{tabular}
