@@ -1007,3 +1007,255 @@ stock level,61,band 7% + inspect 3 per window,24,-17548.166666666668,0.166666666
 stock level,61,band 7% + inspect 3 per window,25,5034.666666666667,1.0
 stock level,61,band 7% + inspect 3 per window,26,27863.666666666668,0.0
 stock level,61,band 7% + inspect 3 per window,27,-54916.25,0.5
+trend-free,9,band 7%,0,-44846.25,
+trend-free,9,band 7%,1,9625.666666666666,
+trend-free,9,band 7%,2,-41809.666666666664,
+trend-free,9,band 7%,3,-15347.5,
+trend-free,9,band 7%,4,10255.666666666666,
+trend-free,9,band 7%,5,7501.166666666667,
+trend-free,9,band 7%,6,7205.416666666667,
+trend-free,9,band 7%,7,2093.75,
+trend-free,9,band 7%,8,-10583.166666666666,
+trend-free,9,band 7%,9,761.3333333333334,
+trend-free,9,band 7%,10,11547.916666666666,
+trend-free,9,band 7%,11,-6752.583333333333,
+trend-free,9,band 7%,12,2567.0,
+trend-free,9,band 7%,13,15661.583333333334,
+trend-free,9,band 7%,14,-911.1666666666666,
+trend-free,9,band 7%,15,23735.916666666668,
+trend-free,9,band 7%,16,6086.333333333333,
+trend-free,9,band 7%,17,14418.166666666666,
+trend-free,9,band 7%,18,-2894.75,
+trend-free,9,band 7%,19,-1365.1666666666667,
+trend-free,9,band 7%,20,4105.0,
+trend-free,9,band 7%,21,-1949.3333333333333,
+trend-free,9,band 7%,22,20460.583333333332,
+trend-free,9,band 7%,23,11678.333333333334,
+trend-free,9,band 7%,24,14840.0,
+trend-free,9,band 7%,25,12021.166666666666,
+trend-free,9,band 7%,26,4413.833333333333,
+trend-free,9,band 7%,27,-24057.416666666668,
+trend-free,9,band 7% + block at 240-step mean,0,-45560.83333333328,
+trend-free,9,band 7% + block at 240-step mean,1,10453.791666666666,
+trend-free,9,band 7% + block at 240-step mean,2,-54046.12500000014,
+trend-free,9,band 7% + block at 240-step mean,3,-1163.1249999999254,
+trend-free,9,band 7% + block at 240-step mean,4,7247.333333333369,
+trend-free,9,band 7% + block at 240-step mean,5,8006.374999999981,
+trend-free,9,band 7% + block at 240-step mean,6,-1042.4999999999454,
+trend-free,9,band 7% + block at 240-step mean,7,6656.249999999943,
+trend-free,9,band 7% + block at 240-step mean,8,3847.0416666665446,
+trend-free,9,band 7% + block at 240-step mean,9,8807.166666666653,
+trend-free,9,band 7% + block at 240-step mean,10,-3604.1666666665565,
+trend-free,9,band 7% + block at 240-step mean,11,-644.2499999999845,
+trend-free,9,band 7% + block at 240-step mean,12,-6916.333333333462,
+trend-free,9,band 7% + block at 240-step mean,13,-2297.7916666667174,
+trend-free,9,band 7% + block at 240-step mean,14,4120.083333333278,
+trend-free,9,band 7% + block at 240-step mean,15,1717.1666666665697,
+trend-free,9,band 7% + block at 240-step mean,16,-1902.2083333332466,
+trend-free,9,band 7% + block at 240-step mean,17,4993.166666666684,
+trend-free,9,band 7% + block at 240-step mean,18,-705.1666666666397,
+trend-free,9,band 7% + block at 240-step mean,19,8334.833333333549,
+trend-free,9,band 7% + block at 240-step mean,20,1658.1249999999943,
+trend-free,9,band 7% + block at 240-step mean,21,-10438.916666666564,
+trend-free,9,band 7% + block at 240-step mean,22,4895.999999999974,
+trend-free,9,band 7% + block at 240-step mean,23,2610.6250000002465,
+trend-free,9,band 7% + block at 240-step mean,24,7374.375000000125,
+trend-free,9,band 7% + block at 240-step mean,25,-5673.6250000000655,
+trend-free,9,band 7% + block at 240-step mean,26,1769.041666666784,
+trend-free,9,band 7% + block at 240-step mean,27,-11667.833333333403,
+trend-free,9,band 7% + inspect 3 per window,0,-44846.25,0.6666666666666666
+trend-free,9,band 7% + inspect 3 per window,1,9625.666666666666,0.0
+trend-free,9,band 7% + inspect 3 per window,2,-41809.666666666664,0.8333333333333334
+trend-free,9,band 7% + inspect 3 per window,3,-15347.5,0.0
+trend-free,9,band 7% + inspect 3 per window,4,10255.666666666666,0.16666666666666666
+trend-free,9,band 7% + inspect 3 per window,5,7501.166666666667,0.0
+trend-free,9,band 7% + inspect 3 per window,6,7205.416666666667,0.0
+trend-free,9,band 7% + inspect 3 per window,7,2093.75,0.3333333333333333
+trend-free,9,band 7% + inspect 3 per window,8,-10583.166666666666,0.0
+trend-free,9,band 7% + inspect 3 per window,9,761.3333333333334,0.0
+trend-free,9,band 7% + inspect 3 per window,10,11547.916666666666,0.0
+trend-free,9,band 7% + inspect 3 per window,11,-6752.583333333333,0.0
+trend-free,9,band 7% + inspect 3 per window,12,2567.0,0.0
+trend-free,9,band 7% + inspect 3 per window,13,15661.583333333334,0.0
+trend-free,9,band 7% + inspect 3 per window,14,-911.1666666666666,0.0
+trend-free,9,band 7% + inspect 3 per window,15,23735.916666666668,0.0
+trend-free,9,band 7% + inspect 3 per window,16,6086.333333333333,0.5
+trend-free,9,band 7% + inspect 3 per window,17,14418.166666666666,0.3333333333333333
+trend-free,9,band 7% + inspect 3 per window,18,-2894.75,0.16666666666666666
+trend-free,9,band 7% + inspect 3 per window,19,-1365.1666666666667,0.16666666666666666
+trend-free,9,band 7% + inspect 3 per window,20,4105.0,0.16666666666666666
+trend-free,9,band 7% + inspect 3 per window,21,-1949.3333333333333,0.3333333333333333
+trend-free,9,band 7% + inspect 3 per window,22,20460.583333333332,0.0
+trend-free,9,band 7% + inspect 3 per window,23,11678.333333333334,0.16666666666666666
+trend-free,9,band 7% + inspect 3 per window,24,14840.0,0.16666666666666666
+trend-free,9,band 7% + inspect 3 per window,25,12021.166666666666,0.3333333333333333
+trend-free,9,band 7% + inspect 3 per window,26,4413.833333333333,0.0
+trend-free,9,band 7% + inspect 3 per window,27,-24057.416666666668,0.0
+trend-free,11,band 7%,0,81383.83333333333,
+trend-free,11,band 7%,1,33992.583333333336,
+trend-free,11,band 7%,2,-19905.583333333332,
+trend-free,11,band 7%,3,-34266.666666666664,
+trend-free,11,band 7%,4,-9110.666666666666,
+trend-free,11,band 7%,5,27838.583333333332,
+trend-free,11,band 7%,6,-5708.416666666667,
+trend-free,11,band 7%,7,-725.1666666666666,
+trend-free,11,band 7%,8,3260.9166666666665,
+trend-free,11,band 7%,9,1384.9166666666667,
+trend-free,11,band 7%,10,8776.833333333334,
+trend-free,11,band 7%,11,5634.583333333333,
+trend-free,11,band 7%,12,-8281.833333333334,
+trend-free,11,band 7%,13,5664.833333333333,
+trend-free,11,band 7%,14,32971.583333333336,
+trend-free,11,band 7%,15,-2700.25,
+trend-free,11,band 7%,16,-45131.916666666664,
+trend-free,11,band 7%,17,45089.666666666664,
+trend-free,11,band 7%,18,-13107.083333333334,
+trend-free,11,band 7%,19,-5871.75,
+trend-free,11,band 7%,20,20349.083333333332,
+trend-free,11,band 7%,21,35221.916666666664,
+trend-free,11,band 7%,22,-1530.0,
+trend-free,11,band 7%,23,6636.0,
+trend-free,11,band 7%,24,9037.25,
+trend-free,11,band 7%,25,19452.083333333332,
+trend-free,11,band 7%,26,24057.0,
+trend-free,11,band 7%,27,34140.666666666664,
+trend-free,11,band 7% + block at 240-step mean,0,28869.2499999999,
+trend-free,11,band 7% + block at 240-step mean,1,-2983.4583333331416,
+trend-free,11,band 7% + block at 240-step mean,2,-43975.3750000002,
+trend-free,11,band 7% + block at 240-step mean,3,-22637.499999999975,
+trend-free,11,band 7% + block at 240-step mean,4,1807.0416666666988,
+trend-free,11,band 7% + block at 240-step mean,5,6335.458333333321,
+trend-free,11,band 7% + block at 240-step mean,6,10140.541666666648,
+trend-free,11,band 7% + block at 240-step mean,7,-6162.666666666781,
+trend-free,11,band 7% + block at 240-step mean,8,371.33333333340397,
+trend-free,11,band 7% + block at 240-step mean,9,22155.749999999894,
+trend-free,11,band 7% + block at 240-step mean,10,9428.916666666726,
+trend-free,11,band 7% + block at 240-step mean,11,5842.916666666649,
+trend-free,11,band 7% + block at 240-step mean,12,-11361.000000000071,
+trend-free,11,band 7% + block at 240-step mean,13,-335.1666666666097,
+trend-free,11,band 7% + block at 240-step mean,14,-17627.37499999981,
+trend-free,11,band 7% + block at 240-step mean,15,3408.083333333292,
+trend-free,11,band 7% + block at 240-step mean,16,-22954.833333333267,
+trend-free,11,band 7% + block at 240-step mean,17,7343.833333333273,
+trend-free,11,band 7% + block at 240-step mean,18,923.1249999999021,
+trend-free,11,band 7% + block at 240-step mean,19,-13373.83333333333,
+trend-free,11,band 7% + block at 240-step mean,20,1758.4583333332878,
+trend-free,11,band 7% + block at 240-step mean,21,10522.958333333274,
+trend-free,11,band 7% + block at 240-step mean,22,-92.49999999997151,
+trend-free,11,band 7% + block at 240-step mean,23,19062.041666666748,
+trend-free,11,band 7% + block at 240-step mean,24,-4546.0833333334,
+trend-free,11,band 7% + block at 240-step mean,25,-417.7083333334085,
+trend-free,11,band 7% + block at 240-step mean,26,3863.250000000006,
+trend-free,11,band 7% + block at 240-step mean,27,18773.99999999991,
+trend-free,11,band 7% + inspect 3 per window,0,81383.83333333333,0.3333333333333333
+trend-free,11,band 7% + inspect 3 per window,1,33992.583333333336,0.0
+trend-free,11,band 7% + inspect 3 per window,2,-19905.583333333332,0.3333333333333333
+trend-free,11,band 7% + inspect 3 per window,3,-34266.666666666664,0.0
+trend-free,11,band 7% + inspect 3 per window,4,-9110.666666666666,0.0
+trend-free,11,band 7% + inspect 3 per window,5,27838.583333333332,0.0
+trend-free,11,band 7% + inspect 3 per window,6,-5708.416666666667,0.16666666666666666
+trend-free,11,band 7% + inspect 3 per window,7,-725.1666666666666,0.0
+trend-free,11,band 7% + inspect 3 per window,8,3260.9166666666665,0.0
+trend-free,11,band 7% + inspect 3 per window,9,1384.9166666666667,0.16666666666666666
+trend-free,11,band 7% + inspect 3 per window,10,8776.833333333334,0.0
+trend-free,11,band 7% + inspect 3 per window,11,5634.583333333333,0.0
+trend-free,11,band 7% + inspect 3 per window,12,-8281.833333333334,0.0
+trend-free,11,band 7% + inspect 3 per window,13,5664.833333333333,0.0
+trend-free,11,band 7% + inspect 3 per window,14,32971.583333333336,0.16666666666666666
+trend-free,11,band 7% + inspect 3 per window,15,-2700.25,0.16666666666666666
+trend-free,11,band 7% + inspect 3 per window,16,-45131.916666666664,0.8333333333333334
+trend-free,11,band 7% + inspect 3 per window,17,45089.666666666664,0.16666666666666666
+trend-free,11,band 7% + inspect 3 per window,18,-13107.083333333334,0.16666666666666666
+trend-free,11,band 7% + inspect 3 per window,19,-5871.75,0.16666666666666666
+trend-free,11,band 7% + inspect 3 per window,20,20349.083333333332,0.5
+trend-free,11,band 7% + inspect 3 per window,21,35221.916666666664,0.0
+trend-free,11,band 7% + inspect 3 per window,22,-1530.0,0.0
+trend-free,11,band 7% + inspect 3 per window,23,6636.0,0.16666666666666666
+trend-free,11,band 7% + inspect 3 per window,24,9037.25,0.16666666666666666
+trend-free,11,band 7% + inspect 3 per window,25,19452.083333333332,0.3333333333333333
+trend-free,11,band 7% + inspect 3 per window,26,24057.0,0.0
+trend-free,11,band 7% + inspect 3 per window,27,34140.666666666664,0.0
+trend-free,15,band 7%,0,11849.916666666666,
+trend-free,15,band 7%,1,43891.166666666664,
+trend-free,15,band 7%,2,-10441.0,
+trend-free,15,band 7%,3,7514.0,
+trend-free,15,band 7%,4,-16021.833333333334,
+trend-free,15,band 7%,5,7511.583333333333,
+trend-free,15,band 7%,6,-4689.083333333333,
+trend-free,15,band 7%,7,-576.6666666666666,
+trend-free,15,band 7%,8,1032.8333333333333,
+trend-free,15,band 7%,9,-5767.333333333333,
+trend-free,15,band 7%,10,10583.5,
+trend-free,15,band 7%,11,-14882.583333333334,
+trend-free,15,band 7%,12,10603.75,
+trend-free,15,band 7%,13,3819.8333333333335,
+trend-free,15,band 7%,14,17961.083333333332,
+trend-free,15,band 7%,15,-7074.75,
+trend-free,15,band 7%,16,-25574.75,
+trend-free,15,band 7%,17,44636.75,
+trend-free,15,band 7%,18,6948.0,
+trend-free,15,band 7%,19,7485.416666666667,
+trend-free,15,band 7%,20,1504.0833333333333,
+trend-free,15,band 7%,21,45725.75,
+trend-free,15,band 7%,22,-25031.833333333332,
+trend-free,15,band 7%,23,1658.8333333333333,
+trend-free,15,band 7%,24,-17942.083333333332,
+trend-free,15,band 7%,25,28166.166666666668,
+trend-free,15,band 7%,26,6827.5,
+trend-free,15,band 7%,27,-3205.4166666666665,
+trend-free,15,band 7% + block at 240-step mean,0,-16505.29166666661,
+trend-free,15,band 7% + block at 240-step mean,1,13994.291666666673,
+trend-free,15,band 7% + block at 240-step mean,2,-48045.166666666664,
+trend-free,15,band 7% + block at 240-step mean,3,-3040.166666666619,
+trend-free,15,band 7% + block at 240-step mean,4,-1705.1666666666133,
+trend-free,15,band 7% + block at 240-step mean,5,749.0833333332308,
+trend-free,15,band 7% + block at 240-step mean,6,3268.2083333333026,
+trend-free,15,band 7% + block at 240-step mean,7,3845.208333333246,
+trend-free,15,band 7% + block at 240-step mean,8,14147.416666666648,
+trend-free,15,band 7% + block at 240-step mean,9,87.87499999989025,
+trend-free,15,band 7% + block at 240-step mean,10,9323.083333333258,
+trend-free,15,band 7% + block at 240-step mean,11,13562.208333333429,
+trend-free,15,band 7% + block at 240-step mean,12,6361.041666666703,
+trend-free,15,band 7% + block at 240-step mean,13,-629.1249999998337,
+trend-free,15,band 7% + block at 240-step mean,14,-5648.291666666667,
+trend-free,15,band 7% + block at 240-step mean,15,10784.625000000002,
+trend-free,15,band 7% + block at 240-step mean,16,-12253.91666666659,
+trend-free,15,band 7% + block at 240-step mean,17,14305.499999999958,
+trend-free,15,band 7% + block at 240-step mean,18,3047.999999999994,
+trend-free,15,band 7% + block at 240-step mean,19,-5719.791666666693,
+trend-free,15,band 7% + block at 240-step mean,20,-4962.583333333335,
+trend-free,15,band 7% + block at 240-step mean,21,17805.95833333322,
+trend-free,15,band 7% + block at 240-step mean,22,-3584.958333333412,
+trend-free,15,band 7% + block at 240-step mean,23,6652.583333333368,
+trend-free,15,band 7% + block at 240-step mean,24,11707.916666666586,
+trend-free,15,band 7% + block at 240-step mean,25,1500.5416666665758,
+trend-free,15,band 7% + block at 240-step mean,26,970.2083333333027,
+trend-free,15,band 7% + block at 240-step mean,27,-3721.0416666665838,
+trend-free,15,band 7% + inspect 3 per window,0,11849.916666666666,0.8333333333333334
+trend-free,15,band 7% + inspect 3 per window,1,43891.166666666664,0.16666666666666666
+trend-free,15,band 7% + inspect 3 per window,2,-10441.0,1.0
+trend-free,15,band 7% + inspect 3 per window,3,7514.0,0.0
+trend-free,15,band 7% + inspect 3 per window,4,-16021.833333333334,0.0
+trend-free,15,band 7% + inspect 3 per window,5,7511.583333333333,0.0
+trend-free,15,band 7% + inspect 3 per window,6,-4689.083333333333,0.16666666666666666
+trend-free,15,band 7% + inspect 3 per window,7,-576.6666666666666,0.16666666666666666
+trend-free,15,band 7% + inspect 3 per window,8,1032.8333333333333,0.16666666666666666
+trend-free,15,band 7% + inspect 3 per window,9,-5767.333333333333,0.0
+trend-free,15,band 7% + inspect 3 per window,10,10583.5,0.0
+trend-free,15,band 7% + inspect 3 per window,11,-14882.583333333334,0.16666666666666666
+trend-free,15,band 7% + inspect 3 per window,12,10603.75,0.16666666666666666
+trend-free,15,band 7% + inspect 3 per window,13,3819.8333333333335,0.0
+trend-free,15,band 7% + inspect 3 per window,14,17961.083333333332,0.0
+trend-free,15,band 7% + inspect 3 per window,15,-7074.75,0.0
+trend-free,15,band 7% + inspect 3 per window,16,-25574.75,0.6666666666666666
+trend-free,15,band 7% + inspect 3 per window,17,44636.75,0.3333333333333333
+trend-free,15,band 7% + inspect 3 per window,18,6948.0,0.0
+trend-free,15,band 7% + inspect 3 per window,19,7485.416666666667,0.16666666666666666
+trend-free,15,band 7% + inspect 3 per window,20,1504.0833333333333,0.5
+trend-free,15,band 7% + inspect 3 per window,21,45725.75,0.16666666666666666
+trend-free,15,band 7% + inspect 3 per window,22,-25031.833333333332,0.3333333333333333
+trend-free,15,band 7% + inspect 3 per window,23,1658.8333333333333,0.16666666666666666
+trend-free,15,band 7% + inspect 3 per window,24,-17942.083333333332,0.16666666666666666
+trend-free,15,band 7% + inspect 3 per window,25,28166.166666666668,0.3333333333333333
+trend-free,15,band 7% + inspect 3 per window,26,6827.5,0.0
+trend-free,15,band 7% + inspect 3 per window,27,-3205.4166666666665,0.16666666666666666
