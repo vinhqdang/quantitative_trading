@@ -7,7 +7,7 @@
 | journal | Computational Economics (Springer) |
 | title | Screening for Coordinated Manipulation and Evaluating Exchange Rules in a Calibrated Market Simulator |
 | author | Quang-Vinh Dang (sole author), British University Vietnam |
-| submitted version | repository commit `092eea6` on `main` (tag `submitted-compecon-2026-10-12`) |
+| submitted version | repository commit `092eea6` on `main` |
 | files uploaded | `submission/manuscript_latex.zip` (LaTeX source only), `submission/cover_letter.pdf`; title, abstract, keywords and JEL codes in `submission/title_abstract.txt` |
 | checksums (md5) | zip `9e58f9379156794e3e23f971908d6611`, cover letter `a98bff9f47821c2ac5826e46ea3c7014` |
 | format | Springer Nature `sn-jnl` class (`sn-basic` reference style), 59 pages, abstract 248 words |
@@ -39,4 +39,4 @@
 ## After submission
 
 - Record the manuscript number and the dates of each status change in the table above.
-- On a revision request: rebuild with `paper/make_submission.sh`, keep the response letter in `submission/`, tag the revised commit.
+- On a revision request: rebuild with `paper/make_submission.sh` and keep the response letter in `submission/`; to recover the submitted manuscript use `git checkout 092eea6 -- paper submission`.
