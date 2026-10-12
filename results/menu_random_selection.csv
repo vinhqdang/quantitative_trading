@@ -83,3 +83,87 @@ index level,1,band 7% + inspect 3 per window,24,2860.8333333333335,0.33333333333
 index level,1,band 7% + inspect 3 per window,25,-4312.166666666667,1.0
 index level,1,band 7% + inspect 3 per window,26,18842.333333333332,0.6666666666666666
 index level,1,band 7% + inspect 3 per window,27,15049.416666666666,0.3333333333333333
+index level,5,band 7%,0,111041.91666666667,
+index level,5,band 7%,1,-22736.833333333332,
+index level,5,band 7%,2,64508.583333333336,
+index level,5,band 7%,3,64096.25,
+index level,5,band 7%,4,16063.416666666666,
+index level,5,band 7%,5,107576.91666666667,
+index level,5,band 7%,6,11469.666666666666,
+index level,5,band 7%,7,11351.75,
+index level,5,band 7%,8,11935.833333333334,
+index level,5,band 7%,9,29077.333333333332,
+index level,5,band 7%,10,4126.416666666667,
+index level,5,band 7%,11,40101.666666666664,
+index level,5,band 7%,12,7744.416666666665,
+index level,5,band 7%,13,36321.916666666664,
+index level,5,band 7%,14,-17862.083333333332,
+index level,5,band 7%,15,61991.25,
+index level,5,band 7%,16,82695.66666666667,
+index level,5,band 7%,17,-30195.833333333332,
+index level,5,band 7%,18,29094.666666666668,
+index level,5,band 7%,19,50858.0,
+index level,5,band 7%,20,48166.0,
+index level,5,band 7%,21,41975.666666666664,
+index level,5,band 7%,22,54314.583333333336,
+index level,5,band 7%,23,-539.0,
+index level,5,band 7%,24,-8998.333333333334,
+index level,5,band 7%,25,14832.166666666666,
+index level,5,band 7%,26,-18349.333333333332,
+index level,5,band 7%,27,-562.8333333333334,
+index level,5,band 7% + block at 240-step mean,0,54749.208333333394,
+index level,5,band 7% + block at 240-step mean,1,-3236.833333333305,
+index level,5,band 7% + block at 240-step mean,2,2740.8749999999127,
+index level,5,band 7% + block at 240-step mean,3,16554.58333333323,
+index level,5,band 7% + block at 240-step mean,4,-4373.0416666666815,
+index level,5,band 7% + block at 240-step mean,5,33424.8333333331,
+index level,5,band 7% + block at 240-step mean,6,21220.70833333331,
+index level,5,band 7% + block at 240-step mean,7,-2106.5833333333117,
+index level,5,band 7% + block at 240-step mean,8,-191.25000000005517,
+index level,5,band 7% + block at 240-step mean,9,-3057.0416666665883,
+index level,5,band 7% + block at 240-step mean,10,13811.83333333325,
+index level,5,band 7% + block at 240-step mean,11,8853.749999999827,
+index level,5,band 7% + block at 240-step mean,12,-7443.083333333306,
+index level,5,band 7% + block at 240-step mean,13,-10743.708333333316,
+index level,5,band 7% + block at 240-step mean,14,17997.291666666784,
+index level,5,band 7% + block at 240-step mean,15,1812.0833333332969,
+index level,5,band 7% + block at 240-step mean,16,24169.625000000044,
+index level,5,band 7% + block at 240-step mean,17,-1584.3750000001728,
+index level,5,band 7% + block at 240-step mean,18,8563.416666666582,
+index level,5,band 7% + block at 240-step mean,19,-8734.708333333434,
+index level,5,band 7% + block at 240-step mean,20,13523.29166666664,
+index level,5,band 7% + block at 240-step mean,21,7848.583333333364,
+index level,5,band 7% + block at 240-step mean,22,7343.7499999999445,
+index level,5,band 7% + block at 240-step mean,23,14006.833333333487,
+index level,5,band 7% + block at 240-step mean,24,21546.45833333337,
+index level,5,band 7% + block at 240-step mean,25,-2768.8749999998654,
+index level,5,band 7% + block at 240-step mean,26,4503.791666666616,
+index level,5,band 7% + block at 240-step mean,27,6476.74999999988,
+index level,5,band 7% + inspect 3 per window,0,111041.91666666667,1.0
+index level,5,band 7% + inspect 3 per window,1,-22736.833333333332,0.3333333333333333
+index level,5,band 7% + inspect 3 per window,2,64508.583333333336,1.0
+index level,5,band 7% + inspect 3 per window,3,64096.25,0.3333333333333333
+index level,5,band 7% + inspect 3 per window,4,16063.416666666666,0.3333333333333333
+index level,5,band 7% + inspect 3 per window,5,107576.91666666667,0.8333333333333334
+index level,5,band 7% + inspect 3 per window,6,11469.666666666666,0.6666666666666666
+index level,5,band 7% + inspect 3 per window,7,11351.75,0.5
+index level,5,band 7% + inspect 3 per window,8,11935.833333333334,0.5
+index level,5,band 7% + inspect 3 per window,9,29077.333333333332,0.16666666666666666
+index level,5,band 7% + inspect 3 per window,10,4126.416666666667,0.5
+index level,5,band 7% + inspect 3 per window,11,40101.666666666664,0.5
+index level,5,band 7% + inspect 3 per window,12,7744.416666666665,0.8333333333333334
+index level,5,band 7% + inspect 3 per window,13,36321.916666666664,0.16666666666666666
+index level,5,band 7% + inspect 3 per window,14,-17862.083333333332,0.3333333333333333
+index level,5,band 7% + inspect 3 per window,15,61991.25,0.16666666666666666
+index level,5,band 7% + inspect 3 per window,16,82695.66666666667,1.0
+index level,5,band 7% + inspect 3 per window,17,-30195.833333333332,0.8333333333333334
+index level,5,band 7% + inspect 3 per window,18,29094.666666666668,0.5
+index level,5,band 7% + inspect 3 per window,19,50858.0,0.5
+index level,5,band 7% + inspect 3 per window,20,48166.0,1.0
+index level,5,band 7% + inspect 3 per window,21,41975.666666666664,0.8333333333333334
+index level,5,band 7% + inspect 3 per window,22,54314.583333333336,0.0
+index level,5,band 7% + inspect 3 per window,23,-539.0,0.6666666666666666
+index level,5,band 7% + inspect 3 per window,24,-8998.333333333334,0.3333333333333333
+index level,5,band 7% + inspect 3 per window,25,14832.166666666666,1.0
+index level,5,band 7% + inspect 3 per window,26,-18349.333333333332,0.5
+index level,5,band 7% + inspect 3 per window,27,-562.8333333333334,0.3333333333333333
