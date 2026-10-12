@@ -1,0 +1,48 @@
+\documentclass[10.5pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[margin=2cm]{geometry}
+\usepackage{url}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.5em}
+\pagestyle{empty}
+\begin{document}
+
+\textbf{Quang-Vinh Dang}\\
+British University Vietnam, Hung Yen, Vietnam\\
+Email: vinh.dq4@buv.edu.vn \quad ORCID: 0000-0002-3877-8024
+
+12 October 2026
+
+The Editor-in-Chief\\
+\emph{Computational Economics}
+
+\textbf{Submission of an original research article: ``Screening for Coordinated Manipulation and Evaluating Exchange Rules in a Vietnam-Calibrated Market Simulator''}
+
+Dear Editor,
+
+I submit the enclosed manuscript for consideration in \emph{Computational Economics}.
+
+\textbf{The problem.} Prosecuted manipulation on Vietnamese stock exchanges is mostly carried out by groups of accounts that trade in step with each other. The securities regulator has no labelled cases from which to train a detector, and the order-level data needed to test one are not public. The manuscript asks two questions of a regulator in that position: can a group of coordinated accounts be found without labels, and which exchange rules, and how much inspection capacity, make a manipulator who adapts to them give up?
+
+\textbf{What the manuscript does.} It combines theory, agent-based simulation and public data.
+\begin{itemize}\itemsep0pt
+\item It states a label-free coincidence test with an exact circular-shift null for each account, shows that ranking many accounts loses that guarantee, and derives a power law in which detection falls with the number of accounts. It links the law to a deterrence condition for a regulator with a fixed inspection capacity and a fine proportional to the gain, and derives a law for pricing off-book block trades from a trailing mean. Each statement is checked by simulation with the implemented test.
+\item It evaluates rules by the best response of a colluding ring, chosen from a fixed set of strategies, in three families of agent-based markets that match published and measured moments of the Ho Chi Minh Stock Exchange, together with the cost of each rule to honest participants.
+\item It stress-tests the statistic on public real account-level order flow from a different venue, and checks what public Vietnamese data can say: documented enforcement cases, a natural experiment on the 2016 tick-size reform, and pump events.
+\end{itemize}
+
+\textbf{Main findings and limits.} In the simulated markets the daily price band does not change the gain of a ring, pricing off-book blocks from a trailing mean removes most of the value of the block when the block is the main source of the gain, and inspection deters a ring only with enough capacity; minimum resting times and cancel fees leave the gains of fixed manipulators unchanged and raise volatility. The manuscript is explicit about what it does not show: no real Vietnamese account-level data are used, and on the real order flow of the other venue the exchangeability condition of the test fails for a large share of accounts and a planted ring is found only when it is a substantial share of the flow.
+
+\textbf{Fit with the journal.} The work applies computational methods, agent-based simulation and Monte Carlo verification of analytical results, to the economics of market regulation and enforcement, which I believe falls within the scope of \emph{Computational Economics}.
+
+\textbf{Declarations.} The manuscript is original, has not been published before and is not under consideration for publication elsewhere. I am the sole author and I approve its submission. No text, figure or table has been reproduced from other publications, and no unpublished or overlapping material is included. All real data used are public and are listed in the manuscript; the simulator, the experiment scripts, the result tables and the case list are available at \url{https://github.com/vinhqdang/quantitative_trading}. No funding was received for the study, and I have no competing interests to declare. The author-contribution and competing-interest statements are also entered in the submission system.
+
+Thank you for considering the manuscript.
+
+Sincerely,
+
+Quang-Vinh Dang
+
+\end{document}
