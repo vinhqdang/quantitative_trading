@@ -138,6 +138,32 @@ def exp_netting(rng, R=200, N=100, T=T_DEFAULT):
     return pd.DataFrame(rows)
 
 
+def exp_cross(rng, R=100, N=300, T=T_DEFAULT, K=12):
+    """Ring accounts that trade against each other: half of the ring buys at common moments and half sells.
+
+    Netting buys against sells (signed statistic) makes the aggregate of the others cancel for such a ring; the opposite-side tail does not
+    repair this, whereas the unsigned statistic (buys with buys, sells with sells) still sees it. One-directional ring for reference.
+    """
+    rows = []
+    for scenario in ["one-directional ring", "balanced pairs trading against each other"]:
+        hits = {"signed, positive tail": [], "signed, negative tail": [], "unsigned": []}
+        for _ in range(R):
+            buy = rng.poisson(0.3, size=(N, T)).astype(float)
+            sell = rng.poisson(0.3, size=(N, T)).astype(float)
+            moment = rng.random(T) < 0.2
+            for j in range(K):
+                if scenario.startswith("one") or j % 2 == 0:
+                    buy[j] += 3 * moment * rng.random(T)
+                else:
+                    sell[j] += 3 * moment * rng.random(T)
+            flow = np.stack([buy, sell])
+            for nm, kw in (("signed, positive tail", dict(signed=True)), ("signed, negative tail", dict(signed=True, tail="neg")), ("unsigned", dict(signed=False))):
+                z, _p = coincidence_scan(flow, TOLS, **kw)
+                hits[nm].append(bool((np.argsort(-z)[:5] < K).any()))
+        rows.append({"scenario": scenario, **{f"catch@5, {k}": float(np.mean(v)) for k, v in hits.items()}})
+    return pd.DataFrame(rows)
+
+
 def main(a):
     rng = np.random.default_rng(a.seed)
     out = Path(a.out); out.mkdir(exist_ok=True)
@@ -145,12 +171,14 @@ def main(a):
     b = exp_budget(rng, max(50, a.n_windows // 2)); b.to_csv(out / "theory_budget.csv", index=False)
     p = exp_power(rng, a.reps); p.to_csv(out / "theory_power.csv", index=False)
     n = exp_netting(rng); n.to_csv(out / "theory_netting.csv", index=False)
+    c = exp_cross(rng); c.to_csv(out / "theory_cross.csv", index=False)
     text = ["# Monte Carlo checks of the propositions\n", "## Validity (Proposition 1)\n", v.round(4).to_markdown(index=False),
             "\n## Inspection budget (Proposition 2)\n", b.round(4).to_markdown(index=False),
             "\n## Power scaling law (Proposition 3)\n", p.round(3).to_markdown(index=False),
             f"\nCorrelation between predicted and simulated catch@5: {np.corrcoef(p['catch@5'], p['catch@5 predicted'])[0, 1]:.3f}; "
             f"mean absolute error {np.abs(p['catch@5'] - p['catch@5 predicted']).mean():.3f}.\n",
-            "\n## Signed netting (Proposition 4)\n", n.round(3).to_markdown(index=False)]
+            "\n## Signed netting (Proposition 4)\n", n.round(3).to_markdown(index=False),
+            "\n## Ring accounts trading against each other\n", c.round(3).to_markdown(index=False)]
     (out / "theory_checks.md").write_text("\n".join(text))
     print("\n".join(text))
 

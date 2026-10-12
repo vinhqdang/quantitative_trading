@@ -47,10 +47,12 @@ def _circ_box(x: np.ndarray, tol: int) -> np.ndarray:
     return out
 
 
-def coincidence_scan(flow: np.ndarray, tols=(1, 5, 15), signed: bool = False) -> tuple[np.ndarray, np.ndarray]:
+def coincidence_scan(flow: np.ndarray, tols=(1, 5, 15), signed: bool = False, tail: str = "pos") -> tuple[np.ndarray, np.ndarray]:
     """flow: [side(2), agent, step] submission counts of one window (side 0 = buy, 1 = sell). Returns (z, p) per agent.
 
     z is the observed maximum standardised coincidence statistic; p is its exact circular-shift p-value.
+    With `tail="neg"` the statistic is the opposite-side coincidence (the account submits on the other side from the others at the same
+    moments), which detects accounts that trade against each other; both tails have the same exact null.
     With `signed=True` the buy and sell counts of each account and step are netted before testing, so accounts that
     quote both sides at the same moment (market-making desks) contribute nothing while one-directional coordination does.
     """
@@ -66,6 +68,8 @@ def coincidence_scan(flow: np.ndarray, tols=(1, 5, 15), signed: bool = False) ->
             Fo = np.fft.rfft(others, axis=1)
             Fa = np.fft.rfft(flow[sd], axis=1)
             corr += np.fft.irfft(Fo * np.conj(Fa), n=T, axis=1)      # corr[:, k] = statistic at shift k
+        if tail == "neg":
+            corr = -corr
         mu = corr.mean(axis=1, keepdims=True)
         sdv = corr.std(axis=1, keepdims=True)
         stats.append((corr - mu) / np.where(sdv > 0, sdv, 1.0))

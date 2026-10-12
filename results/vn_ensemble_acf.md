@@ -1,6 +1,6 @@
 # Policy conclusions across a family of calibrated markets
 
-4 markets accepted among 29 draws (tolerances: cancel share 0.27-0.37, daily volatility 0.9-1.5%, retail share 0.66-0.85). Ring strategy set: 4 strategies; 12 selection and 12 reporting episodes per cell. `ratio` is the ring's gain relative to its gain with no policy in the same market (markets with non-positive baseline gain are left out of the ratio).
+4 markets accepted among 29 draws (tolerances: cancel share 0.27-0.37, daily volatility 0.9-1.5%, retail share 0.55-0.85). Ring strategy set: 4 strategies; 12 selection and 12 reporting episodes per cell. `ratio` is the ring's gain relative to its gain with no policy in the same market (markets with non-positive baseline gain are left out of the ratio).
 
 ## Accepted markets
 

@@ -27,7 +27,7 @@
 
 \affil*[1]{\orgname{British University Vietnam}, \orgaddress{\city{Hung Yen}, \country{Vietnam}}}
 
-\abstract{Prosecuted manipulation on Vietnamese stock exchanges is mostly carried out by groups of accounts trading in step, yet regulators have no labelled cases to train a detector and the order-level data to test one are not public. We study which rules and how much inspection capacity make such a ring give up. We state a label-free coincidence test with an exact circular-shift null per account, derive a power law in which the shift of the statistic falls like the inverse square root of the number of accounts; the law fits an agent-based market and yields a deterrence condition linking inspection capacity to the fine. A ring that picks its best strategy against each rule, in simulated markets matching moments of the Ho Chi Minh Stock Exchange, is unaffected by the daily price band, loses most of the block value when off-book blocks are priced at a trailing mean, and is deterred by inspection only with enough capacity; in one market, minimum resting times and cancel fees leave fixed manipulators' gains unchanged and raise volatility. On real order flow from a public derivatives venue the exchangeability condition fails for more than a quarter of the active accounts, and a planted ring of 12 quiet accounts is found only when it makes up about a fifth of the flow. On Vietnamese public data, the 2016 tick reform lowered the share of zero-return days by seven points, and a price-based rank puts 8 of 10 documented cases in the daily top ten.}
+\abstract{Prosecuted manipulation on Vietnamese stock exchanges is mostly carried out by groups of accounts trading in step, yet regulators have no labelled cases to train a detector and the order-level data to test one are not public. We ask which rules and how much inspection make such a ring give up. We state a label-free coincidence test with an exact circular-shift null per account, derive a power law in which the shift of the statistic falls like the inverse square root of the number of accounts; the law fits an agent-based market and yields a deterrence condition linking inspection capacity to the fine. A ring that picks its best strategy against each rule, in simulated markets matching Ho Chi Minh Stock Exchange moments, is unaffected by the daily price band, loses most of the block value when off-book blocks are priced at a trailing mean, and is deterred by inspection only with enough capacity; in one market, minimum resting times and cancel fees do not reduce the gains of fixed manipulators and raise volatility. On real order flow from a public derivatives venue the exchangeability condition fails for more than a quarter of active accounts, and a planted ring of 12 quiet accounts is found only at about a fifth of the flow. On Vietnamese public data, the 2016 tick reform lowered the share of zero-return days by seven points, and a price-based rank puts 8 of 10 documented cases in the daily top ten on at least one day.}
 
 \keywords{market manipulation, market surveillance, agent-based model, limit order book, exchange rules, Vietnam}
 
@@ -53,8 +53,9 @@
 
 \backmatter
 
+\newcounter{svt}\newcounter{svf}\setcounter{svt}{\value{table}}\setcounter{svf}{\value{figure}}
 \begin{appendices}
-\makeatletter\@removefromreset{table}{section}\@removefromreset{figure}{section}\makeatother
+\setcounter{table}{\value{svt}}\setcounter{figure}{\value{svf}}
 \renewcommand{\thetable}{\arabic{table}}\renewcommand{\thefigure}{\arabic{figure}}
 \section{Documented cases considered in Section~\ref{sec:cases} (HNG is listed but not scored)}\label{app:cases}
 \begin{table}[h]
@@ -76,7 +77,7 @@
 \end{itemize}
 
 \section{Single-market results}\label{app:single}
-The first version of the policy comparison used one calibrated market (index level, daily volatility 1.14\%), with 20 selection and 20 reporting episodes per cell and seven strategies. Table~\ref{tab:policy} and Figure~\ref{fig:policy} are from it; they include the daily bands of 10\% and 15\% and a fine multiple of 10, and they are consistent with the family results (band: no effect; block price: large reduction; inspection: negative net benefit at one and three inspected accounts in that market).
+The first version of the policy comparison used one calibrated market (index level, daily volatility 1.14\%), with 20 selection and 20 reporting episodes per cell and seven strategies. Table~\ref{tab:policy} and Figure~\ref{fig:policy} are from it; they include the daily bands of 10\% and 15\% and a fine multiple of 10, and they are consistent with the family results in direction (block price: large reduction; inspection: negative net benefit at one and three inspected accounts in that market), but the band of 7\% appears to halve the gain in the unrestricted evolution-strategy search of Section~\ref{sec:policy} (101k without a band, 49k with it) and not in this cross-evaluation, which shows the noise of the search. In this market the single inspected account is caught in 20\% of the episodes (gain 14k, standard error 11k over 20 episodes).
 
 \begin{figure}[h]
 \centering

@@ -105,7 +105,7 @@ def main(args):
                                                  caught_median=("caught", "median"), netU5_max=("net_U5", "max"), netU10_max=("net_U10", "max"))
     text = ["# Policy conclusions across a family of calibrated markets\n",
             f"{len(markets)} markets accepted among {len(draws)} draws (tolerances: cancel share 0.27-0.37, daily volatility {args.vol_lo}-{args.vol_hi}%, retail share "
-            f"0.66-0.85). Ring strategy set: {len(strats)} strategies; {args.n} selection and {args.n} reporting episodes per cell. `ratio` is the ring's gain "
+            f"{args.retail_lo}-0.85). Ring strategy set: {len(strats)} strategies; {args.n} selection and {args.n} reporting episodes per cell. `ratio` is the ring's gain "
             "relative to its gain with no policy in the same market (markets with non-positive baseline gain are left out of the ratio).\n",
             "## Accepted markets\n", markets.round(3).to_markdown(index=False), "\n", "## Per policy, over markets\n", summ.round(2).to_markdown(), ""]
     (Path(args.out) / f"vn_ensemble{tag}.md").write_text("\n".join(text))

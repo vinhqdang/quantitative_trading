@@ -1,0 +1,3 @@
+scenario,"catch@5, signed, positive tail","catch@5, signed, negative tail","catch@5, unsigned"
+one-directional ring,0.985,0.0,0.99
+balanced pairs trading against each other,0.14,0.25,0.85
